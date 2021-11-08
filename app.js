@@ -40,6 +40,14 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+app.get('/sync', (req, res) => {
+  let models = require('./models');
+  models.sequelize.sync()
+  .then(() => {
+    res.send('Databse sync successfully')
+  });
+});
+
 app.listen(port, () => {
   console.log(`App is listening on port http://localhost:${port}`)
 });
