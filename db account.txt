@@ -1,0 +1,9 @@
+Free MySQL Hosting
+email: katigo8790@ecofreon.com
+password: .MKss7QQxj7TxRT
+
+Server: sql6.freemysqlhosting.net
+Name: sql6449878
+Username: sql6449878
+Password: 9c5JILZ8Ht
+Port number: 3306
