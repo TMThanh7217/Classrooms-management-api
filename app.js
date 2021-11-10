@@ -11,6 +11,7 @@ const classroomsRouter = require('./api/classrooms');
 const app = express();
 const port = process.env.PORT || 9000;
 
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -21,8 +22,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use('/', indexRouter);
+app.use('/sync', indexRouter);
 app.use('/classrooms', classroomsRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -40,15 +44,12 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.get('/sync', (req, res) => {
-  let models = require('./models');
-  models.sequelize.sync()
-  .then(() => {
-    res.send('Databse sync successfully')
-  });
-});
-
 app.listen(port, () => {
+  /*models.sequelize.sync()
+  .then(() => {
+    res.send('Databse sync successfully');
+    console.log('Databse sync successfully');
+  });*/
   console.log(`App is listening on port http://localhost:${port}`)
 });
 
