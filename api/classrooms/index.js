@@ -1,10 +1,12 @@
+// classroom router
+
 const express = require('express');
 const router = express.Router();
 
 const classroomController = require('./classroomController');
 
 /* List all classes  */
-router.get('/', classroomController.list);
+router.get('/', classroomController.listAllClassroom);
 
 /* Classroom detail */
 router.get('/:id', classroomController.detail);
