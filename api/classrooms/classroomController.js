@@ -34,27 +34,32 @@ exports.listAllClassroom = async function(req, res) {
 exports.detail = function(req, res) {
     const classroomId = req.params.id;
     classroomService.detail(parseInt(classroomId))
-    .then( (classroomDetail) => {
-      /*console.log(classroomId);
-      console.log(classroomDetail);*/
-      if (classroomDetail) {
-          return res.status(200).json(classroomDetail);
+      .then( (classroomDetail) => {
+        /*console.log(classroomId);
+        console.log(classroomDetail);*/
+        if (classroomDetail) {
+            return res.status(200).json(classroomDetail);
+          }
+        else {
+          return res.status(404).json({msg: 'Cannot find classroom with the given id'});
         }
-      else {
-        return res.status(404).json({msg: 'Cannot find classroom with the given id'});
-      }
-    });
+      });
 };
 
 exports.create = function(req, res) {
     const classroom = {
-        name: req.body.classroomName,
+        name: req.body.name,
+        section: req.body.section,
+        description: req.body.description,
+        createdBy: req.body.createdBy,
     };
-    const classroomId = classroomService.create(classroom);
-    if (classroomId) {
-        res.status(201).json({msg: 'Classroom created', id: classroomId});
-      }
-      else {
-        res.status(500).json({msg: 'Cannot find classroom with the given id'});
-      }
+    classroomService.create(classroom)
+      .then( classroomId => {
+        if (classroomId) {
+          return res.status(201).json({msg: 'Classroom created', id: classroomId});
+        }
+        else {
+          return res.status(500).json({msg: 'Cannot create classroom with the given id'});
+        }
+      })
 };

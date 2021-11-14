@@ -33,11 +33,21 @@ exports.getAllClassroomWithUserID = async (userID) => {
 
 // Use id of Classroom model for this
 exports.getClassroomDetailWithID = async (id) => {
-    return await  Classroom.findAll({
+    return await Classroom.findAll({
         raw: true,
         where: {
             id: id
         },
         attributes: ['id', 'name', 'section', 'description', 'createdBy']
+    })
+};
+
+// Create classroom
+exports.createClassroom = async (classroom) => {
+    return await Classroom.create({
+        name: classroom.name,
+        section: classroom.section,
+        description: classroom.description,
+        createdBy: classroom.createdBy
     })
 };

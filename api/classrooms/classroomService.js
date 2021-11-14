@@ -5,10 +5,10 @@ exports.listAllClassroom = async () => {
     // return classrooms;
     return await classroomModel
         .getAllClassroom()
-        .then(result => {
+        .then( classrooms => {
             /*console.log("\nClassroom service called here");
             console.log(result);*/
-            return result;
+            return classrooms;
         })
         .catch(err => (console.log(err)));
 };
@@ -16,14 +16,17 @@ exports.listAllClassroom = async () => {
 exports.detail = async (id) => {
     return await classroomModel
         .getClassroomDetailWithID(id)
-        .then(result => {
-            return result;
+        .then( classroomDetail => {
+            return classroomDetail;
         })
         .catch(err => (console.log(err)));
 };
 
-exports.create = (classroom) => {
-    classroom.id = classrooms.length + 1;
-    classrooms.push(classroom);
-    return classroom.id;
+exports.create = async (classroom) => {
+    return await classroomModel
+        .createClassroom(classroom)
+        .then( classroom => {
+            return classroom.id;
+        })
+        .catch(err => (console.log(err)));
 }
