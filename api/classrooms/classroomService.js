@@ -1,6 +1,16 @@
 // const classrooms = require('../mock.json');
 const classroomModel = require('./classroomModel');
 
+exports.create = async (classroom) => {
+    return await classroomModel
+        .createClassroom(classroom)
+        .then( newClassroom => {
+            console.log(newClassroom.id);
+            return newClassroom.id;
+        })
+        .catch(err => (console.log(err)));
+}
+
 exports.listAllClassroom = async () => {
     // return classrooms;
     return await classroomModel
@@ -21,12 +31,3 @@ exports.detail = async (id) => {
         })
         .catch(err => (console.log(err)));
 };
-
-exports.create = async (classroom) => {
-    return await classroomModel
-        .createClassroom(classroom)
-        .then( classroom => {
-            return classroom.id;
-        })
-        .catch(err => (console.log(err)));
-}
