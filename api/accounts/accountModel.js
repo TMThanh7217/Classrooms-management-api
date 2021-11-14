@@ -19,6 +19,7 @@ exports.getAccountWithID = async (id) => {
         where: {
             id: id
         },
+        raw: true
     });
 };
 
@@ -28,6 +29,7 @@ exports.getAccountWithUserID = async (userID) => {
         where: {
             userID: userID
         },
+        raw: true
     });
 };
 
@@ -36,6 +38,7 @@ exports.getAccountWithUsername = async (username) => {
         where: {
             username: username
         },
+        raw: true
     });
 }
 
