@@ -9,7 +9,7 @@ const indexRouter = require('./routes/index');
 const classroomsRouter = require('./api/classrooms');
 
 const app = express();
-const port = process.env.PORT || 9000;
+const port = process.env.PORT || 9001;
 
 
 // view engine setup
@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(cors())
 
 app.use('/', indexRouter);
 app.use('/sync', indexRouter);
