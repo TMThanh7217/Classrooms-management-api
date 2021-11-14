@@ -13,6 +13,31 @@ exports.getAllClassroom = async () => {
     }); */
     return await Classroom.findAll({
         raw: true,
+        attributes: ['id', 'name', 'section', 'description', 'createdBy']
+    })
+};
+
+// Look like account store userID, might want to use that. UserClassroom hold userID and classroomID
+exports.getAllClassroomWithUserID = async (userID) => {
+    return await  Classroom.findAll({
+        include: [{
+            model: UserClassroom,
+            where: {
+                userID: userID
+            }
+        }],
+        raw: true,
         attributes: ['id', 'name', 'section', 'description']
+    })
+};
+
+// Use id of Classroom model for this
+exports.getClassroomDetailWithID = async (id) => {
+    return await  Classroom.findAll({
+        raw: true,
+        where: {
+            id: id
+        },
+        attributes: ['id', 'name', 'section', 'description', 'createdBy']
     })
 };

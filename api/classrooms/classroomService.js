@@ -13,7 +13,14 @@ exports.listAllClassroom = async () => {
         .catch(err => (console.log(err)));
 };
 
-exports.detail = (id) => classrooms.find(classroom => classroom.id === id);
+exports.detail = async (id) => {
+    return await classroomModel
+        .getClassroomDetailWithID(id)
+        .then(result => {
+            return result;
+        })
+        .catch(err => (console.log(err)));
+};
 
 exports.create = (classroom) => {
     classroom.id = classrooms.length + 1;

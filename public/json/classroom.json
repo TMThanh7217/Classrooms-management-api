@@ -1,41 +1,51 @@
 [{
     "name": "Acetylcholine Chloride Phenolic",
     "section": "Khaki",
-    "description": "Cross-platform non-volatile emulation"
+    "description": "Cross-platform non-volatile emulation",
+    "createdBy": 1
   }, {
     "name": "Cardizem CD",
     "section": "Orange",
-    "description": "Realigned 6th generation methodology"
+    "description": "Realigned 6th generation methodology",
+    "createdBy": 1
   }, {
     "name": "PHENTERMINE HYDROCHLORIDE",
     "section": "Green",
-    "description": "Object-based multi-state extranet"
+    "description": "Object-based multi-state extranet",
+    "createdBy": 1
   }, {
     "name": "Alclometasone Dipropionate",
     "section": "Red",
-    "description": "Organic zero defect structure"
+    "description": "Organic zero defect structure",
+    "createdBy": 1
   }, {
     "name": "Denti-Care Denti-Pro",
     "section": "Pink",
-    "description": "Secured actuating monitoring"
+    "description": "Secured actuating monitoring",
+    "createdBy": 1
   }, {
     "name": "Ibuprofen",
     "section": "Puce",
-    "description": "Object-based static intranet"
+    "description": "Object-based static intranet",
+    "createdBy": 1
   }, {
     "name": "fluorodine OXYGEN white Fluoride Anticavity",
     "section": "Goldenrod",
-    "description": "Re-engineered bifurcated array"
+    "description": "Re-engineered bifurcated array",
+    "createdBy": 1
   }, {
     "name": "TremorSoothe",
     "section": "Aquamarine",
-    "description": "Future-proofed object-oriented architecture"
+    "description": "Future-proofed object-oriented architecture",
+    "createdBy": 1
   }, {
     "name": "Bayer Migraine Formula",
     "section": "Blue",
-    "description": "Automated incremental moderator"
+    "description": "Automated incremental moderator",
+    "createdBy": 1
   }, {
     "name": "IPECACUANHA",
     "section": "Yellow",
-    "description": "Balanced 24/7 knowledge base"
+    "description": "Balanced 24/7 knowledge base",
+    "createdBy": 1
   }]
