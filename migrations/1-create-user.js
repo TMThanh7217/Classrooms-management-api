@@ -20,9 +20,6 @@ module.exports = {
       sex: {
         type: Sequelize.INTEGER
       },
-      userCode: {
-        type: Sequelize.STRING
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
