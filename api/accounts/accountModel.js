@@ -38,6 +38,9 @@ exports.getAccountWithUsername = async (username) => {
         where: {
             username: username
         },
+        attributes: {
+            exclude: ['createdAt', 'updatedAt', 'createdDate']
+        },
         raw: true
     });
 }

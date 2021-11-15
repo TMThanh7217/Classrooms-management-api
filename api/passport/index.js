@@ -2,40 +2,35 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt;
+const accountModel = require('../accounts/accountModel');
 
 const opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = process.env.JWT_SECRET;
 
-passport.use(new LocalStrategy(
-    function(username, password, done) {
-      if(username === "admin" && password === "123"){
-          let user = {
-              id: 0,
-              username: username,
-              //password: password
-          };
-          return(done(null, user));
-      }
-      return done(null, false, { message: 'Incorrect username or password.'});
+// Using passport-local to authenticate with JWT using username, password
+// Login, checking passwordand other stuff goes here.  Return a JWT
+passport.use(new LocalStrategy( async (username, password, done) => {
+    let account = await accountModel.getAccountWithUsername(username);
+    //console.log(account);
+    if (account) {
+        if (password == account.password)
+            return done(null, account);
+        else 
+            return done(null, false, { message: 'Incorrect username or password.'});
     }
-));
+    return done(null, false, { message: 'error'});
+}));
 
-passport.use(new JwtStrategy(opts, 
-    function(jwt_payload, done) {
-        console.log(jwt_payload);
-        return done(null , { id: jwt_payload.id, username: jwt_payload.username });
-        /*User.findOne({id: jwt_payload.sub}, function(err, user) {
-            if (err) {
-                return done(err, false);
-            }
-            if (user) {
-                return done(null, user);
-            } else {
-                return done(null, false);
-                // or you could create a new account
-            }
-    });*/
+// Using passport-jwt to verify JWT
+// Register new account goes here
+passport.use(new JwtStrategy(opts, async function(jwt_payload, done) {
+    // jwt_payload is an object literal containing the decoded JWT payload
+    console.log(jwt_payload);
+    let account = await accountModel.getAccountWithID(jwt_payload.id);
+    if (account)
+        return done(null, account);
+    else return done(null, false);
 }));
 
 module.exports = passport;
