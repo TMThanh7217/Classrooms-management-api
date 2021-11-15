@@ -28,8 +28,8 @@ app.use(passport.initialize());
 
 app.use('/', indexRouter);
 app.use('/sync', indexRouter);
-//app.use('/classrooms', classroomsRouter);
-app.use('/classrooms', passport.authenticate('jwt', { session: false }), classroomsRouter);
+app.use('/classrooms', classroomsRouter);
+//app.use('/classrooms', passport.authenticate('jwt', { session: false }), classroomsRouter);
 //app.use('/login', loginRouter);
 app.use('/login', accountRouter);
 
