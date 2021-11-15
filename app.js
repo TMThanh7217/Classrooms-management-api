@@ -29,9 +29,9 @@ app.use(passport.initialize());
 app.use('/', indexRouter);
 app.use('/sync', indexRouter);
 app.use('/classrooms', classroomsRouter);
+// use authen inside each function + check user role there
 //app.use('/classrooms', passport.authenticate('jwt', { session: false }), classroomsRouter);
-//app.use('/login', loginRouter);
-app.use('/login', accountRouter);
+app.use('/account', accountRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

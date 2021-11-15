@@ -5,8 +5,11 @@ const passport = require('../passport');
 const jwt = require('jsonwebtoken');
 const accountController = require('./accountController');
 
+// profile page
+router.get('/', accountController.info);
+
 // handle login
-router.post('/', passport.authenticate('local', { session: false }),
+router.post('/login', passport.authenticate('local', { session: false }),
     function (req, res) {
         // If this function gets called, authentication was successful.
         // req.user contains the authenticated user
@@ -17,6 +20,11 @@ router.post('/', passport.authenticate('local', { session: false }),
                 username: req.user.username,
             }, process.env.JWT_SECRET)
         })
+});
+
+// handle register
+router.post('/register', (req, res) => {
+
 });
 
 module.exports = router;
