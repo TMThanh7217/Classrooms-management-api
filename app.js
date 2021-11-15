@@ -7,6 +7,9 @@ const cors = require('cors');
 
 const indexRouter = require('./routes/index');
 const classroomsRouter = require('./api/classrooms');
+const accountRouter = require('./api/accounts');
+const passport = require('./api/passport');
+const loginRouter = require('./api/passport/loginRouter')
 
 const app = express();
 const port = process.env.PORT || 9000;
@@ -22,11 +25,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors())
+app.use(passport.initialize());
 
 app.use('/', indexRouter);
 app.use('/sync', indexRouter);
 app.use('/classrooms', classroomsRouter);
-
+// app.use('/classrooms', passport.authenticate('jwt', { session: false }), classroomsRouter);
+app.use('/login', loginRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,5 +1,24 @@
 const classroomService = require('./classroomService');
 
+// why does this function not require async? idk. How can it even work but the others don't? why? :?
+exports.create = function(req, res) {
+  const classroom = {
+      name: req.body.name,
+      section: req.body.section,
+      description: req.body.description,
+      createdBy: req.body.createdBy,
+  };
+  classroomService.create(classroom)
+    .then( classroomId => {
+      if (classroomId) {
+        return res.status(201).json({msg: 'Classroom created', id: classroomId});
+      }
+      else {
+        return res.status(500).json({msg: 'Cannot create classroom with the given id'});
+      }
+    })
+};
+
 exports.create = function(req, res) {
   const classroom = {
       name: req.body.name,
