@@ -21,7 +21,8 @@ module.exports = (sequelize, DataTypes) => {
   Classroom.init({
     name: DataTypes.STRING,
     section: DataTypes.STRING,
-    description: DataTypes.TEXT
+    description: DataTypes.TEXT,
+    createdBy: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Classroom',

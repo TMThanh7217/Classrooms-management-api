@@ -9,7 +9,7 @@ const indexRouter = require('./routes/index');
 const classroomsRouter = require('./api/classrooms');
 
 const app = express();
-const port = process.env.PORT || 9001;
+const port = process.env.PORT || 9000;
 
 
 // view engine setup
