@@ -25,7 +25,7 @@ exports.getAllUserWithClassroomID = async (classroomID) => {
             return userList;
         })
         .catch(err => (console.log(err)));
-}
+};
 
 exports.listAllUser = async () => {
     return await userModel
@@ -34,7 +34,7 @@ exports.listAllUser = async () => {
             return userList;
         })
         .catch(err => console.log(err));
-}
+};
 
 exports.update = async (user) => {
     return await userModel
@@ -42,4 +42,4 @@ exports.update = async (user) => {
             return updatedUser;
         })
         .catch(err => console.log(err));
-}
+};
