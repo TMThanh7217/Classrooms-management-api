@@ -1,6 +1,7 @@
 const accountService = require('./accountService');
-
 const userService = require('../users/userService');
+const bcrypt = require('bcrypt');
+const saltRound = 11;
 
 // This acutally get info inside User model, not info in Account model
 exports.info = async function(req, res) {
@@ -30,8 +31,6 @@ exports.register = async function(req, res) {
         sex: req.body.sex
     };
 
-    // use bcrypt or something to encrypt password here
-
     let oldAccount = await accountService.getAccountWithUsername(account.username);
     if (oldAccount) {
         // maybe change the status code later
@@ -40,10 +39,21 @@ exports.register = async function(req, res) {
     else {
         userService.create(user)
             .then(newUser => {
-                console.log('\nnew user:');
-                console.log(newUser);
+                /*console.log('\nnew user:');
+                console.log(newUser);*/
                 // create only return the id for now
                 account.userID = newUser;
+                // use bcrypt or something to encrypt password here
+                account.username = account.username.toLowerCase()
+                bcrypt.genSalt(saltRound, (err, salt) => {
+                    bcrypt.hash(account.password, salt, (err, hash) => {
+                        console.log(`hash: ${hash}`);
+                        account.password = hash;
+                    })
+                });
+                console.log("account check when register");
+                console.log(account);
+
                 accountService
                     .create(account)
                     .then(newAccount => {
