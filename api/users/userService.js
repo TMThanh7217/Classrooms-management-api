@@ -35,3 +35,11 @@ exports.listAllUser = async () => {
         })
         .catch(err => console.log(err));
 }
+
+exports.update = async (user) => {
+    return await userModel
+        .update(updatedUser => {
+            return updatedUser;
+        })
+        .catch(err => console.log(err));
+}

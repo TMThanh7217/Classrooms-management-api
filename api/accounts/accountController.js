@@ -77,3 +77,20 @@ exports.listAllAccount = async (req, res) => {
                 return res.status(404).json({msg: 'Cannot find any account'});
         })
 };
+
+exports.update = async (req, res) => {
+    let user = {
+        name: req.body.name,
+        dob: req.body.dob,
+        email: req.body.email,
+        sex: req.body.sex,
+    }
+    userService
+        .update(user)
+        .then(updatedUser => {
+            // may need to change this
+            if (updatedUser)
+                return res.status(200).json(updatedUser);
+            else return res.status(404).json({msg: 'Cannot update this account info'});
+        })
+}
