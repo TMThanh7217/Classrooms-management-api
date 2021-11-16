@@ -1,5 +1,4 @@
 const accountService = require('./accountService');
-const userService = require('')
 
 exports.info = async function(req, res) {
      // The id is returned when user login, store it in local storage or cookies or whatever and use it here
