@@ -18,3 +18,12 @@ exports.info = async (id) => {
         })
         .catch(err => (console.log(err)));
 };
+
+exports.getAllUserWithClassroomID = async (classroomID) => {
+    return await userModel
+        .getAllUserWithClassroomID(classroomID)
+        .then( userList => {
+            return userList;
+        })
+        .catch(err => (console.log(err)));
+}

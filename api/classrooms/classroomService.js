@@ -32,6 +32,15 @@ exports.listAllClassroomWithUserID = async (userID) => {
         .catch(err => console.log(err));
 }
 
+exports.getClassroomDetailWithID = async (id) => {
+    return await classroomModel
+        .getClassroomDetailWithID(id)
+        .then( classroom => {
+            return classroom;
+        })
+        .catch(err => console.log(err));
+};
+
 exports.detail = async (id) => {
     return await classroomModel
         .getClassroomDetailWithID(id)

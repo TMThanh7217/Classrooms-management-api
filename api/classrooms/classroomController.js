@@ -72,6 +72,22 @@ exports.listAllClassroomWithUserID = async function(req, res) {
     });
 };
 
+exports.getClassroomAndUserList = async function(req, res) {
+  let userID = req.user.id; // maybe change this later
+  classroomService.getClassroomDetailWithID(userID)
+    .then( classroom => {
+      //console.log("\nClassroom controller call service here");
+        if (classroom) {
+          let userList = await userService.getAllUserWithClassroomID(classroom.id)
+          return res.status(200).json({classroom, userList});
+        }
+        else {
+          //console.log("No classroom");
+          return res.status(404).json({msg: 'Cannot find classroom with the given id'});
+        }
+  });
+}
+
 exports.detail = function(req, res) {
     const classroomId = req.params.id;
     classroomService.detail(parseInt(classroomId))
