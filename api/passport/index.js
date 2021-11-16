@@ -9,7 +9,7 @@ opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = process.env.JWT_SECRET;
 
 // Using passport-local to authenticate with JWT using username, password
-// Login, checking passwordand other stuff goes here.  Return a JWT
+// checking passwordand other stuff goes here.  Return a JWT
 passport.use(new LocalStrategy( async (username, password, done) => {
     let account = await accountModel.getAccountWithUsername(username);
     //console.log(account);
@@ -23,7 +23,6 @@ passport.use(new LocalStrategy( async (username, password, done) => {
 }));
 
 // Using passport-jwt to verify JWT
-// Register new account goes here
 passport.use(new JwtStrategy(opts, async function(jwt_payload, done) {
     // jwt_payload is an object literal containing the decoded JWT payload
     console.log(jwt_payload);

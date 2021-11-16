@@ -13,8 +13,17 @@ exports.create = async (user) => {
 exports.info = async (id) => {
     return await userModel
         .getUserWithID(id)
-        .then( account => {
-            return account;
+        .then( userInfo => {
+            return userInfo;
         })
         .catch(err => (console.log(err)));
 };
+
+exports.getAllUserWithClassroomID = async (classroomID) => {
+    return await userModel
+        .getAllUserWithClassroomID(classroomID)
+        .then( userList => {
+            return userList;
+        })
+        .catch(err => (console.log(err)));
+}

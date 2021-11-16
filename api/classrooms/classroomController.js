@@ -1,4 +1,5 @@
 const classroomService = require('./classroomService');
+const userService = require('../users/userService');
 
 // why does this function not require async? idk. How can it even work but the others don't? why? :?
 exports.create = function(req, res) {
@@ -57,11 +58,12 @@ exports.listAllClassroomWithUserID = async function(req, res) {
     .then( classrooms => {
       //console.log("\nClassroom controller call service here");
         if (classrooms) {
-          /*console.log("Has classrooms");
-          console.log(classrooms)*/
-          //res.status(200).json(classrooms);
-          //res.status(200).send(classrooms);
-          return res.status(200).json(classrooms);
+          let name = [];
+          for (let classroom in classrooms) {
+            let creator = await userService.info(classroom.createdBy);
+            name.push(creator);
+          }
+          return res.status(200).json({classrooms, name});
         }
         else {
           //console.log("No classroom");
@@ -69,6 +71,22 @@ exports.listAllClassroomWithUserID = async function(req, res) {
         }
     });
 };
+
+exports.getClassroomAndUserList = async function(req, res) {
+  let userID = req.user.id; // maybe change this later
+  classroomService.getClassroomDetailWithID(userID)
+    .then( classroom => {
+      //console.log("\nClassroom controller call service here");
+        if (classroom) {
+          let userList = await userService.getAllUserWithClassroomID(classroom.id)
+          return res.status(200).json({classroom, userList});
+        }
+        else {
+          //console.log("No classroom");
+          return res.status(404).json({msg: 'Cannot find classroom with the given id'});
+        }
+  });
+}
 
 exports.detail = function(req, res) {
     const classroomId = req.params.id;
