@@ -13,8 +13,8 @@ exports.create = async (user) => {
 exports.info = async (id) => {
     return await userModel
         .getUserWithID(id)
-        .then( account => {
-            return account;
+        .then( userInfo => {
+            return userInfo;
         })
         .catch(err => (console.log(err)));
 };
