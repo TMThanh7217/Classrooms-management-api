@@ -1,9 +1,9 @@
 Free MySQL Hosting
-email: katigo8790@ecofreon.com
+email: vijag31277@healteas.com
 password: .MKss7QQxj7TxRT
 
 Server: sql6.freemysqlhosting.net
-Name: sql6449878
-Username: sql6449878
-Password: 9c5JILZ8Ht
+Name: sql6451518
+Username: sql6451518
+Password: VLF1pZYYDk
 Port number: 3306

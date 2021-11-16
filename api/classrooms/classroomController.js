@@ -60,7 +60,7 @@ exports.listAllClassroomWithUserID = async function(req, res) {
         if (classrooms) {
           let name = [];
           for (let classroom in classrooms) {
-            let creator = await userService.info(classroom.createdBy);
+            let creator = userService.info(classroom.createdBy);
             name.push(creator);
           }
           return res.status(200).json({classrooms, name});
@@ -78,7 +78,7 @@ exports.getClassroomAndUserList = async function(req, res) {
     .then( classroom => {
       //console.log("\nClassroom controller call service here");
         if (classroom) {
-          let userList = await userService.getAllUserWithClassroomID(classroom.id)
+          let userList = userService.getAllUserWithClassroomID(classroom.id)
           return res.status(200).json({classroom, userList});
         }
         else {

@@ -23,8 +23,6 @@ router.post('/login', passport.authenticate('local', { session: false }),
 });
 
 // handle register
-router.post('/register', (req, res) => {
-
-});
+router.post('/register', accountController.register);
 
 module.exports = router;
