@@ -28,9 +28,9 @@ exports.getUserWithID = async (id) => {
 exports.getAllUserWithClassroomID = async (classroomID) => {
     return await User.findAll({
         include: [{
-            model: UserClassroom,
+            model: Classroom,
             where: {
-                classroomID: classroomID
+                id: classroomID
             },
         }],
         raw: true

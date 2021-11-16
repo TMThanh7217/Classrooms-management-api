@@ -1,5 +1,6 @@
 const model = require("../../models");
 const Classroom = model.Classroom;
+//const Sequelize = require('sequelize');
 
 //----------------------------------------------------------Create----------------------------------------------------------
 // Create a classroom
@@ -33,24 +34,49 @@ exports.getAllClassroom = async () => {
 exports.getAllClassroomWithUserID = async (userID) => {
     return await  Classroom.findAll({
         include: [{
-            model: UserClassroom,
+            model: model.User,
+            attributes: [],
             where: {
-                userID: userID
-            }
+                id: userID
+            },
+            through: {
+                attributes: [] // pass nothing if don't want any other attributes in the UserClassroom model 
+            },
         }],
         raw: true,
-        attributes: ['id', 'name', 'section', 'description']
+        nest: true,
+        attributes: ['id', 'name', 'section', 'description', 'createdBy']
     });
 };
 
 // Use id of Classroom model for this
 exports.getClassroomDetailWithID = async (id) => {
-    return await Classroom.findAll({
+    return await Classroom.findOne({
         raw: true,
         where: {
             id: id
         },
         attributes: ['id', 'name', 'section', 'description', 'createdBy']
+    });
+};
+
+exports.getUserListWithClassroomID = async (id) => {
+    return await Classroom.findAll({
+        include: [{
+            model: model.User,
+            through: {
+                attributes: ['userID', 'classroomID', 'role', 'userCode'] // pass nothing if don't want any other attributes in the UserClassroom model 
+            },
+            attributes: ['id', 'name', 'dob', 'email', 'sex']
+            //attributes: [[Sequelize.col('id'), 'user_id'], [Sequelize.col('name'), 'user_name'], 'dob', 'email', 'sex']
+        }],
+        raw: true,
+        nest: true, // very cool option
+        where: {
+            id: id
+        },
+        attributes: ['createdBy']
+        //attributes: ['id', 'name', 'section', 'description', 'createdBy']
     });
 };
 

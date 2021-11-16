@@ -73,23 +73,32 @@ exports.listAllClassroomWithUserID = async function(req, res) {
     });
 };
 
-exports.getClassroomAndUserList = async function(req, res) {
-  let userID = req.user.id; // maybe change this later
-  classroomService.getClassroomDetailWithID(userID)
-    .then( classroom => {
-      //console.log("\nClassroom controller call service here");
-        if (classroom) {
-          userService.getAllUserWithClassroomID(classroom.id)
-            .then(userList => {
-              return res.status(200).json({classroom, userList});
-            })
-            .catch(er => console.log(err));
-        }
-        else {
-          //console.log("No classroom");
-          return res.status(404).json({msg: 'Cannot find classroom with the given id'});
-        }
-  });
+exports.getUserListWithClassroomID = async function(req, res) {
+  let id = req.params.id; // maybe change this later
+  classroomService.getClassroomDetailWithID(parseInt(id))
+    .then( classroomDetail => {
+      if (classroomDetail) {
+        classroomService.getUserListWithClassroomID(parseInt(id))
+          .then(userList => {
+            //console.log("\nClassroom controller call service here");
+            // classroom is an array lmao
+              if (userList) {
+                //console.log(classroom);
+                console.log("Hello ");
+                console.log(userList[0].Users.UserClassroom.role);
+                userService.info(userList[0].createdBy)
+                  .then( (creator) => {
+                    return res.status(200).json({classroomDetail, creator, userList});
+                  })
+                  .catch(err => console.log(err));
+              }
+        });
+      }
+      else {
+        //console.log("No classroom");
+        return res.status(404).json({msg: 'Cannot find classroom with the given id'});
+      }
+    });
 }
 
 exports.getClassroomDetailWithID = function(req, res) {
@@ -106,4 +115,3 @@ exports.getClassroomDetailWithID = function(req, res) {
         }
       });
 };
-

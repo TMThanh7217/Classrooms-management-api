@@ -41,3 +41,11 @@ exports.getClassroomDetailWithID = async (id) => {
         .catch(err => console.log(err));
 };
 
+exports.getUserListWithClassroomID = async (id) => {
+    return await classroomModel
+        .getUserListWithClassroomID(id)
+        .then(info => {
+            return info;
+        })
+        .catch(err => console.log(err));
+}
