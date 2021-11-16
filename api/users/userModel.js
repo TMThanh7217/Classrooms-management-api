@@ -16,7 +16,7 @@ exports.create = async (user) => {
 exports.getUserWithID = async (id) => {
     return await User.findOne({
         where: {
-            useridID: id
+            id: id
         },
         attributes: { 
             exclude: ['createdAt', 'updatedAt']
@@ -36,6 +36,16 @@ exports.getAllUserWithClassroomID = async (classroomID) => {
         raw: true
     })
 }
+
+exports.getAllUser = async () => {
+    return await User.findAll({
+        raw: true,
+        attributes: { 
+            exclude: ['createdAt', 'updatedAt']
+        },
+    })
+}
+
 //----------------------------------------------------------Update----------------------------------------------------------
 // Use this to update user info
 exports.update = async (user) => {

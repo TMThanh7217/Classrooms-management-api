@@ -1,5 +1,14 @@
 const accountModel = require('./accountModel');
 
+exports.listAllAccount = async () => {
+    return await accountModel
+        .getAllAccount()
+        .then( accountList => {
+            return accountList;
+        })
+        .catch(err => console.log(err));
+}
+
 exports.info = async (id) => {
    return await accountModel
         .getAccountWithID(id)
@@ -18,7 +27,7 @@ exports.getAccountWithUsername = async (username) => {
         .catch(err => (console.log(err)));
 }
 
-exports.create = async (account) => {
+exports.create = async (account, user) => {
     return await accountModel
         .create(account)
         .then( newAccount => {

@@ -18,7 +18,7 @@ exports.info = async function(req, res) {
 
 exports.register = async function(req, res) {
     // not really sure where username, password is store
-    let newAccount = {
+    let account = {
         username: req.body.username,
         password: req.body.password
     };
@@ -30,16 +30,40 @@ exports.register = async function(req, res) {
         sex: req.body.sex
     };
 
-    let oldAccount = await accountService.getAccountWithUsername(newAccount.username);
+    // use bcrypt or something to encrypt password here
+
+    let oldAccount = await accountService.getAccountWithUsername(account.username);
     if (oldAccount) {
         // maybe change the status code later
         return res.status(409).json({msg: 'Account already existed'});
     }
     else {
-        let newAccount = await accountService.create(newAccount);
-        let newUser = await userService.create(user);
-        newAccount.userID = newUser.id;
-        return res.status(201).json({msg: 'Account create', id: newAccount.id});
+        userService.create(user)
+            .then(newUser => {
+                console.log('\nnew user:');
+                console.log(newUser);
+                // create only return the id for now
+                account.userID = newUser;
+                accountService
+                    .create(account)
+                    .then(newAccount => {
+                        /*console.log('\nnew account id:');
+                        console.log(newAccountID);*/
+                        // return only the id of new account lmao
+                        return res.status(201).json({msg: 'Account created', id: newAccount})
+                    })
+                    .catch(err => console.log(err));
+            })
+            .catch(err => console.log(err));
     }
-    // use bcrypt or something to encrypt password here
+};
+
+exports.listAllAccount = async (req, res) => {
+    accountService.listAllAccount()
+        .then(accountList => {
+            if (accountList)
+                return res.status(200).json(accountList);
+            else 
+                return res.status(404).json({msg: 'Cannot find any account'});
+        })
 };

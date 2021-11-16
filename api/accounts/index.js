@@ -5,6 +5,9 @@ const passport = require('../passport');
 const jwt = require('jsonwebtoken');
 const accountController = require('./accountController');
 
+// for debugging, delete or comment this later
+router.get('/listAll', accountController.listAllAccount);
+
 // profile page
 router.get('/', accountController.info);
 

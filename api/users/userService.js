@@ -9,7 +9,6 @@ exports.create = async (user) => {
         .catch(err => (console.log(err)));
 };
 
-
 exports.info = async (id) => {
     return await userModel
         .getUserWithID(id)
@@ -26,4 +25,13 @@ exports.getAllUserWithClassroomID = async (classroomID) => {
             return userList;
         })
         .catch(err => (console.log(err)));
+}
+
+exports.listAllUser = async () => {
+    return await userModel
+        .getAllUser()
+        .then( userList => {
+            return userList;
+        })
+        .catch(err => console.log(err));
 }

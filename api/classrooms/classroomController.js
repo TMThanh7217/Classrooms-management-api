@@ -46,7 +46,7 @@ exports.listAllClassroom = async function(req, res) {
           }
           else {
             //console.log("No classroom");
-            return res.status(404).json({msg: 'Cannot find classroom with the given id'});
+            return res.status(404).json({msg: 'Cannot find any classroom'});
           }
       });
 };

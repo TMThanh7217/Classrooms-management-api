@@ -45,6 +45,15 @@ exports.getAccountWithUsername = async (username) => {
     });
 }
 
+exports.getAllAccount = async () => {
+    return await Account.findAll({
+        raw: true,
+        attributes: {
+            exclude: ['createdAt', 'updatedAt', 'createdDate']
+        }
+    })
+}
+
 //----------------------------------------------------------Update----------------------------------------------------------
 // fix this later
 exports.update = async (account) => {

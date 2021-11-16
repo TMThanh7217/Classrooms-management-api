@@ -8,6 +8,7 @@ const cors = require('cors');
 const indexRouter = require('./routes/index');
 const classroomsRouter = require('./api/classrooms');
 const accountRouter = require('./api/accounts');
+const userRouter = require('./api/users');
 const passport = require('./api/passport');
 //const loginRouter = require('./api/passport/loginRouter')
 
@@ -32,6 +33,7 @@ app.use('/classrooms', classroomsRouter);
 // use authen inside each function + check user role there
 //app.use('/classrooms', passport.authenticate('jwt', { session: false }), classroomsRouter);
 app.use('/account', accountRouter);
+app.use('/user', userRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
