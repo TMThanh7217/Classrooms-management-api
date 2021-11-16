@@ -85,12 +85,28 @@ exports.update = async (req, res) => {
         email: req.body.email,
         sex: req.body.sex,
     }
+
+    let account = {
+        username: req.body.username,
+        password: req.body.password,
+    }
+
     userService
         .update(user)
         .then(updatedUser => {
             // may need to change this
-            if (updatedUser)
+            if (updatedUser){
+                if (account.username != '' && account.password != '')
+                // this only return account id
+                    accountService
+                        .update(account)
+                        .then(updatedAccount => {
+                            return res.status(200).json({updatedUser, updatedAccount});
+                        })
                 return res.status(200).json(updatedUser);
+            }
             else return res.status(404).json({msg: 'Cannot update this account info'});
         })
+    
+    
 }

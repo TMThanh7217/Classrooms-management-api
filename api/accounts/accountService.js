@@ -36,3 +36,16 @@ exports.create = async (account, user) => {
         })
         .catch(err => (console.log(err)));
 }
+
+exports.update = async (account) => {
+    return await accountModel
+        .update(account, {
+            where: {
+                id: account.id
+            }
+        }).then( updatedAccount => {
+            console.log(newAccount.id);
+            return newAccount.id;
+        })
+        .catch(err => (console.log(err)));
+}
