@@ -53,7 +53,13 @@ exports.register = async function(req, res) {
                 });
                 console.log("account check when register");
                 console.log(account);*/
-
+                /*bcrypt.genSalt(saltRound, (err, salt) => {
+                    bcrypt.hashSync(account.password, salt, (err, hash) => {
+                        console.log(`hash: ${hash}`);
+                        account.password = hash;
+                    })
+                });*/
+                
                 accountService
                     .create(account)
                     .then(newAccount => {
