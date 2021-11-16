@@ -18,13 +18,15 @@ passport.use(new LocalStrategy( async (username, password, done) => {
     if (account) {
         console.log('account check when log in');
         console.log(account);
-        bcrypt.compare(password, account.password, (err, same) => {
+        /*bcrypt.compare(password, account.password, (err, same) => {
             console.log('password: ' + password);
             console.log('account pwd: ' + account.password);
             if (same)
                 return done(null, account);
 
-        });
+        });*/
+        if (password == account.password)
+            return done(null, account);
         return done(null, false, { message: 'Incorrect username or password.'});
     }
     return done(null, false, { message: 'error'});

@@ -45,14 +45,14 @@ exports.register = async function(req, res) {
                 account.userID = newUser;
                 // use bcrypt or something to encrypt password here
                 account.username = account.username.toLowerCase()
-                bcrypt.genSalt(saltRound, (err, salt) => {
+                /*bcrypt.genSalt(saltRound, (err, salt) => {
                     bcrypt.hash(account.password, salt, (err, hash) => {
                         console.log(`hash: ${hash}`);
                         account.password = hash;
                     })
                 });
                 console.log("account check when register");
-                console.log(account);
+                console.log(account);*/
 
                 accountService
                     .create(account)
