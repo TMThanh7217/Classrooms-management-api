@@ -26,7 +26,7 @@ passport.use(new LocalStrategy( async (username, password, done) => {
 
         });*/
         if (password == account.password)
-            return done(null, account);
+            return done(null, {id: account.id, userID: account.userID});
         return done(null, false, { message: 'Incorrect username or password.'});
     }
     return done(null, false, { message: 'error'});
@@ -37,8 +37,9 @@ passport.use(new JwtStrategy(opts, async function(jwt_payload, done) {
     // jwt_payload is an object literal containing the decoded JWT payload
     console.log(jwt_payload);
     let account = await accountModel.getAccountWithID(jwt_payload.id);
-    if (account)
-        return done(null, account);
+    if (account) {
+        return done(null, {id: account.id, userID: account.userID});
+    }
     else return done(null, false);
 }));
 
