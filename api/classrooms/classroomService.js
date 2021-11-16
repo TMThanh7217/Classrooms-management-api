@@ -35,17 +35,9 @@ exports.listAllClassroomWithUserID = async (userID) => {
 exports.getClassroomDetailWithID = async (id) => {
     return await classroomModel
         .getClassroomDetailWithID(id)
-        .then( classroom => {
-            return classroom;
+        .then( classroomDetail => {
+            return classroomDetail;
         })
         .catch(err => console.log(err));
 };
 
-exports.detail = async (id) => {
-    return await classroomModel
-        .getClassroomDetailWithID(id)
-        .then( classroomDetail => {
-            return classroomDetail;
-        })
-        .catch(err => (console.log(err)));
-};

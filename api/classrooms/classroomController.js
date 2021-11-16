@@ -53,22 +53,23 @@ exports.listAllClassroom = async function(req, res) {
 
 exports.listAllClassroomWithUserID = async function(req, res) {
   // The id is returned when user login, store it in local storage or cookies or whatever and use it here
-  let userID = req.user.id; // maybe change this later
+  let userID = req.body.id; // maybe change this later
   classroomService.listAllClassroomWithUserID(userID)
     .then( classrooms => {
       //console.log("\nClassroom controller call service here");
-        if (classrooms) {
-          let name = [];
-          for (let classroom in classrooms) {
-            let creator = userService.info(classroom.createdBy);
-            name.push(creator);
-          }
-          return res.status(200).json({classrooms, name});
+      if (classrooms) {
+        /*let name = [];
+        for (let classroom in classrooms) {
+          let creator = userService.info(classroom.createdBy);
+          name.push(creator);
         }
-        else {
-          //console.log("No classroom");
-          return res.status(404).json({msg: 'Cannot find classroom with the given id'});
-        }
+        return res.status(200).json({classrooms, name});*/
+        return res.status(200).json({classrooms});
+      }
+      else {
+        //console.log("No classroom");
+        return res.status(404).json({msg: 'Cannot find classroom with the given id'});
+      }
     });
 };
 
@@ -78,8 +79,11 @@ exports.getClassroomAndUserList = async function(req, res) {
     .then( classroom => {
       //console.log("\nClassroom controller call service here");
         if (classroom) {
-          let userList = userService.getAllUserWithClassroomID(classroom.id)
-          return res.status(200).json({classroom, userList});
+          userService.getAllUserWithClassroomID(classroom.id)
+            .then(userList => {
+              return res.status(200).json({classroom, userList});
+            })
+            .catch(er => console.log(err));
         }
         else {
           //console.log("No classroom");
@@ -88,9 +92,9 @@ exports.getClassroomAndUserList = async function(req, res) {
   });
 }
 
-exports.detail = function(req, res) {
+exports.getClassroomDetailWithID = function(req, res) {
     const classroomId = req.params.id;
-    classroomService.detail(parseInt(classroomId))
+    classroomService.getClassroomDetailWithID(parseInt(classroomId))
       .then( (classroomDetail) => {
         /*console.log(classroomId);
         console.log(classroomDetail);*/
