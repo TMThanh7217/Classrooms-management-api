@@ -1,5 +1,6 @@
 const classroomService = require('./classroomService');
 const userService = require('../users/userService');
+const user_classroomService = require('../user_classrooms/user_classroomService');
 
 // why does this function not require async? idk. How can it even work but the others don't? why? :?
 exports.create = function(req, res) {
@@ -121,7 +122,7 @@ exports.getUserListWithClassroomID = async function(req, res) {
 }
 
 exports.getClassroomDetailWithID = function(req, res) {
-    const classroomId = req.params.id;
+    let classroomId = req.params.id;
     classroomService.getClassroomDetailWithID(parseInt(classroomId))
       .then( (classroomDetail) => {
         /*console.log(classroomId);

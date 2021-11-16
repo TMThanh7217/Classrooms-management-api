@@ -6,9 +6,10 @@ const saltRound = 11;
 // This acutally get info inside User model, not info in Account model
 exports.info = async function(req, res) {
      // The id is returned when user login, store it in local storage or cookies or whatever and use it here
-    let id = req.body.id // maybe change this later
+    let userId = req.query.id;
     // using userService here might be dumb but oh well
-    userService.info(id)
+    console.log("Hello?");console.log(userId);
+    userService.info(parseInt(userId))
         .then( accountInfo => {
             if (accountInfo)
                 return res.status(200).json(accountInfo);
@@ -113,6 +114,4 @@ exports.update = async (req, res) => {
             }
             else return res.status(404).json({msg: 'Cannot update this account info'});
         })
-    
-    
 }
