@@ -7,13 +7,18 @@ exports.create = function(req, res) {
   const classroom = {
       name: req.body.name,
       section: req.body.section,
-      description: req.body.description,
+      description: req.body.userID,
       createdBy: req.body.createdBy,
   };
+  let userID = req.body.userID;
   classroomService.create(classroom)
     .then( classroomId => {
       if (classroomId) {
-        return res.status(201).json({msg: 'Classroom created', id: classroomId});
+        user_classroomService.create(userID, classroomId)
+          .then(result => {
+            console.log(result);
+            return res.status(201).json({msg: 'Classroom created', id: classroomId});
+          })
       }
       else {
         return res.status(500).json({msg: 'Cannot create classroom with the given id'});
