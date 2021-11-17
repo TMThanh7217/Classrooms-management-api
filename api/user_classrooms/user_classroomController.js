@@ -10,12 +10,13 @@ exports.createWithRole = async (req, res) => {
     
     user_classroomService
         .findUserInClassroom(user_classroom.userID, user_classroom.classroomID)
-        .then((userclassroom) => { 
+        .then((userclassroom) => {
+            console.log('a',userclassroom) 
             if (!userclassroom) {
-                user_classroomService.create(user_classroom, role) // 2 = Student, default should be this
+                user_classroomService.create(user_classroom, user_classroom.role) // 2 = Student, default should be this
                 .then(result => {
                     if (result)
-                        return res.staus(200).json(result);
+                        return res.status(200).json(result);
                     else return res.status(404).json({err: 'Can not add user to classroom'});
                 })
             }
