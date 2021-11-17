@@ -35,7 +35,7 @@ app.use('/account', accountRouter);
 app.use('/user', userRouter);*/
 // use authen inside each function + check user role there
 app.use('/classrooms', passport.authenticate('jwt', { session: false }), classroomsRouter);
-app.use('/account', passport.authenticate('jwt', { session: false }), accountRouter);
+app.use('/account', accountRouter);
 app.use('/user', passport.authenticate('jwt', { session: false }), userRouter);
 
 

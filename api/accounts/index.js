@@ -6,10 +6,10 @@ const jwt = require('jsonwebtoken');
 const accountController = require('./accountController');
 
 // for debugging, delete or comment this later
-router.get('/listAll', accountController.listAllAccount);
+router.get('/listAll', passport.authenticate('jwt', { session: false }), accountController.listAllAccount);
 
 // profile page
-router.get('/', accountController.info);
+router.get('/', passport.authenticate('jwt', { session: false }), accountController.info);
 
 // handle login
 router.post('/login', passport.authenticate('local', { session: false }),
@@ -29,6 +29,6 @@ router.post('/login', passport.authenticate('local', { session: false }),
 router.post('/register', accountController.register);
 
 // update profile (info in user model)
-router.put('/:id', accountController.update);
+router.put('/:id', passport.authenticate('jwt', { session: false }), accountController.update);
 
 module.exports = router;
