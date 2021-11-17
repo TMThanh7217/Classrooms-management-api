@@ -38,7 +38,7 @@ app.use('/user', userRouter);*/
 app.use('/classrooms', passport.authenticate('jwt', { session: false }), classroomsRouter);
 app.use('/account', accountRouter);
 app.use('/user', passport.authenticate('jwt', { session: false }), userRouter);
-app.use('/user-classroom', userClassroomRouter);
+app.use('/guest', userClassroomRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

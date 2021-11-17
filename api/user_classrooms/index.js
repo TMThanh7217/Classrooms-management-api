@@ -7,7 +7,7 @@ router.post('/invite/student', user_classroomController.createStudentRole);
 
 router.post('/invite/teacher', user_classroomController.createTeacherRole);
 
-router.get('/guest/classrooms/:id', classroomController.getClassroomDetailWithID);
+router.get('/classrooms/:id', classroomController.getClassroomDetailWithID);
 
 router.put('/updateUserCode', user_classroomController.updateUserCode);
 
