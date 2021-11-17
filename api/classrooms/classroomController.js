@@ -10,7 +10,7 @@ exports.create = function(req, res) {
       description: req.body.userID,
       createdBy: req.body.createdBy,
   };
-  let userID = req.body.userID;
+  let userID = parseInt(req.body.userID);
   classroomService.create(classroom)
     .then( classroomId => {
       if (classroomId) {
