@@ -9,7 +9,7 @@ exports.createWithRole = async (req, res) => {
     }
     
     user_classroomService
-        .findUserInClassroom(userID, classroomID)
+        .findUserInClassroom(user_classroom.userID, user_classroom.classroomID)
         .then((userclassroom) => { 
             if (!userclassroom) {
                 user_classroomService.create(user_classroom, role) // 2 = Student, default should be this
