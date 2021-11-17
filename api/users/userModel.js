@@ -49,6 +49,8 @@ exports.getAllUser = async () => {
 //----------------------------------------------------------Update----------------------------------------------------------
 // Use this to update user info
 exports.update = async (user) => {
+    /*console.log("model call");
+    console.log(user)*/
     return await User.update({
         name: user.name,
         dob: user.dob,

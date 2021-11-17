@@ -87,6 +87,7 @@ exports.listAllAccount = async (req, res) => {
 
 exports.update = async (req, res) => {
     let user = {
+        id: parseInt(req.params.id),
         name: req.body.name,
         dob: req.body.dob,
         email: req.body.email,
@@ -98,18 +99,19 @@ exports.update = async (req, res) => {
         password: req.body.password,
     }
 
+    console.log(user);
     userService
         .update(user)
         .then(updatedUser => {
             // may need to change this
             if (updatedUser){
-                if (account.username != '' && account.password != '')
+                /*if (account.username != '' && account.password != '')
                 // this only return account id
                     accountService
                         .update(account)
                         .then(updatedAccount => {
                             return res.status(200).json({updatedUser, updatedAccount});
-                        })
+                        })*/
                 return res.status(200).json(updatedUser);
             }
             else return res.status(404).json({msg: 'Cannot update this account info'});

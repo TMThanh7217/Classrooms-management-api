@@ -37,8 +37,11 @@ exports.listAllUser = async () => {
 };
 
 exports.update = async (user) => {
+    /*console.log('service call')
+    console.log(user);*/
     return await userModel
-        .update(updatedUser => {
+        .update(user)
+        .then(updatedUser => {
             return updatedUser;
         })
         .catch(err => console.log(err));

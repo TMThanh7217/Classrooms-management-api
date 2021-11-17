@@ -29,6 +29,6 @@ router.post('/login', passport.authenticate('local', { session: false }),
 router.post('/register', accountController.register);
 
 // update profile (info in user model)
-router.put('/', accountController.update);
+router.put('/:id', accountController.update);
 
 module.exports = router;
