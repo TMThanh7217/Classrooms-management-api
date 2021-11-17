@@ -2,8 +2,8 @@ const user_classroomService = require('./user_classroomService');
 
 exports.createWithRole = async (req, res) => {
     let user_classroom = {
-        userID: parseInt(req.body.user_classroom.userID),
-        classroomID: parseInt(req.body.user_classroom.classroomID),
+        userID: parseInt(req.body.userID),
+        classroomID: parseInt(req.body.classroomID),
         role: parseInt(req.body.role), // change this later, default = student 
         userCode: ''
     }
