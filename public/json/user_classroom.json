@@ -11,7 +11,7 @@
 }, {
   "userID": 10,
   "classroomID": 10,
-  "role": 0,
+  "role": 1,
   "userCode": "843993"
 }, {
   "userID": 8,
@@ -26,7 +26,7 @@
 }, {
   "userID": 1,
   "classroomID": 5,
-  "role": 2,
+  "role": 0,
   "userCode": "384755"
 }, {
   "userID": 13,
@@ -46,7 +46,7 @@
 }, {
   "userID": 10,
   "classroomID": 4,
-  "role": 0,
+  "role": 1,
   "userCode": "852805"
 }, {
   "userID": 11,
@@ -56,7 +56,7 @@
 }, {
   "userID": 4,
   "classroomID": 9,
-  "role": 0,
+  "role": 1,
   "userCode": "010201"
 }, {
   "userID": 2,
@@ -66,7 +66,7 @@
 }, {
   "userID": 1,
   "classroomID": 6,
-  "role": 2,
+  "role": 1,
   "userCode": "363886"
 }, {
   "userID": 3,
