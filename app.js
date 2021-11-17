@@ -10,6 +10,7 @@ const indexRouter = require('./routes/index');
 const classroomsRouter = require('./api/classrooms');
 const accountRouter = require('./api/accounts');
 const userRouter = require('./api/users');
+const userClassroomRouter = require('./api/user_classrooms');
 const passport = require('./api/passport');
 //const loginRouter = require('./api/passport/loginRouter')
 
@@ -37,7 +38,7 @@ app.use('/user', userRouter);*/
 app.use('/classrooms', passport.authenticate('jwt', { session: false }), classroomsRouter);
 app.use('/account', accountRouter);
 app.use('/user', passport.authenticate('jwt', { session: false }), userRouter);
-
+app.use('/user-classroom', userClassroomRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
