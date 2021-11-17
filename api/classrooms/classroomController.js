@@ -10,14 +10,20 @@ exports.create = function(req, res) {
       description: req.body.userID,
       createdBy: req.body.createdBy,
   };
-  let userID = req.body.userID;
+  let userID = parseInt(req.body.userID);
   classroomService.create(classroom)
-    .then( classroomId => {
-      if (classroomId) {
-        user_classroomService.create(userID, classroomId)
+    .then( classroom => {
+      if (classroom) {
+        let user_classroom = {
+          userID: userID,
+          classroomID: classroom.id,
+          role: 2, // change this later, default = student 
+          userCode: ''
+        }
+        user_classroomService.create(user_classroom, user_classroom.classroomID)
           .then(result => {
             console.log(result);
-            return res.status(201).json({msg: 'Classroom created', id: classroomId});
+            return res.status(201).json({msg: 'Classroom created', id: classroom.id});
           })
       }
       else {
