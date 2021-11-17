@@ -135,3 +135,17 @@ exports.getClassroomDetailWithID = function(req, res) {
         }
       });
 };
+
+exports.getClassroomDetailWithInviteLink = function(req, res) {
+  let inviteLink = req.params.inviteLink;
+  //console.log(inviteLink);
+  classroomService.getClassroomDetailWithInviteLink(inviteLink)
+    .then(classroomDetail => {
+      if (classroomDetail) {
+        return res.status(200).json(classroomDetail);
+      }
+      else {
+        return res.status(404).json({msg: 'Cannot find classroom with the invite link'});
+      }
+    })
+}

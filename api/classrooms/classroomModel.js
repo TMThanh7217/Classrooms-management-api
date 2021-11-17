@@ -9,7 +9,8 @@ exports.createClassroom = async (classroom) => {
         name: classroom.name,
         section: classroom.section,
         description: classroom.description,
-        createdBy: classroom.createdBy
+        createdBy: classroom.createdBy,
+        inviteLink: classroom.inviteLink
     });
 };
 
@@ -26,7 +27,7 @@ exports.getAllClassroom = async () => {
     }); */
     return await Classroom.findAll({
         raw: true,
-        attributes: ['id', 'name', 'section', 'description', 'createdBy']
+        attributes: ['id', 'name', 'section', 'description', 'createdBy', 'inviteLink']
     });
 };
 
@@ -45,7 +46,7 @@ exports.getAllClassroomWithUserID = async (userID) => {
         }],
         raw: true,
         nest: true,
-        attributes: ['id', 'name', 'section', 'description', 'createdBy']
+        attributes: ['id', 'name', 'section', 'description', 'createdBy', 'inviteLink']
     });
 };
 
@@ -56,7 +57,17 @@ exports.getClassroomDetailWithID = async (id) => {
         where: {
             id: id
         },
-        attributes: ['id', 'name', 'section', 'description', 'createdBy']
+        attributes: ['id', 'name', 'section', 'description', 'createdBy', 'inviteLink']
+    });
+};
+
+exports.getClassroomDetailWithInviteLink = async (inviteLink) => {
+    return await Classroom.findOne({
+        raw: true,
+        where: {
+            inviteLink: inviteLink
+        },
+        attributes: {exclude: ['updatedAt', 'createdAt']}
     });
 };
 

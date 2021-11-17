@@ -37,10 +37,16 @@ exports.createTeacherRole = async (req, res) => {
 }
 
 exports.updateUserCode = async (req, res) => {
-    user_classroomService.updateUserCode(req.body.userID, req.body.classroomID, req.body.userCode)
-        .then(result => {
-            if (result)
-                return res.status(200).json(result);
-            else return res.status(404).json({err: 'Can not update userCode'});
+    user_classroomService.getUserCode(req.body.userID, req.body.classroomID, req.body.userCode)
+        .then((userCode) => { 
+            if (!userCode) {
+                user_classroomService.updateUserCode(req.body.userID, req.body.classroomID, req.body.userCode)
+                .then(result => {
+                    if (result)
+                        return res.status(200).json(result);
+                    else return res.status(404).json({err: 'Can not update userCode'});
+                })
+            }
+            return res.status(409).json({err: 'User already has usercode in this classroom'});
         })
 };

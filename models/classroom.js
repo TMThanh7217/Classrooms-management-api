@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     section: DataTypes.STRING,
     description: DataTypes.TEXT,
     createdBy: DataTypes.INTEGER,
+    inviteLink: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Classroom',

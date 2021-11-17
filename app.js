@@ -31,13 +31,11 @@ app.use(passport.initialize());
 
 app.use('/', indexRouter);
 app.use('/sync', indexRouter);
-/*app.use('/classrooms', classroomsRouter);
-app.use('/account', accountRouter);
-app.use('/user', userRouter);*/
+
 // use authen inside each function + check user role there
-app.use('/classrooms', passport.authenticate('jwt', { session: false }), classroomsRouter);
+app.use('/classrooms', classroomsRouter);
 app.use('/account', accountRouter);
-app.use('/user', passport.authenticate('jwt', { session: false }), userRouter);
+app.use('/user', userRouter);
 app.use('/guest', userClassroomRouter);
 
 // catch 404 and forward to error handler

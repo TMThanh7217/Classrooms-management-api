@@ -20,6 +20,9 @@ module.exports = {
       createdBy: {
         type: Sequelize.INTEGER
       },
+      inviteLink: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
