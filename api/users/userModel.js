@@ -25,6 +25,18 @@ exports.getUserWithID = async (id) => {
     });
 }
 
+exports.getUserWithEmail = async (email) => {
+    return await User.findOne({
+        raw: true,
+        where: {
+            email: email
+        },
+        attributes: {
+            exclude: ['createdAt, updatedAt']
+        }
+    })
+}
+
 exports.getAllUserWithClassroomID = async (classroomID) => {
     return await User.findAll({
         include: [{

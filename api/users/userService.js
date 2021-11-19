@@ -27,6 +27,15 @@ exports.getAllUserWithClassroomID = async (classroomID) => {
         .catch(err => (console.log(err)));
 };
 
+exports.getUserWithEmail = async (email) => {
+    return await userModel
+        .getUserWithEmail(email)
+        .then(user => {
+            return user;
+        })
+        .catch(err => console.log(err));
+};
+
 exports.listAllUser = async () => {
     return await userModel
         .getAllUser()

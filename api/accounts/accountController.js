@@ -22,7 +22,9 @@ exports.register = async function(req, res) {
     // not really sure where username, password is store
     let account = {
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
+        created_date: '',
+        googleToken: '',
     };
 
     let user = {
@@ -32,7 +34,12 @@ exports.register = async function(req, res) {
         sex: req.body.sex
     };
 
+    let oldEmail = await userService.getUserWithEmail(user.email);
     let oldAccount = await accountService.getAccountWithUsername(account.username);
+
+    if (oldEmail)
+        return res.status(409).json({msg: 'Email has been used'}); 
+
     if (oldAccount) {
         // maybe change the status code later
         return res.status(409).json({msg: 'Account already existed'});
@@ -60,7 +67,7 @@ exports.register = async function(req, res) {
                         account.password = hash;
                     })
                 });*/
-                
+                console.log(account);
                 accountService
                     .create(account)
                     .then(newAccount => {
