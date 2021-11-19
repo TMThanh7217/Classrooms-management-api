@@ -26,10 +26,10 @@ exports.create = function(req, res) {
         user_classroomService.create(user_classroom, user_classroom.role)
           .then(result => {
             if (result) {
-              console.log(result);
+              //console.log(result);
               return res.status(200).json({msg: 'Classroom created', id: newClassroomID});
             }
-            
+
             return res.status(200).json({msg: 'Classroom created, cannot add user to this classroom', id: newClassroomID});
           })
       }
