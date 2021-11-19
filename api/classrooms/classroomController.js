@@ -20,7 +20,8 @@ exports.create = function(req, res) {
         let user_classroom = {
           userID: userID,
           classroomID: newClassroomID,
-          role: 2, // change this later, default = student 
+          // they create the classroom so they have teacher role in that classroom, fair enough right?
+          role: 1, // change this later, reserve 0 for admin or something later, 1 = teacher, 2 = student 
           userCode: ''
         }
         user_classroomService.create(user_classroom, user_classroom.role)
@@ -29,7 +30,6 @@ exports.create = function(req, res) {
               //console.log(result);
               return res.status(200).json({msg: 'Classroom created', id: newClassroomID});
             }
-
             return res.status(200).json({msg: 'Classroom created, cannot add user to this classroom', id: newClassroomID});
           })
       }
