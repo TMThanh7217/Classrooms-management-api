@@ -1,9 +1,9 @@
 Free MySQL Hosting
-email: vijag31277@healteas.com
-password: .MKss7QQxj7TxRT
+email: yaxacad181@luxiu2.com
+password: yaxacad181@luxiu2.com
 
 Server: sql6.freemysqlhosting.net
-Name: sql6451518
-Username: sql6451518
-Password: VLF1pZYYDk
+Name: sql6452268
+Username: sql6452268
+Password: LQlyb2aD2i
 Port number: 3306
