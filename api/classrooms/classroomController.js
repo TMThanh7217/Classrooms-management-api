@@ -9,22 +9,26 @@ exports.create = function(req, res) {
       section: req.body.section,
       description: req.body.userID,
       createdBy: req.body.createdBy,
+      initeLink: ''
+      //inviteLink: req.body.inviteLink
   };
   let userID = parseInt(req.body.userID);
+  // create return id only lmao
   classroomService.create(classroom)
-    .then( classroom => {
-      if (classroom) {
+    .then( newClassroomID => {
+      if (newClassroomID) {
         let user_classroom = {
           userID: userID,
-          classroomID: classroom.id,
+          classroomID: newClassroomID,
           role: 2, // change this later, default = student 
           userCode: ''
         }
-        user_classroomService.create(user_classroom, user_classroom.classroomID)
+        user_classroomService.create(user_classroom, user_classroom.role)
           .then(result => {
             console.log(result);
-            return res.status(201).json({msg: 'Classroom created', id: classroom.id});
+            return res.status(200).json({msg: 'Classroom created', id: newClassroomID});
           })
+        return res.status(200).json({msg: 'Classroom created, cannot add user to this classroom', id: newClassroomID});
       }
       else {
         return res.status(500).json({msg: 'Cannot create classroom with the given id'});
