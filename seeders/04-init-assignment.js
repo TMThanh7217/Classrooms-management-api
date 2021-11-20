@@ -4,15 +4,15 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     let path = require('path');
     let fs = require('fs');
-    let exerciseData = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../public/json/exercise.json')));
-    for (let data of exerciseData) {
+    let assignmentData = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../public/json/assignment.json')));
+    for (let data of assignmentData) {
       data.createdAt = Sequelize.literal('NOW()');
       data.updatedAt = Sequelize.literal('NOW()');
     }
-    return queryInterface.bulkInsert('Exercises', exerciseData);
+    return queryInterface.bulkInsert('Assignments', assignmentData);
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('Exercises', null, {});
+    return queryInterface.bulkDelete('Assignments', null, {});
   }
 };

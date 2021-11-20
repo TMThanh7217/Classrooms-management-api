@@ -1,90 +1,105 @@
 [{
     "classroomID": 1,
     "name": "Regrant",
+    "maxPoint":  100,
     "description": "Compatible 4th generation projection",
     "start_time": "2021-09-16",
     "end_time": "2021-01-01"
   }, {
     "classroomID": 1,
     "name": "Bigtax",
+    "maxPoint":  100,
     "description": "Down-sized secondary local area network",
     "start_time": "2021-06-17",
     "end_time": "2020-11-27"
   }, {
     "classroomID": 2,
     "name": "Flexidy",
+    "maxPoint":  100,
     "description": "Upgradable homogeneous forecast",
     "start_time": "2021-06-01",
     "end_time": "2021-09-10"
   }, {
     "classroomID": 3,
     "name": "Keylex",
+    "maxPoint":  100,
     "description": "Cross-group logistical methodology",
     "start_time": "2021-08-19",
     "end_time": "2021-03-01"
   }, {
     "classroomID": 4,
     "name": "Cardguard",
+    "maxPoint":  100,
     "description": "Front-line responsive flexibility",
     "start_time": "2021-09-03",
     "end_time": "2021-06-03"
   }, {
     "classroomID": 5,
     "name": "Sonsing",
+    "maxPoint":  100,
     "description": "Virtual well-modulated support",
     "start_time": "2021-10-29",
     "end_time": "2020-12-30"
   }, {
     "classroomID": 6,
     "name": "Zaam-Dox",
+    "maxPoint":  100,
     "description": "Re-contextualized demand-driven intranet",
     "start_time": "2021-02-17",
     "end_time": "2021-10-12"
   }, {
     "classroomID": 7,
     "name": "Kanlam",
+    "maxPoint":  100,
     "description": "Team-oriented optimal analyzer",
     "start_time": "2021-08-09",
     "end_time": "2021-02-04"
   }, {
     "classroomID": 8,
     "name": "Tres-Zap",
+    "maxPoint":  100,
     "description": "Inverse motivating concept",
     "start_time": "2021-07-31",
     "end_time": "2020-12-05"
   }, {
     "classroomID": 9,
     "name": "Transcof",
+    "maxPoint":  100,
     "description": "Multi-lateral logistical info-mediaries",
     "start_time": "2021-04-01",
     "end_time": "2021-08-11"
   }, {
     "classroomID": 10,
     "name": "Holdlamis",
+    "maxPoint":  100,
     "description": "Organic incremental contingency",
     "start_time": "2021-11-07",
     "end_time": "2021-09-12"
   }, {
     "classroomID": 5,
     "name": "Otcom",
+    "maxPoint":  100,
     "description": "Digitized clear-thinking protocol",
     "start_time": "2021-11-05",
     "end_time": "2021-02-17"
   }, {
     "classroomID": 3,
     "name": "Voltsillam",
+    "maxPoint":  100,
     "description": "Configurable demand-driven orchestration",
     "start_time": "2021-02-10",
     "end_time": "2021-08-15"
   }, {
     "classroomID": 2,
     "name": "Andalax",
+    "maxPoint":  100,
     "description": "Cross-platform user-facing intranet",
     "start_time": "2021-03-27",
     "end_time": "2020-12-29"
   }, {
     "classroomID": 5,
     "name": "Prodder",
+    "maxPoint":  100,
     "description": "Persistent demand-driven migration",
     "start_time": "2021-05-18",
     "end_time": "2021-05-25"
