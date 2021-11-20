@@ -9,7 +9,7 @@ const classroomController = require('./classroomController');
 const user_classroomController = require('../user_classrooms/user_classroomController');
 
 /* List all classes  */
-//router.get('/', classroomController.listAllClassroom);
+//router.get('/listAll', classroomController.listAllClassroom);
 router.get('/', passport.authenticate('jwt', { session: false }), classroomController.listAllClassroomWithUserID);
 
 /* Classroom detail */
@@ -19,7 +19,6 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), classroomCo
 router.get('/invite/:inviteLink', classroomController.getClassroomDetailWithInviteLink);
 
 router.post('/invite/join', user_classroomController.createWithRole);
-
 
 /* Add a new class */
 router.post('/', passport.authenticate('jwt', { session: false }), classroomController.create);

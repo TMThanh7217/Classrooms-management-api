@@ -8,6 +8,6 @@ const jwt = require('jsonwebtoken');
 const userController = require('./userController');
 
 // for debugging, delete or comment this later
-router.get('/listAll', passport.authenticate('jwt', { session: false }), userController.listAllUser)
+router.get('/listAll', userController.listAllUser)
 
 module.exports = router;
