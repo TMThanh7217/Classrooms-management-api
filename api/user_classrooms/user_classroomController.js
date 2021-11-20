@@ -17,7 +17,7 @@ exports.createWithRole = async (req, res) => {
                 .then(result => {
                     if (result)
                         return res.status(200).json(result);
-                    else return res.status(404).json({err: 'Can not add user to classroom'});
+                    else return res.status(500).json({err: 'Can not add user to classroom'});
                 })
             }
             return res.status(409).json({err: 'User is already in this classroom'});
@@ -32,7 +32,7 @@ exports.updateUserCode = async (req, res) => {
                 .then(result => {
                     if (result)
                         return res.status(200).json(result);
-                    else return res.status(404).json({err: 'Can not update userCode'});
+                    else return res.status(500).json({err: 'Can not update userCode'});
                 })
             }
             return res.status(409).json({err: 'User already has usercode in this classroom'});

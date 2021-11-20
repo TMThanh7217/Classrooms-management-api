@@ -11,6 +11,7 @@ const classroomsRouter = require('./api/classrooms');
 const accountRouter = require('./api/accounts');
 const userRouter = require('./api/users');
 const userClassroomRouter = require('./api/user_classrooms');
+const assignmentRouter = require('./api/assignments');
 const passport = require('./api/passport');
 //const loginRouter = require('./api/passport/loginRouter')
 
@@ -37,6 +38,7 @@ app.use('/classrooms', classroomsRouter);
 app.use('/account', accountRouter);
 app.use('/user', userRouter);
 app.use('/guest', userClassroomRouter);
+app.use('/assignment', assignmentRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

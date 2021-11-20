@@ -74,7 +74,7 @@ exports.register = async function(req, res) {
                         /*console.log('\nnew account id:');
                         console.log(newAccountID);*/
                         // return only the id of new account lmao
-                        return res.status(201).json({msg: 'Account created', id: newAccount})
+                        return res.status(200).json({msg: 'Account created', id: newAccount})
                     })
                     .catch(err => console.log(err));
             })
@@ -94,19 +94,33 @@ exports.listAllAccount = async (req, res) => {
 
 exports.update = async (req, res) => {
     let user = {
-        id: parseInt(req.params.id),
-        name: req.body.name,
-        dob: req.body.dob,
-        email: req.body.email,
-        sex: req.body.sex,
+        id: parseInt(req.params.id)
     }
 
     let account = {
         username: req.body.username,
         password: req.body.password,
     }
+    //console.log(user);
 
-    console.log(user);
+    let oldUser = await userService.getUserWithID(user.id);
+    if (oldUser) {
+        if (req.body.name != '')
+            user.name = req.body.name;
+        else user.name = oldUser.name;
+
+        if (req.body.dob != '')
+            user.dob = req.body.dob;
+        else user.dob = oldUser.dob;
+
+        if (req.body.email != '')
+            user.email = req.body.email;
+        else user.email = oldUser.email;
+            
+        if (sex.body.sex != '')
+            user.sex = req.body.sex;
+        else user.sex = oldUser.sex;
+
     userService
         .update(user)
         .then(updatedUser => {
@@ -121,6 +135,8 @@ exports.update = async (req, res) => {
                         })*/
                 return res.status(200).json(updatedUser);
             }
-            else return res.status(404).json({msg: 'Cannot update this account info'});
+            else return res.status(500).json({msg: 'Cannot update this account info'});
         })
+    }
+    else return res.status(404).json({msg: 'Cannot find this account'});
 }
