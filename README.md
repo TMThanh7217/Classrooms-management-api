@@ -9,3 +9,4 @@ API for Classrooms-management-website repos
 
 ## .env file
 * JWT_SECRET=secret-key
+* GOOGLE_CLIENT_ID=757213109795-g8fjmjfue5p2h6ehsobv7fc6t3ovc4o3.apps.googleusercontent.com
