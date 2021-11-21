@@ -18,6 +18,24 @@ exports.info = async (id) => {
         .catch(err => (console.log(err)));
 }
 
+exports.getAccountWithID = async (id) => {
+    return await accountModel
+        .getAccountWithID(id)
+        .then( account => {
+            return account
+        })
+        .catch(err => (console.log(err)));
+}
+
+exports.getAccountWithUserID = async (userID) => {
+    return await accountModel
+        .getAccountWithUserID(userID)
+        .then( account => {
+            return account
+        })
+        .catch(err => (console.log(err)));
+}
+
 exports.getAccountWithUsername = async (username) => {
     return await accountModel
         .getAccountWithUsername(username)
@@ -39,13 +57,10 @@ exports.create = async (account, user) => {
 
 exports.update = async (account) => {
     return await accountModel
-        .update(account, {
-            where: {
-                id: account.id
-            }
-        }).then( updatedAccount => {
-            console.log(newAccount.id);
-            return newAccount.id;
+        .update(account)
+        .then( updatedAccount => {
+            console.log(updatedAccount.id);
+            return updatedAccount.id;
         })
         .catch(err => (console.log(err)));
 }
