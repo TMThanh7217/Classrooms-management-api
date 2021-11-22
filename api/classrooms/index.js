@@ -20,6 +20,7 @@ router.get('/invite/:inviteLink', classroomController.getClassroomDetailWithInvi
 
 router.post('/invite/join', user_classroomController.createWithRole);
 
+router.post('/:id/userCode', user_classroomController.updateUserCode)
 
 /* Add a new class */
 router.post('/', passport.authenticate('jwt', { session: false }), classroomController.create);
