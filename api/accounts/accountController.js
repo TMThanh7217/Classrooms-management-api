@@ -74,7 +74,7 @@ exports.register = async function(req, res) {
                         /*console.log('\nnew account id:');
                         console.log(newAccountID);*/
                         // return only the id of new account lmao
-                        return res.status(201).json({msg: 'Account created', id: newAccount})
+                        return res.status(200).json({msg: 'Account created', id: newAccount})
                     })
                     .catch(err => console.log(err));
             })
@@ -94,33 +94,99 @@ exports.listAllAccount = async (req, res) => {
 
 exports.update = async (req, res) => {
     let user = {
-        id: parseInt(req.params.id),
-        name: req.body.name,
-        dob: req.body.dob,
-        email: req.body.email,
-        sex: req.body.sex,
+        id: parseInt(req.params.id)
     }
 
     let account = {
         username: req.body.username,
         password: req.body.password,
     }
+    //console.log(user);
 
-    console.log(user);
-    userService
-        .update(user)
-        .then(updatedUser => {
-            // may need to change this
-            if (updatedUser){
-                /*if (account.username != '' && account.password != '')
-                // this only return account id
-                    accountService
-                        .update(account)
-                        .then(updatedAccount => {
-                            return res.status(200).json({updatedUser, updatedAccount});
-                        })*/
-                return res.status(200).json(updatedUser);
+    let oldUser = await userService.getUserWithID(user.id);
+    if (oldUser) {
+        // use this if the update need all attribute
+        /*user.name = oldUser.name;
+        user.dob = oldUser.dob;
+        user.email = oldUser.email;
+        user.sex = oldUser.sex;*/
+        if (req.body.name != '')
+            user.name = req.body.name;
+        else user.name = oldUser.name;
+
+        if (req.body.dob != '')
+            user.dob = req.body.dob;
+        else user.dob = oldUser.dob;
+
+        if (req.body.email != '')
+            user.email = req.body.email;
+        else user.email = oldUser.email;
+            
+        if (sex.body.sex != '')
+            user.sex = req.body.sex;
+        else user.sex = oldUser.sex;
+
+        userService
+            .update(user)
+            .then(updatedUser => {
+                // may need to change this
+                if (updatedUser){
+                    /*if (account.username != '' && account.password != '')
+                    // this only return account id
+                        accountService
+                            .update(account)
+                            .then(updatedAccount => {
+                                return res.status(200).json({updatedUser, updatedAccount});
+                            })*/
+                    return res.status(200).json(updatedUser);
+                }
+                else return res.status(500).json({msg: 'Cannot update user info'});
+            })
+    }
+    else return res.status(404).json({msg: 'Cannot find this account'});
+}
+
+exports.updateAccountInfo = async (req, res) => {
+    let account = {
+        id: parseInt(req.body.id)
+    }
+
+    let newUsername = req.body.username;
+    let oldPassword = req.body.oldPassword;
+    let newPassword = req.body.newPassword;
+    let googleToken = req.body.googleToken;
+
+    let oldAccount = await accountService.getAccountWithID(account.id);
+    if (oldAccount) {
+        // use this if the update really need all attribute to work
+        /*account.username = oldAccount.username;
+        account.password = oldAccount.password;
+        account.googleToken = oldAccount.googleToken;*/
+        if (oldPassword != '') {
+            if (oldPassword != oldAccount.password)
+                return res.status(400).json({msg: 'Password does not match'});
+            if (newPassword != '')
+                account.password = newPassword;
             }
-            else return res.status(404).json({msg: 'Cannot update this account info'});
-        })
+        
+        if (newUsername != '') {
+            let dupAcc = await accountService.getAccountWithUsername(newUsername);
+            if (dupAcc)
+                return res.status(401).json({msg: 'Username has already been used'});
+            else account.username = newUsername;
+        }
+
+        if (googleToken != '')
+            account.googleToken = googleToken;
+
+        accountService
+            .update(account)
+            .then(updatedAccount => {
+                if (updatedAccount){
+                    return res.status(200).json(updatedAccount);
+                }
+                else return res.status(500).json({msg: 'Cannot update account info'});
+            })
+    }
+    else return res.status(404).json({msg: 'Cannot find this account'});
 }

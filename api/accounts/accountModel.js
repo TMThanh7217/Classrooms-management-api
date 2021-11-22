@@ -61,6 +61,7 @@ exports.update = async (account) => {
     return await Account.update({
         username: account.username,
         password: account.password,
+        googleToken: account.googleToken
     }, {
         where: {
             id: account.id

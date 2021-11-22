@@ -9,7 +9,7 @@ const classroomController = require('./classroomController');
 const user_classroomController = require('../user_classrooms/user_classroomController');
 
 /* List all classes  */
-//router.get('/', classroomController.listAllClassroom);
+//router.get('/listAll', classroomController.listAllClassroom);
 router.get('/', passport.authenticate('jwt', { session: false }), classroomController.listAllClassroomWithUserID);
 
 /* Classroom detail */

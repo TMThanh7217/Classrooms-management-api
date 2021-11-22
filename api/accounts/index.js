@@ -30,5 +30,9 @@ router.post('/register', accountController.register);
 
 // update profile (info in user model)
 router.put('/:id', passport.authenticate('jwt', { session: false }), accountController.update);
+// THis route id is user id
+router.put('/update-user-info/:id', passport.authenticate('jwt', { session: false }), accountController.update);
+// This route id is account id
+router.put('/update-account-info/:id', passport.authenticate('jwt', { session: false }), accountController.updateAccountInfo);
 
 module.exports = router;

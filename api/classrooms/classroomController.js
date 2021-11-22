@@ -9,9 +9,11 @@ exports.create = function(req, res) {
       section: req.body.section,
       description: req.body.userID,
       createdBy: req.body.createdBy,
-      initeLink: ''
+      inviteLink: ''
       //inviteLink: req.body.inviteLink
   };
+
+  classroom.inviteLink = classroomService.makeInviteLink(8);
   let userID = parseInt(req.body.userID);
   // create return id only lmao
   classroomService.create(classroom)
