@@ -9,7 +9,8 @@ exports.create = async (assignment) => {
         maxPoint: assignment.maxPoint,
         description: assignment.description,	
         start_time: assignment.start_time,
-        end_time: assignment.end_time
+        end_time: assignment.end_time,
+        position: assignment.position 
     });
 };
 
@@ -54,6 +55,15 @@ exports.getAssignmentWithClassroomID = async (classroomID) => {
     })
 }
 
+// count total assignment in a classroom
+exports.countAssignmentInClassroom = async (classroomID) => {
+    return await Assignment.count({
+        where: {
+            classroomID: classroomID
+        }
+    })
+}
+
 //----------------------------------------------------------Update----------------------------------------------------------
 exports.update = async (assignment) => {
     return await Assignment.update({
@@ -61,7 +71,8 @@ exports.update = async (assignment) => {
         maxPoint: assignment.maxPoint,
         description: assignment.description,	
         start_time: assignment.start_time,
-        end_time: assignment.end_time
+        end_time: assignment.end_time,
+        position: assignment.position 
     }, {
         where: {
             classroomID: assignment.classroomID

@@ -17,12 +17,17 @@ exports.create = async (req, res) => {
     if (oldAssignment)
         return res.status(409).json({msg: 'Assignment with the same name has already existed in this classroom'});
     else {
-        assignmentService.create(assignment)
-            .then(assignmentID => {
-                if (assignmentID)
-                    return res.status(200).json({msg: 'Assignment created', id: assignmentID});
-                else return res.status(500).json({msg: 'Cannot created new assignment'});
+        assignmentService.countAssignmentInClassroom(assignment.classroomID)
+            .then(assignmentNumber => {
+                assignment.position = assignmentNumber + 1;
+                assignmentService.create(assignment)
+                .then(assignmentID => {
+                    if (assignmentID)
+                        return res.status(200).json({msg: 'Assignment created', id: assignmentID});
+                    else return res.status(500).json({msg: 'Cannot created new assignment'});
+                })
             })
+
     }
 };
 
@@ -74,6 +79,7 @@ exports.update = async (req, res) => {
     // if this doesn't work properly then then
     let oldAssignment = await assignmentService
                                 .getAssignmentWithNameAndClassroomID(assignment.name, assignment.classroomID);
+    
 
     if (oldAssignment) {
         // '' or null? no idea check this again later
@@ -92,6 +98,10 @@ exports.update = async (req, res) => {
         if (req.body.end_time != '')
             assignment.end_time = req.body.end_time;
         else assignment.end_time = oldAssignment.end_time;
+
+        if (req.body.position != '')
+            assignment.position = req.body.position;
+        else assignment.position = oldAssignment.position;
 
         assignmentService.update(assignment)
             .then(result => {

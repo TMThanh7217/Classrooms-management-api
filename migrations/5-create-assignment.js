@@ -30,6 +30,9 @@ module.exports = {
       end_time: {
         type: Sequelize.DATE
       },
+      position: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

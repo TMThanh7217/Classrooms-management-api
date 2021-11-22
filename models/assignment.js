@@ -24,7 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     maxPoint: DataTypes.DECIMAL,
     description: DataTypes.TEXT,
     start_time: DataTypes.DATE,
-    end_time: DataTypes.DATE
+    end_time: DataTypes.DATE,
+    position: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Assignment',
