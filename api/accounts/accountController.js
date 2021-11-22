@@ -36,7 +36,7 @@ exports.register = async function(req, res) {
 
     let oldEmail = await userService.getUserWithEmail(user.email);
     let oldAccount = await accountService.getAccountWithUsername(account.username);
-
+    console.log(oldAccount);
     if (oldEmail)
         return res.status(409).json({msg: 'Email has been used'}); 
 
@@ -150,7 +150,7 @@ exports.updateAccountInfo = async (req, res) => {
     let account = {
         id: parseInt(req.body.id)
     }
-
+    
     let newUsername = req.body.username;
     let oldPassword = req.body.oldPassword;
     let newPassword = req.body.newPassword;

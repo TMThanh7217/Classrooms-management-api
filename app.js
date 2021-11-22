@@ -13,6 +13,7 @@ const userRouter = require('./api/users');
 const userClassroomRouter = require('./api/user_classrooms');
 const assignmentRouter = require('./api/assignments');
 const passport = require('./api/passport');
+const authRouter = require('./api/social_authentication');
 //const loginRouter = require('./api/passport/loginRouter')
 
 const app = express();
@@ -39,7 +40,7 @@ app.use('/account', accountRouter);
 app.use('/user', userRouter);
 app.use('/guest', userClassroomRouter);
 app.use('/assignment', assignmentRouter);
-
+app.use('/auth', authRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
