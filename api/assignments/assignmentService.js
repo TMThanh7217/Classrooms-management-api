@@ -47,6 +47,7 @@ exports.countAssignmentInClassroom = async (classroomID) => {
     return await assignmentModel
         .countAssignmentInClassroom(classroomID)
         .then(result => {
+            //console.log(result);
             return result;
         })
         .catch(err => console.log(err));

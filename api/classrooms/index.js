@@ -5,7 +5,6 @@ const router = express.Router();
 const passport = require('../passport');
 const jwt = require('jsonwebtoken');
 
-const assignmentController = require('../assignments/assignmentController')
 const classroomController = require('./classroomController');
 const user_classroomController = require('../user_classrooms/user_classroomController');
 const assignmentController = require('../assignments/assignmentController');

@@ -30,7 +30,7 @@ exports.getAssignmentWithID = async (id) => {
 
 // assingment name in a class cannot be duplicate
 exports.getAssignmentWithNameAndClassroomID = async (name, classroomID) => {
-    return await Assignment.findAll({
+    return await Assignment.findOne({
         raw: true,
         where: {
             name: name,

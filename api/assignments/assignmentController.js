@@ -14,21 +14,21 @@ exports.create = async (req, res) => {
     let oldAssignment = await assignmentService
                                 .getAssignmentWithNameAndClassroomID(assignment.name, assignment.classroomID);
 
-    if (oldAssignment)
+    if (oldAssignment) {
+        console.log(oldAssignment)
         return res.status(409).json({msg: 'Assignment with the same name has already existed in this classroom'});
-    else {
-        assignmentService.countAssignmentInClassroom(assignment.classroomID)
-            .then(assignmentNumber => {
-                assignment.position = assignmentNumber + 1;
-                assignmentService.create(assignment)
-                .then(assignmentID => {
-                    if (assignmentID)
-                        return res.status(200).json({msg: 'Assignment created', id: assignmentID});
-                    else return res.status(500).json({msg: 'Cannot created new assignment'});
-                })
-            })
-
     }
+    // await work properly i think
+    assignmentService.countAssignmentInClassroom(assignment.classroomID)
+        .then(assignmentNumber => {
+            assignment.position = assignmentNumber + 1;
+            assignmentService.create(assignment)
+            .then(assignmentID => {
+                if (assignmentID)
+                    return res.status(200).json({msg: 'Assignment created', id: assignmentID});
+                else return res.status(500).json({msg: 'Cannot create new assignment'});
+            })
+        })
 };
 
 //----------------------------------------------------------Read----------------------------------------------------------
@@ -67,6 +67,14 @@ exports.getAssignmentWithClassroomID = async (req, res) => {
                 return res.status(200).json(assignmentList);
             else return res.status(404).json({msg: 'Cannot find any assignment'});
         })
+}
+
+// ignore this
+exports.total = async (req, res) => {
+    let total = await assignmentService.countAssignmentInClassroom(parseInt(req.body.classroomID));
+    if (total) 
+        return res.status(200).json(total);
+    else return res.stauts(404).json({msg: 'lmao'});
 }
 
 //----------------------------------------------------------Update----------------------------------------------------------

@@ -8,4 +8,6 @@ router.post('/', passport.authenticate('jwt', { session: false }), assignmentCon
 
 router.post('/update', passport.authenticate('jwt', { session: false }), assignmentController.update);
 
+router.get('/total', assignmentController.total);
+
 module.exports = router;
