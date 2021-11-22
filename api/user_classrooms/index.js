@@ -8,6 +8,4 @@ const classroomController = require('../classrooms/classroomController');
 
 router.get('/classrooms/:id', classroomController.getClassroomDetailWithID);
 
-router.put('/updateUserCode', user_classroomController.updateUserCode);
-
 module.exports = router;

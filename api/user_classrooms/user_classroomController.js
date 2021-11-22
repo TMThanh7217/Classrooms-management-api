@@ -35,6 +35,6 @@ exports.updateUserCode = async (req, res) => {
                     else return res.status(500).json({err: 'Can not update userCode'});
                 })
             }
-            return res.status(409).json({err: 'User already has usercode in this classroom'});
+            return res.status(409).json({err: 'This user code has been used in this classroom'});
         })
 };
