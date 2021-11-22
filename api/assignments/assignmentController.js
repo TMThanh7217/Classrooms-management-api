@@ -54,8 +54,8 @@ exports.getAssignmentWithNameAndClassroomID = async (req, res) => {
 
 // get all assignment in a classroom
 exports.getAssignmentWithClassroomID = async (req, res) => {
-    let classroomID = parseInt(req.body.classroomID);
-
+    let classroomID = parseInt(req.params.classroomId);
+    
     assignmentService.getAssignmentWithClassroomID(classroomID)
         .then(assignmentList => {
             if (assignmentList)
@@ -67,7 +67,7 @@ exports.getAssignmentWithClassroomID = async (req, res) => {
 //----------------------------------------------------------Update----------------------------------------------------------
 exports.update = async (req, res) => {
     let assignment = {
-        classroomID = parseInt(req.body.classroomID),
+        classroomID: parseInt(req.body.classroomID),
         name: req.body.name,	
     }
 
