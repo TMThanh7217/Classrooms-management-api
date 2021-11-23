@@ -11,6 +11,7 @@ exports.create = async (req, res) => {
         end_time: req.body.end_time
     };
 
+
     let oldAssignment = await assignmentService
                                 .getAssignmentWithNameAndClassroomID(assignment.name, assignment.classroomID);
 
@@ -80,8 +81,9 @@ exports.total = async (req, res) => {
 //----------------------------------------------------------Update----------------------------------------------------------
 exports.update = async (req, res) => {
     let assignment = {
-        classroomID: parseInt(req.body.classroomID),
-        name: req.body.name,	
+        classroomID: parseInt(req.params.classroomId),
+        assignmentID: parseInt(req.params.assignmentId)
+        name: req.body.name,
     }
 
     // if this doesn't work properly then then

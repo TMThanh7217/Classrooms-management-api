@@ -24,6 +24,12 @@ router.post('/', passport.authenticate('jwt', { session: false }), classroomCont
 // get All assignments of classroom
 router.get('/:classroomId/assignments', passport.authenticate('jwt', { session: false }), assignmentController.getAssignmentWithClassroomID);
 
+// create new assignment
+router.post('/:classroomId/assignments', passport.authenticate('jwt', { session: false }), assignmentController.create);
+
+//update assignment
+router.post('/:classroomId/assignments/:assignmentId', passport.authenticate('jwt', { session: false }), assignmentController.update);
+
 /* Invite  */
 router.post('/:id/userCode', user_classroomController.updateUserCode)
 
