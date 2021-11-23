@@ -91,13 +91,13 @@ exports.update = async (assignment) => {
 // may need to check this later
 exports.delete = async (id, name, classroomID) => {
     if (id)
-        return await Assignment.delete({
+        return await Assignment.destroy({
             where: {
                 id: id,
                 classroomID: classroomID
             }
         });
-    else return await Assignment.delete({
+    else return await Assignment.destroy({
         where: {
             name: name,
             classroomID: classroomID

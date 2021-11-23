@@ -100,8 +100,12 @@ exports.update = async (req, res) => {
                                 .getAssignmentWithID(assignment.id);
 
     if (oldAssignment) {
+        // if terrary does not affect async switch
         // '' or null? no idea check this again later
-        /*
+        if (req.body.name != '')
+            assignment.name =  req.body.name;
+        else assignment.name = oldAssignment.name;
+
         if (req.body.maxPoint != '')
             assignment.maxPoint = req.body.maxPoint;
         else assignment.maxPoint = oldAssignment.maxPoint;
@@ -110,31 +114,27 @@ exports.update = async (req, res) => {
             assignment.description = req.body.description;
         else assignment.description = oldAssignment.description;
 
-        if (req.body.start_time != '')
-            assignment.start_time = req.body.start_time;
-        else assignment.start_time = oldAssignment.start_time;
-
-        if (req.body.end_time != '')
-            assignment.end_time = req.body.end_time;
-        else assignment.end_time = oldAssignment.end_time;
+        assignment.start_time = oldAssignment.start_time;
+        assignment.end_time = oldAssignment.end_time;
 
         if (req.body.position != '')
             assignment.position = req.body.position;
         else assignment.position = oldAssignment.position;
-        */
+        
 
+        /*
         req.body.maxPoint != '' ? assignment.maxPoint = req.body.maxPoint : assignment.maxPoint = oldAssignment.maxPoint;
         req.body.description != '' ? assignment.description = req.body.description : assignment.description = oldAssignment.description;
-        /*
-        req.body.start_time != '' ? assignment.start_time = req.body.start_time : assignment.start_time = oldAssignment.start_time;
-        req.body.end_time != '' ? assignment.end_time = req.body.end_time : assignment.end_time = oldAssignment.end_time;
-        */
+        
+        //req.body.start_time != '' ? assignment.start_time = req.body.start_time : assignment.start_time = oldAssignment.start_time;
+        //req.body.end_time != '' ? assignment.end_time = req.body.end_time : assignment.end_time = oldAssignment.end_time;
+        
         // cannot change start time and end time of an assignment for now
         assignment.start_time = oldAssignment.start_time;
         assignment.end_time = oldAssignment.end_time;
         // position use for interactive UI
         req.body.position != '' ? assignment.position = req.body.position : assignment.position = oldAssignment.position;
-
+        */
         assignmentService.update(assignment)
             .then(result => {
                 if (result)
