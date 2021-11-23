@@ -86,6 +86,19 @@ exports.getAssignmentWithClassroomID = async (req, res) => {
         })
 }
 
+exports.updateAssignmentPosition = async (req, res) => {
+    let id = parseInt(req.params.asignmentId);
+    let classroomID = parseInt(req.params.classroomId);
+    let position = parseInt(req.params.position)
+
+    assignmentService.updateAssignmentPosition(id, classroomID, position)
+        .then(result => {
+            if (result)
+                return res.status(200).json(result);
+            else return res.status(500).json({msg: 'Cannot update assignment'});
+        })
+}
+
 // ignore this
 exports.total = async (req, res) => {
     let total = await assignmentService.countAssignmentInClassroom(parseInt(req.body.classroomID));

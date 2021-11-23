@@ -87,6 +87,16 @@ exports.update = async (assignment) => {
     })
 }
 
+exports.updateAssignmentPosition = async (id, classroomID, position) => {
+    return await Assignment.update({
+        position: position
+    },{
+        where: {
+            id: id,
+            classroomID: classroomID
+        }
+    });
+}
 //----------------------------------------------------------Delete----------------------------------------------------------
 // may need to check this later
 exports.delete = async (id, name, classroomID) => {
