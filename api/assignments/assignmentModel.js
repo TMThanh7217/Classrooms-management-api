@@ -36,6 +36,9 @@ exports.getAssignmentWithNameAndClassroomID = async (name, classroomID) => {
             name: name,
             classroomID: classroomID
         },
+        order: [
+            ['position', 'DESC'],
+        ],
         attributes: {
             exclude: ['createdAt, updatedAt']
         }
@@ -49,6 +52,9 @@ exports.getAssignmentWithClassroomID = async (classroomID) => {
         where: {
             classroomID: classroomID
         },
+        order: [
+            ['position', 'DESC'],
+        ],
         attributes: {
             exclude: ['createdAt, updatedAt']
         }
@@ -72,9 +78,10 @@ exports.update = async (assignment) => {
         description: assignment.description,	
         start_time: assignment.start_time,
         end_time: assignment.end_time,
-        position: assignment.position 
+        position: assignment.position
     }, {
         where: {
+            id: assignment.id,
             classroomID: assignment.classroomID
         }
     })

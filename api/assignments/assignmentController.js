@@ -82,7 +82,7 @@ exports.total = async (req, res) => {
 exports.update = async (req, res) => {
     let assignment = {
         classroomID: parseInt(req.params.classroomId),
-        assignmentID: parseInt(req.params.assignmentId)
+        assignmentID: parseInt(req.params.assignmentId),
         name: req.body.name,
     }
 
