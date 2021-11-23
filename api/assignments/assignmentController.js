@@ -3,7 +3,7 @@ const assignmentService = require('./assignmentService');
 //----------------------------------------------------------Create----------------------------------------------------------
 exports.create = async (req, res) => {
     let assignment = {
-        classroomID: parseInt(req.body.classroomID),
+        classroomID: parseInt(req.params.classroomId),
         name: req.body.name,	
         maxPoint: req.body.maxPoint,
         description: req.body.description,
@@ -15,7 +15,7 @@ exports.create = async (req, res) => {
     /*for (attribute in assignment)
         if (attribute == '')
             return res.status(400).json({msg: 'Missing attribute'});*/
-    if (!assignment.classroomID || !assignment.name || !assignment.maxPoin || 
+    if (!assignment.classroomID || !assignment.name || !assignment.maxPoint || 
         !assignment.start_time || !assignment.end_time)
         return res.status(400).json({msg: 'Missing attribute'});
 
