@@ -53,7 +53,7 @@ exports.getAssignmentWithClassroomID = async (classroomID) => {
             classroomID: classroomID
         },
         order: [
-            ['position', 'DESC'],
+            ['position', 'ASC'],
         ],
         attributes: {
             exclude: ['createdAt, updatedAt']

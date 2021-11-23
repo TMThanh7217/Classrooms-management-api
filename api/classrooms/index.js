@@ -23,13 +23,16 @@ router.post('/', passport.authenticate('jwt', { session: false }), classroomCont
 
 /* Assignment */
 // get All assignments of classroom
-router.get('/:classroomId/assignments', passport.authenticate('jwt', { session: false }), authorization.checkAllRole, assignmentController.getAssignmentWithClassroomID);
+router.get('/:classroomId/assignments', passport.authenticate('jwt', { session: false }), authorization.checkTeacherRole, assignmentController.getAssignmentWithClassroomID);
 
 // create new assignment
-router.post('/:classroomId/assignments', passport.authenticate('jwt', { session: false }), assignmentController.create);
+router.post('/:classroomId/assignments', passport.authenticate('jwt', { session: false }), authorization.checkTeacherRole, assignmentController.create);
 
 //update assignment
-router.put('/:classroomId/assignments/:assignmentId', passport.authenticate('jwt', { session: false }), assignmentController.update);
+router.put('/:classroomId/assignments/:assignmentId', passport.authenticate('jwt', { session: false }), authorization.checkTeacherRole, assignmentController.update);
+
+//delete assignment
+router.delete('/:classroomId/assignments/:assignmentId', passport.authenticate('jwt', { session: false }), authorization.checkTeacherRole, assignmentController.delete);
 
 /* Invite  */
 router.post('/:id/userCode', user_classroomController.updateUserCode)

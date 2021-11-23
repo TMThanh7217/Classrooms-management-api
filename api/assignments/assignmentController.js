@@ -134,9 +134,9 @@ exports.update = async (req, res) => {
 //----------------------------------------------------------Delete----------------------------------------------------------
 // may need to check this later
 exports.delete = async (req, res) => {
-    let id = req.body.id;
+    let id = req.params.assignmentId;
     let name = req.body.name;
-    let classroomID = req.body.classroomID;
+    let classroomID = req.params.classroomId;
 
     assignmentService.delete(id, name, classroomID)
         .then(result => {

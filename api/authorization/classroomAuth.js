@@ -5,7 +5,7 @@ const user_classroomService = require('../user_classrooms/user_classroomService'
 exports.checkAllRole = async (req, res, next) => {
     console.log('Checking user jwt');
     console.log(req.user)
-    let classroomID = parseInt(req.params.id) || parseInt(req.params.classroomId); // be mindfull about which parameter in req hold classroom id
+    let classroomID = parseInt(req.params.classroomId) || parseInt(req.params.id); // be mindfull about which parameter in req hold classroom id
     /*console.log("Classroom id here: ");
     console.log(classroomID);*/
     let userID = req.user.userID;
@@ -20,7 +20,7 @@ exports.checkAllRole = async (req, res, next) => {
 exports.checkStudentRole = async (req, res, next) => {
     console.log('Checking user jwt');
     console.log(req.user)
-    let classroomID = parseInt(req.params.id); // be mindfull about which parameter in req hold classroom id
+    let classroomID = parseInt(req.params.classroomId) || parseInt(req.params.id); // be mindfull about which parameter in req hold classroom id
     /*console.log("Classroom id here: ");
     console.log(classroomID);*/
     let userID = req.user.userID
@@ -36,7 +36,7 @@ exports.checkTeacherRole = async (req, res, next) => {
     console.log('Checking user jwt');
     console.log(req.user)
     // be mindfull about which parameter in req hold classroom id
-    let classroomID = parseInt(req.params.id) || parseInt(req.params.classroomId);
+    let classroomID = parseInt(req.params.classroomId) || parseInt(req.params.id);
     console.log("Classroom id here: ");
     console.log(classroomID);
     let userID = req.user.userID
