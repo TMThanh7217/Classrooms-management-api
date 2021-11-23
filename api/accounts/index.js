@@ -16,16 +16,13 @@ router.post('/login', passport.authenticate('local', { session: false }),
     function (req, res) {
         // If this function gets called, authentication was successful.
         // req.user contains the authenticated user
-        let payload = {
+        res.json({
             account: req.user,
             token: jwt.sign({
                 id: req.user.id,
-                username: req.user.username, // Look like this is null or something? May need to check this later
+                username: req.user.username,
             }, process.env.JWT_SECRET)
-        };
-        /*console.log("My token from post login: ");
-        console.log(payload.token);*/
-        res.json(payload);
+        })
 });
 
 // handle register
