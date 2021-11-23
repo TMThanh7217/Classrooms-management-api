@@ -101,6 +101,7 @@ exports.update = async (req, res) => {
 
     if (oldAssignment) {
         // '' or null? no idea check this again later
+        /*
         if (req.body.maxPoint != '')
             assignment.maxPoint = req.body.maxPoint;
         else assignment.maxPoint = oldAssignment.maxPoint;
@@ -120,6 +121,19 @@ exports.update = async (req, res) => {
         if (req.body.position != '')
             assignment.position = req.body.position;
         else assignment.position = oldAssignment.position;
+        */
+
+        req.body.maxPoint != '' ? assignment.maxPoint = req.body.maxPoint : assignment.maxPoint = oldAssignment.maxPoint;
+        req.body.description != '' ? assignment.description = req.body.description : assignment.description = oldAssignment.description;
+        /*
+        req.body.start_time != '' ? assignment.start_time = req.body.start_time : assignment.start_time = oldAssignment.start_time;
+        req.body.end_time != '' ? assignment.end_time = req.body.end_time : assignment.end_time = oldAssignment.end_time;
+        */
+        // cannot change start time and end time of an assignment for now
+        assignment.start_time = oldAssignment.start_time;
+        assignment.end_time = oldAssignment.end_time;
+        // position use for interactive UI
+        req.body.position != '' ? assignment.position = req.body.position : assignment.position = oldAssignment.position;
 
         assignmentService.update(assignment)
             .then(result => {
@@ -134,9 +148,9 @@ exports.update = async (req, res) => {
 //----------------------------------------------------------Delete----------------------------------------------------------
 // may need to check this later
 exports.delete = async (req, res) => {
-    let id = req.params.assignmentId;
+    let id = parseInt(req.params.assignmentId);
     let name = req.body.name;
-    let classroomID = req.params.classroomId;
+    let classroomID = parseInt(req.params.classroomId);
 
     assignmentService.delete(id, name, classroomID)
         .then(result => {
