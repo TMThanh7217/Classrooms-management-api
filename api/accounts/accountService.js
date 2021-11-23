@@ -59,7 +59,7 @@ exports.update = async (account) => {
     return await accountModel
         .update(account)
         .then( updatedAccount => {
-            console.log(updatedAccount.id);
+            //console.log(updatedAccount.id);
             return updatedAccount.id;
         })
         .catch(err => (console.log(err)));
