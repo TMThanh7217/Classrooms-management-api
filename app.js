@@ -36,7 +36,7 @@ app.use('/sync', indexRouter);
 
 // use authen inside each function + check user role there
 app.use('/classrooms', classroomsRouter);
-app.use('/account', accountRouter);
+app.use('/accounts', accountRouter);
 app.use('/user', userRouter);
 app.use('/guest', userClassroomRouter);
 app.use('/assignment', assignmentRouter);

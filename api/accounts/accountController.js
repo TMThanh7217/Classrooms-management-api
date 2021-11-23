@@ -118,11 +118,11 @@ exports.update = async (req, res) => {
             user.dob = req.body.dob;
         else user.dob = oldUser.dob;
 
-        if (req.body.email != '')
+        if (req.body.email != '')  
             user.email = req.body.email;
         else user.email = oldUser.email;
             
-        if (sex.body.sex != '')
+        if (req.body.sex != '')
             user.sex = req.body.sex;
         else user.sex = oldUser.sex;
 
