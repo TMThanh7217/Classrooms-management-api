@@ -23,7 +23,7 @@ exports.register = async function(req, res) {
     let account = {
         username: req.body.username,
         password: req.body.password,
-        created_date: '',
+        createdDate: '',
         googleToken: '',
     };
 

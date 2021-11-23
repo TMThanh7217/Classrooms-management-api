@@ -8,7 +8,7 @@ exports.create = async (account) => {
         username: account.username,
         password: account.password,
         userID: account.userID,
-        created_date: account.created_date,
+        createdDate: account.createdDate,
         googleToken: account.googleToken
     })
 }

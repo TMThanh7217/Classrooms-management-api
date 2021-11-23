@@ -19,6 +19,14 @@ exports.googleAuthentication = async (tokenID) => {
     const user_data = await userService.getUserWithEmail(mail);
     
     //console.log('User:' + user);
+    function prepareOutput(output_id, output_userID){
+        return {
+            account: {id: output_id, userID: output_userID},
+            token: jwt.sign({
+                id: output_id
+            }, process.env.JWT_SECRET)
+        };
+    }
     if (user_data) {
         const account_data = await accountService.getAccountWithUserID(user_data.id);
         if (account_data.id == ''){
@@ -37,13 +45,13 @@ exports.googleAuthentication = async (tokenID) => {
                     console.log('Can not update account info :<');
             });
         }
-        const result = {
-            account: {id: account_data.id, userID: user_data.id},
-            token: jwt.sign({
-                id: account_data.id,
-            }, process.env.JWT_SECRET)
-        };
-        return result
+        // const result = {
+        //     account: {id: account_data.id, userID: user_data.id},
+        //     token: jwt.sign({
+        //         id: account_data.id,
+        //     }, process.env.JWT_SECRET)
+        // };
+        return prepareOutput(account_data.id, user_data.id);
     } else {
         let new_account = {
             username: name,
@@ -83,13 +91,7 @@ exports.googleAuthentication = async (tokenID) => {
                         console.log(new_account);
             
                         //------------------------------Result------------------------------
-                        const result = {
-                            account: {id: new_account.id, userID: new_account.userID},
-                            token: jwt.sign({
-                                id: new_account.id,
-                            }, process.env.JWT_SECRET)
-                        };
-                        return result;
+                        
                     })
                     .catch(err => console.log(err));
             })
