@@ -8,7 +8,8 @@ exports.info = async function(req, res) {
      // The id is returned when user login, store it in local storage or cookies or whatever and use it here
     let userId = req.query.id;
     // using userService here might be dumb but oh well
-    console.log("Hello?");console.log(userId);
+    /*console.log("Hello?");
+    console.log(userId);*/
     userService.info(parseInt(userId))
         .then( accountInfo => {
             if (accountInfo)
