@@ -2,13 +2,15 @@ const assignmentService = require('./assignmentService');
 
 //----------------------------------------------------------Create----------------------------------------------------------
 exports.create = async (req, res) => {
+    let today = new Date();
     let assignment = {
         classroomID: parseInt(req.params.classroomId),
         name: req.body.name,	
         maxPoint: req.body.maxPoint,
         description: req.body.description,
         start_time: req.body.start_time,
-        end_time: req.body.end_time
+        end_time: req.body.end_time,
+        position: today.getHours() + today.getMinutes() + today.getSeconds(),
     };
 
     // for in async is not really a good idea : (
@@ -27,7 +29,7 @@ exports.create = async (req, res) => {
         return res.status(409).json({msg: 'Assignment with the same name has already existed in this classroom'});
     }
     // await work properly i think
-    assignmentService.countAssignmentInClassroom(assignment.classroomID)
+    /*assignmentService.countAssignmentInClassroom(assignment.classroomID)
         .then(assignmentNumber => {
             assignment.position = assignmentNumber + 1;
             assignmentService.create(assignment)
@@ -36,6 +38,13 @@ exports.create = async (req, res) => {
                     return res.status(200).json({msg: 'Assignment created', id: assignmentID});
                 else return res.status(500).json({msg: 'Cannot create new assignment'});
             })
+        })*/
+    
+    assignmentService.create(assignment)
+        .then(assignmentID => {
+            if (assignmentID)
+                return res.status(200).json({msg: 'Assignment created', id: assignmentID});
+            else return res.status(500).json({msg: 'Cannot create new assignment'});
         })
 };
 
