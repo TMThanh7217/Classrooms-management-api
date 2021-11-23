@@ -86,6 +86,8 @@ exports.listAllClassroomWithUserID = async function(req, res) {
             name.push(creator);
           }
           return res.status(200).json({classrooms, name});*/
+          /*console.log("hello checking jwt here");
+          console.log(req.user);*/
           return res.status(200).json({classrooms});
         }
         else {

@@ -16,8 +16,8 @@ passport.use(new LocalStrategy( async (username, password, done) => {
     let account = await accountModel.getAccountWithUsername(username.toLowerCase());
     //console.log(account);
     if (account) {
-        console.log('account check when log in');
-        console.log(account);
+        /*console.log('account check when log in');
+        console.log(account);*/
         /*bcrypt.compare(password, account.password, (err, same) => {
             console.log('password: ' + password);
             console.log('account pwd: ' + account.password);
@@ -35,7 +35,8 @@ passport.use(new LocalStrategy( async (username, password, done) => {
 // Using passport-jwt to verify JWT
 passport.use(new JwtStrategy(opts, async function(jwt_payload, done) {
     // jwt_payload is an object literal containing the decoded JWT payload
-    console.log(jwt_payload);
+    /*console.log("JWT payload");
+    console.log(jwt_payload);*/
     let account = await accountModel.getAccountWithID(jwt_payload.id);
     if (account) {
         return done(null, {id: account.id, userID: account.userID});
