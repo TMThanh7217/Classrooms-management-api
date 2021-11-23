@@ -6,11 +6,18 @@ exports.create = async (req, res) => {
         classroomID: parseInt(req.body.classroomID),
         name: req.body.name,	
         maxPoint: req.body.maxPoint,
-        description: req.body.description,	
+        description: req.body.description,
         start_time: req.body.start_time,
         end_time: req.body.end_time
     };
 
+    // for in async is not really a good idea : (
+    /*for (attribute in assignment)
+        if (attribute == '')
+            return res.status(400).json({msg: 'Missing attribute'});*/
+    if (!assignment.classroomID || !assignment.name || !assignment.maxPoin || 
+        !assignment.start_time || !assignment.end_time)
+        return res.status(400).json({msg: 'Missing attribute'});
 
     let oldAssignment = await assignmentService
                                 .getAssignmentWithNameAndClassroomID(assignment.name, assignment.classroomID);
@@ -81,15 +88,16 @@ exports.total = async (req, res) => {
 //----------------------------------------------------------Update----------------------------------------------------------
 exports.update = async (req, res) => {
     let assignment = {
+        //classroomID: parseInt(req.body.classroomID),
+        id: parseInt(req.params.assignmentId),
         classroomID: parseInt(req.params.classroomId),
-        assignmentID: parseInt(req.params.assignmentId),
         name: req.body.name,
     }
 
-    // if this doesn't work properly then then
+    // if this doesn't work properly then then?
+    // properly could just use id but oh well
     let oldAssignment = await assignmentService
-                                .getAssignmentWithNameAndClassroomID(assignment.name, assignment.classroomID);
-    
+                                .getAssignmentWithID(assignment.id);
 
     if (oldAssignment) {
         // '' or null? no idea check this again later
