@@ -6,10 +6,18 @@ exports.create = async (req, res) => {
         classroomID: parseInt(req.body.classroomID),
         name: req.body.name,	
         maxPoint: req.body.maxPoint,
-        description: req.body.description,	
+        description: req.body.description,
         start_time: req.body.start_time,
         end_time: req.body.end_time
     };
+
+    // for in async is not really a good idea : (
+    /*for (attribute in assignment)
+        if (attribute == '')
+            return res.status(400).json({msg: 'Missing attribute'});*/
+    if (assignment.classroomID == '' || assignment.name == '' || assignment.maxPoint == '' || 
+        assignment.start_time == '' || assignment.end_time == '')
+        return res.status(400).json({msg: 'Missing attribute'});
 
     let oldAssignment = await assignmentService
                                 .getAssignmentWithNameAndClassroomID(assignment.name, assignment.classroomID);
