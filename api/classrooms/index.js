@@ -43,6 +43,9 @@ router.post('/:id/userCode', user_classroomController.updateUserCode)
 
 router.get('/invite/:inviteLink', classroomController.getClassroomDetailWithInviteLink);
 
+/* Role */
+router.get('/:classroomId/users/:userId/role', user_classroomController.getRole);
+
 router.post('/invite/join', user_classroomController.createWithRole);
 
 module.exports = router;
