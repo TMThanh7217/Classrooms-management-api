@@ -33,7 +33,7 @@ router.put('/:classroomId/assignments/:assignmentId', passport.authenticate('jwt
 
 // check the role of these two router later
 // update assignment's position
-router.put('/:classroomId/assignments/:assignmentId/:position', passport.authenticate('jwt', { session: false }), assignmentController.updateAssignmentPosition);
+router.put('/:classroomId/assignments/', passport.authenticate('jwt', { session: false }), assignmentController.updateAssignmentPosition);
 
 //delete assignment
 router.delete('/:classroomId/assignments/:assignmentId', passport.authenticate('jwt', { session: false }), assignmentController.delete);

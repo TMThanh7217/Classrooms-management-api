@@ -86,19 +86,6 @@ exports.getAssignmentWithClassroomID = async (req, res) => {
         })
 }
 
-exports.updateAssignmentPosition = async (req, res) => {
-    let id = parseInt(req.params.asignmentId);
-    let classroomID = parseInt(req.params.classroomId);
-    let position = parseInt(req.params.position)
-
-    assignmentService.updateAssignmentPosition(id, classroomID, position)
-        .then(result => {
-            if (result)
-                return res.status(200).json(result);
-            else return res.status(500).json({msg: 'Cannot update assignment'});
-        })
-}
-
 // ignore this
 exports.total = async (req, res) => {
     let total = await assignmentService.countAssignmentInClassroom(parseInt(req.body.classroomID));
@@ -165,6 +152,80 @@ exports.update = async (req, res) => {
             })
     }
     else return res.status(404).json({msg: 'Cannot find this assignment'});
+}
+
+
+exports.updateAssignmentPosition = async (req, res) => {
+    /*
+        let id = parseInt(req.params.asignmentId);
+        let classroomID = parseInt(req.params.classroomId);
+        let position = parseInt(req.params.position)
+
+        assignmentService.updateAssignmentPosition(id, classroomID, position)
+            .then(result => {
+                if (result)
+                    return res.status(200).json(result);
+                else return res.status(500).json({msg: 'Cannot update assignment'});
+            })
+    */
+    
+
+    console.log("test update assignment pos")
+    let assignmentList = req.body;
+    /*console.log(assignmentList.length);
+    console.log(assignmentList);
+    console.log(assignmentList[0].description);*/
+    //for (let i = 0; i < assignmentList.length)
+
+    for (let i = 0; i < assignmentList.length; i++) {
+        // async handle using then
+        /*
+        assignmentService.getAssignmentWithID(parseInt(assignmentList[i].id))
+            .then(assignment => {
+                //console.log(assignment);
+                if (assignment) {
+                    if (assignment.position != i + 1) {
+                        console.log('position:')
+                        console.log(assignment.position);
+                        console.log('i:');
+                        console.log(i + 1);
+                        assignmentService
+                            .updateAssignmentPosition(assignment.id, assignment.classroomID, assignment.position)
+                            .then(result => {
+                                if (!result)
+                                    return res.status(500).json({msg: "Cannot update assignment's position"});
+                            })
+                    }
+                }
+                else return res.status(500).json({msg: 'Cannot find assignment with the given id'});
+            })
+        */
+        
+        //async handle using await
+        console.log("In loop");
+            let assignment = await assignmentService.getAssignmentWithID(parseInt(assignmentList[i].id))
+            if (assignment) {
+                if (assignment.position != i + 1) {
+                    console.log('position:')
+                    console.log(assignment.position);
+                    console.log('i:');
+                    console.log(i + 1);
+                    // oh would you look at that, instead of using i + 1, i use assignment.position instead
+                    // yikes best 1hr wasted of my life
+                    let result = await assignmentService
+                        .updateAssignmentPosition(assignment.id, assignment.classroomID, i + 1)
+                    if (!result)
+                        return res.status(500).json({msg: "Cannot update assignment's position"});
+                    else {
+                        console.log('result:');
+                        console.log(result);
+                    }
+                }
+            }
+            else return res.status(500).json({msg: 'Cannot find assignment with the given id'});
+    }
+    console.log('Out loop');
+    res.status(200).json({msg: 'update assignment pos success'});
 }
 
 //----------------------------------------------------------Delete----------------------------------------------------------

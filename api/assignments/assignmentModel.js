@@ -90,7 +90,7 @@ exports.update = async (assignment) => {
 exports.updateAssignmentPosition = async (id, classroomID, position) => {
     return await Assignment.update({
         position: position
-    },{
+    }, {
         where: {
             id: id,
             classroomID: classroomID
