@@ -36,7 +36,7 @@ router.put('/:classroomId/assignments/:assignmentId', passport.authenticate('jwt
 router.put('/:classroomId/assignments/', passport.authenticate('jwt', { session: false }), authorization.checkTeacherRole, assignmentController.updateAssignmentPosition);
 
 //delete assignment
-router.delete('/:classroomId/assignments/:assignmentId', passport.authenticate('jwt', { session: false }), assignmentController.delete);
+router.delete('/:classroomId/assignments/:assignmentId', passport.authenticate('jwt', { session: false }), authorization.checkTeacherRole, assignmentController.delete);
 
 /* Invite  */
 router.post('/:id/userCode', user_classroomController.updateUserCode)
