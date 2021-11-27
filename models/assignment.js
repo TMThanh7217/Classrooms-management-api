@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       Assignment.belongsToMany(models.User, {
         through: "StudentAssignment",
         foreignKey: 'assignmentID'
-      });
+      }, {onDelete: 'CASCADE'});
     }
   };
   Assignment.init({

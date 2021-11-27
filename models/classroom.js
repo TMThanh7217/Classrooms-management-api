@@ -14,8 +14,12 @@ module.exports = (sequelize, DataTypes) => {
       Classroom.belongsToMany(models.User, {
         through: "UserClassroom",
         foreignKey: 'classroomID'
-      });
+      }, {onDelete: 'CASCADE'});
       Classroom.hasMany(models.Assignment, {foreignKey: 'classroomID'}, {onDelete: 'CASCADE'});
+      Classroom.belongsToMany(models.User, {
+        through: "SID",
+        foreignKey: 'classroomID'
+      }, {onDelete: 'CASCADE'});
     }
   };
   Classroom.init({

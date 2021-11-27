@@ -14,12 +14,16 @@ module.exports = (sequelize, DataTypes) => {
       User.belongsToMany(models.Classroom, {
         through: "UserClassroom",
         foreignKey: 'userID'
-      });
+      }, {onDelete: 'CASCADE'});
       User.belongsToMany(models.Assignment, {
         through: "StudentAssignment",
         foreignKey: 'userID'
-      });
-      User.hasMany(models.Account, {foreignKey: 'userID'});
+      }, {onDelete: 'CASCADE'});
+      User.hasMany(models.Account, {foreignKey: 'userID'}, {onDelete: 'CASCADE'});
+      User.belongsToMany(models.Classroom, {
+        through: "SID",
+        foreignKey: 'userID'
+      }, {onDelete: 'CASCADE'});
     }
   };
   User.init({
