@@ -2,23 +2,17 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
+    let path = require('path');
+    let fs = require('fs');
+    let SIDData = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../public/json/SID.json')));
+    for (let data of SIDData) {
+      data.createdAt = Sequelize.literal('NOW()');
+      data.updatedAt = Sequelize.literal('NOW()');
+    }
+    return queryInterface.bulkInsert('SIDs', SIDData);
   },
 
   down: async (queryInterface, Sequelize) => {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
+    return queryInterface.bulkDelete('SIDs', null, {});
   }
 };
