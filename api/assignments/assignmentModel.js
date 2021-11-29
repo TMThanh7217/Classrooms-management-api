@@ -23,7 +23,7 @@ exports.getAssignmentWithID = async (id) => {
             id: id
         },
         attributes: {
-            exclude: ['createdAt, updatedAt']
+            exclude: ['createdAt', 'updatedAt']
         }
     })
 }
@@ -40,7 +40,7 @@ exports.getAssignmentWithNameAndClassroomID = async (name, classroomID) => {
             ['position', 'DESC'],
         ],
         attributes: {
-            exclude: ['createdAt, updatedAt']
+            exclude: ['createdAt', 'updatedAt']
         }
     })
 }
@@ -56,7 +56,7 @@ exports.getAssignmentWithClassroomID = async (classroomID) => {
             ['position', 'ASC'],
         ],
         attributes: {
-            exclude: ['createdAt, updatedAt']
+            exclude: ['createdAt', 'updatedAt']
         }
     })
 }

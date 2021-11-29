@@ -17,7 +17,7 @@ exports.findUserInClassroom = async (userID, classroomID) => {
             userID: userID,
             classroomID: classroomID,
         },
-        attributes: { exclude: ['updatedAt', 'createdAt'] }
+        attributes: { exclude: ['createdAt', 'updatedAt'] }
     })
 }
 
@@ -29,6 +29,16 @@ exports.getRole = async (userID, classroomID) => {
             classroomID: classroomID,
         },
         attributes: ['role']
+    });
+}
+
+exports.getWithUserID = async (userID) => {
+    return await UserClassroom.findAll({
+        raw: true,
+        where: {
+            userID: userID
+        },
+        attriutes: { exclude: ['updatedAt', 'createdAt'] } // why is this doesn't work
     });
 }
 

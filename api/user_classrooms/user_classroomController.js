@@ -38,6 +38,20 @@ exports.getRole = async(req, res) => {
         });
 };
 
+exports.getWithUserID = async(req, res) => {
+    let userID = parseInt(req.params.userId);
+    let query = req.query;
+    console.log(query);
+    user_classroomService.getWithUserID(userID)
+        .then( result => {
+            if (result) {
+                console.log(result);
+                return res.status(200).json(result);
+            }
+            else return res.status(404).json({msg: 'Cannot find with userID'});
+        });
+};
+
 /*
 exports.getUserCode = async(req, res) => {
     let userID = parseInt(req.body.userID);

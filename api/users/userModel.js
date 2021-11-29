@@ -32,7 +32,7 @@ exports.getUserWithEmail = async (email) => {
             email: email
         },
         attributes: {
-            exclude: ['createdAt, updatedAt']
+            exclude: ['createdAt', 'updatedAt']
         }
     })
 }
