@@ -7,7 +7,8 @@ exports.create = async (SIDObj) => {
     return await SID.create({
         SID: SIDObj.SID,
         classroomID: SIDObj.classroomID,
-        userID: SIDObj.userID
+        userID: SIDObj.userID,
+        name: SIDObj.name
     });
 }
 
