@@ -3,6 +3,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const accountModel = require('../accounts/accountModel');
+const userModel = require('../users/userModel');
 const bcrypt = require('bcrypt');
 
 const opts = {};
@@ -25,8 +26,11 @@ passport.use(new LocalStrategy( async (username, password, done) => {
                 return done(null, account);
 
         });*/
-        if (password == account.password)
-            return done(null, {id: account.id, userID: account.userID});
+        // oh boi i sure hope using await here doesn't lead to some funny haha stuff later
+        if (password == account.password) {
+            let user = await userModel.getUserWithID(account.userID);
+            return done(null, {id: account.id, userID: account.userID, name: user.name});
+        }
         return done(null, false, { message: 'Incorrect username or password.'});
     }
     return done(null, false, { message: 'error'});
@@ -37,9 +41,11 @@ passport.use(new JwtStrategy(opts, async function(jwt_payload, done) {
     // jwt_payload is an object literal containing the decoded JWT payload
     /*console.log("JWT payload");
     console.log(jwt_payload);*/
+    // jwt_payload return id and iat(issued at) for now
     let account = await accountModel.getAccountWithID(jwt_payload.id);
     if (account) {
-        return done(null, {id: account.id, userID: account.userID});
+        let user = await userModel.getUserWithID(account.userID);
+        return done(null, {id: account.id, userID: account.userID, name: user.name});
     }
     else return done(null, false);
 }));
