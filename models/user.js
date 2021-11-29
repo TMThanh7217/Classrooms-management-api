@@ -20,10 +20,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'userID'
       }, {onDelete: 'CASCADE'});
       User.hasMany(models.Account, {foreignKey: 'userID'}, {onDelete: 'CASCADE'});
-      User.belongsToMany(models.Classroom, {
-        through: "SID",
-        foreignKey: 'userID'
-      }, {onDelete: 'CASCADE'});
+      User.hasMany(models.SID, {foreignKey: 'userID'}, {onDelete: 'CASCADE'});
     }
   };
   User.init({

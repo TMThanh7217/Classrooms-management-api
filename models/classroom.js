@@ -16,10 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'classroomID'
       }, {onDelete: 'CASCADE'});
       Classroom.hasMany(models.Assignment, {foreignKey: 'classroomID'}, {onDelete: 'CASCADE'});
-      Classroom.belongsToMany(models.User, {
-        through: "SID",
-        foreignKey: 'classroomID'
-      }, {onDelete: 'CASCADE'});
+      Classroom.hasMany(models.SID, {foreignKey: 'classroomID'}, {onDelete: 'CASCADE'});
     }
   };
   Classroom.init({
