@@ -9,6 +9,7 @@ const authorization = require('../authorization/classroomAuth');
 const classroomController = require('./classroomController');
 const user_classroomController = require('../user_classrooms/user_classroomController');
 const assignmentController = require('../assignments/assignmentController');
+const sidController = require("../sid/sidController")
 
 /* List all classes  */
 //router.get('/listAll', classroomController.listAllClassroom);
@@ -37,6 +38,9 @@ router.put('/:classroomId/assignments/', passport.authenticate('jwt', { session:
 
 //delete assignment
 router.delete('/:classroomId/assignments/:assignmentId', passport.authenticate('jwt', { session: false }), authorization.checkTeacherRole, assignmentController.delete);
+
+// Add studentId
+router.post('/:classroomId/sids', passport.authenticate('jwt', { session: false }), sidController.addSID)
 
 /* Invite  */
 router.post('/:id/userCode', user_classroomController.updateUserCode)

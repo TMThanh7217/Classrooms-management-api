@@ -12,13 +12,44 @@ exports.create = async (SIDObj) => {
 }
 
 //----------------------------------------------------------Read----------------------------------------------------------
-exports.getUserID = async (Sid, clasroomID) => {
+exports.getUserID = async (Sid, classroomID) => {
     return await SID.findOne({
+        raw: true,
         where: {
             SID: Sid,
-            classroomID: clasroomID
+            classroomID: classroomID
         },
         attributes: ['userID']
+    })
+}
+
+exports.getBySID = async sid => {
+    return await SID.findOne({
+        raw: true,
+        where: {
+            SID: sid,
+        },
+    })
+}
+
+exports.getByClassroomID = async classroomID => {
+    return await SID.findOne({
+        raw: true,
+        where: {
+            classroomID: classroomID,
+        },
+        attributes: ['SID']
+    })
+}
+
+exports.getBySIDAndClassroomID = async (SID, classroomID) => {
+    return await SID.findOne({
+        raw: true,
+        where: {
+            classroomID: classroomID,
+            SID: SID
+        },
+        attributes: ['SID']
     })
 }
 
@@ -28,13 +59,13 @@ exports.updateUserID = async (SIDObj) => {
         userID: SIDObj.userID,
         where: {
             SID: SIDObj.SID,
-            classroomID: SIDObj.clasroomID
+            classroomID: SIDObj.classroomID
         }
     });
 }
 
 //----------------------------------------------------------Delete----------------------------------------------------------
-exports.delete = async (id) => {
+exports.deleteByID = async (id) => {
     return await SID.destroy({
         where: {
             id: id
@@ -42,7 +73,7 @@ exports.delete = async (id) => {
     });
 }
 
-exports.delete = async (Sid) => {
+exports.deleteBySID = async (Sid) => {
     return await SID.destroy({
         where: {
             SID: Sid
@@ -50,20 +81,20 @@ exports.delete = async (Sid) => {
     });
 }
 
-exports.delete = async (Sid, clasroomID) => {
+exports.deleteBySIDAndClassroomID = async (Sid, classroomID) => {
     return await SID.destroy({
         where: {
             SID: Sid,
-            clasroomID: clasroomID
+            classroomID: classroomID
         }
     });
 }
 
-exports.delete = async (userID, clasroomID) => {
+exports.deleteByUserIDAndClassroomID = async (userID, classroomID) => {
     return await SID.destroy({
         where: {
             userID: userID,
-            clasroomID: clasroomID
+            classroomID: classroomID
         }
     });
 }
