@@ -24,6 +24,8 @@ module.exports = {
           model: 'Users',
           key: 'id',
         }
+      }, name: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

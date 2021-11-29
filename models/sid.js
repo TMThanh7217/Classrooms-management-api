@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   SID.init({
     SID: DataTypes.STRING,
     classroomID: DataTypes.INTEGER,
-    userID: DataTypes.INTEGER
+    userID: DataTypes.INTEGER,
+    name: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'SID',
