@@ -10,13 +10,20 @@ const sidService = {
         }),
     findUserBySidAndClassroomId: (sid, classroomId) => sidModel
         .getUserID(sid, classroomId)
-        .then(instance => instance.userID)
+        .then(instance => instance)
         .catch(err => { 
             console.log(err)
             return err
         }),
+    findAllByClassroomId: (classroomId) => sidModel
+        .getByClassroomID(classroomId)
+        .then(result => result)
+        .catch(err => {
+            console.log(err);
+            return err;
+        }),
     findBySidAndClassroomId: (sid, classroomId) => sidModel
-        .deleteBySIDAndClassroomID(sid, classroomId)
+        .getBySIDAndClassroomID(sid, classroomId)
         .then(instance => instance)
         .catch(err => { 
             console.log(err)

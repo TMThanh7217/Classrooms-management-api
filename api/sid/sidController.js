@@ -11,13 +11,12 @@ const sidController = {
         }
         let instance = await sidService.findBySidAndClassroomId(sidObj.SID, sidObj.classroomID)
         console.log(instance)
+
         if(instance) {
             console.log(instance)
             return res.status(500).json({msg: "This SID has been created in this class."})
         }
-        
         else {
-            
             const requireFields = ['name', 'sid', 'classroomId']
             const validateAddData = data => requireFields.every(field => Object.keys(data).includes(field))
             let isValid = Object.keys(validateAddData(sidObj))
@@ -28,6 +27,15 @@ const sidController = {
                 .catch(err => res.status(500).json({msg: err}))
             else return res.status(500).json({msg: "Invalid post data."})
         }
+    },
+    findAllByClassroomId: async (req, res) => {
+        let classroomID = parseInt(req.params.classroomId);
+        let result = await sidService.findAllByClassroomId(classroomID);
+        if (result) {
+            console.log(result)
+            return res.status(200).json(result);
+        }
+        else return res.status(500).json({err: 'Cannot find with classroom id'});
     }
 }
 

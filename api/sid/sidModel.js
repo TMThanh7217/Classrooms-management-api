@@ -30,27 +30,28 @@ exports.getBySID = async sid => {
         where: {
             SID: sid,
         },
+        attributes: {exclude: ['createdAt', 'updatedAt']}
     })
 }
 
 exports.getByClassroomID = async classroomID => {
-    return await SID.findOne({
+    return await SID.findAll({
         raw: true,
         where: {
             classroomID: classroomID,
         },
-        attributes: ['SID']
+        attributes: {exclude: ['createdAt', 'updatedAt']}
     })
 }
 
-exports.getBySIDAndClassroomID = async (SID, classroomID) => {
+exports.getBySIDAndClassroomID = async (Sid, classroomID) => {
     return await SID.findOne({
         raw: true,
         where: {
+            SID: Sid,
             classroomID: classroomID,
-            SID: SID
         },
-        attributes: ['SID']
+        attributes: {exclude: ['createdAt', 'updatedAt']}
     })
 }
 
