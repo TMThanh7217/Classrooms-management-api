@@ -8,7 +8,7 @@ const { sequelize } = require('../../models');
 //----------------------------------------------------------Create----------------------------------------------------------
 exports.create = async (SIDObj) => {
     return await SID.create({
-        SID: SIDObj.SID,
+        SID: SIDObj.sid,
         classroomID: SIDObj.classroomID,
         userID: SIDObj.userID,
         name: SIDObj.name

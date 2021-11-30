@@ -47,10 +47,10 @@ router.get('/:classroomId/sids', passport.authenticate('jwt', { session: false }
 router.get('/:classroomId/scoreboard', passport.authenticate('jwt', { session: false }), sidController.findStudentAndScoreByClassroomID);
 
 // import student list
-router.post('classrooms/:classroomId/sids/import', passport.authenticate('jwt', { session: false }), sidController.importStudentList);
+router.post('/:classroomId/sids/import', passport.authenticate('jwt', { session: false }), sidController.importStudentList);
 
 // import grade for an assignment
-router.post('classrooms/:classroomId/assingments/:assignmentId/scores/import', passport.authenticate('jwt', { session: false }));
+router.post('/:classroomId/assingments/:assignmentId/scores/import', passport.authenticate('jwt', { session: false }));
 
 // Add studentId
 router.post('/:classroomId/sids', passport.authenticate('jwt', { session: false }), sidController.addSID);

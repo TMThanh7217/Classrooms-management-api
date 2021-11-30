@@ -29,13 +29,19 @@ const sidController = {
         }
     },
     importStudentList: async (req, res) => {
-        let data = req.body;
-        let clasroomId = parseInt(req.params.clasroomId);
-        console.log(data);
-        for (let sidObj in data) {
-            console.log(sidObj);
-            sidObj.sid = parseInt(sidObj.sid);
-            let result = await sidService.findBySidAndClassroomId(sidObj.sid, clasroomId);
+        let data = req.body.data;
+        let classroomId = parseInt(req.params.classroomId);
+        /*console.log("classroomId: " + classroomId);
+        console.log("data");
+        console.log(data);*/
+        for (let i = 0; i < data.length; i++) {
+            let sidObj = {
+                sid: parseInt(data[i].sid),
+                name: data[i].name
+            };
+            /*console.log("sidObj");
+            console.log(sidObj);*/
+            let result = await sidService.findBySidAndClassroomId(sidObj.sid, classroomId);
             if (!result) {
                 sidObj.classroomID = classroomId;
                 sidObj.userID = null;
@@ -45,17 +51,17 @@ const sidController = {
                 }
                 else {
                     console.log('newSid:');
-                    console.log(newSid);
+                    console.log(newSid.SID);
                 }
             }
             else { 
-                let updatedSidObj = await sidService.updateName(result);
-                if (updatedSidObj)
-                    console.log('Name updated');
+                //let updatedSidObj = await sidService.updateName(result);
+                //if (updatedSidObj)
+                //    console.log('Name updated');
                 console.log('Sid has already existed');
-             }
+            }
         }
-        return res.status(200).json({msg: 'import student list successfully'});
+        return res.status(200).json({msg: 'Import student list successfully'});
     },
     findAllByClassroomId: async (req, res) => {
         let classroomID = parseInt(req.params.classroomId);
