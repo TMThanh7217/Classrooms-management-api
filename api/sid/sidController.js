@@ -28,6 +28,9 @@ const sidController = {
             else return res.status(500).json({msg: "Invalid post data."})
         }
     },
+    importStudentList: async (req, res) => {
+        console.log(req);
+    },
     findAllByClassroomId: async (req, res) => {
         let classroomID = parseInt(req.params.classroomId);
         let result = await sidService.findAllByClassroomId(classroomID);

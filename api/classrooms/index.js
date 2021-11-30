@@ -43,7 +43,9 @@ router.delete('/:classroomId/assignments/:assignmentId', passport.authenticate('
 // get all sid with classroomID
 router.get('/:classroomId/sids', passport.authenticate('jwt', { session: false }), sidController.findAllByClassroomId)
 
-router.get('/:classroomId/scoreboard',  sidController.findStudentAndScoreByClassroomID)
+router.get('/:classroomId/scoreboard', passport.authenticate('jwt', { session: false }), sidController.findStudentAndScoreByClassroomID)
+
+router.post('classrooms/:classroomId/assignments/:assginmentId/import',);
 
 // Add studentId
 router.post('/:classroomId/sids', passport.authenticate('jwt', { session: false }), sidController.addSID)
