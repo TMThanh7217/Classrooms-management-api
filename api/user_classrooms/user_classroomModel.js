@@ -1,5 +1,8 @@
 const model = require('../../models');
 const UserClassroom = model.UserClassroom;
+const { Op } = require("sequelize");
+const { QueryTypes } = require('sequelize');
+const { sequelize } = require('../../models');
 
 exports.create = async (user_classroom, role) => {
     return await UserClassroom.create({
@@ -62,4 +65,16 @@ exports.updateUserCode = async (userID, classroomID, userCode) => {
             classroomID: classroomID
         }
     })
+}
+
+exports.findClassroomsOfUserHasRole = async (userId, roleList) => {
+    return await sequelize.query(
+        `SELECT Classrooms.name, Classrooms.id
+        FROM UserClassrooms JOIN Classrooms ON (UserClassrooms.ClassroomID = Classrooms.id)
+        WHERE UserClassrooms.userID = :userId AND UserClassrooms.role IN (:role)`,
+        {
+            replacements: { userId: userId, role: roleList },
+            type: QueryTypes.SELECT
+        }
+    )
 }

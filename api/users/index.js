@@ -11,6 +11,6 @@ const user_classroomController = require('../user_classrooms/user_classroomContr
 // for debugging, delete or comment this later
 router.get('/listAll', userController.listAllUser)
 
-router.get('/:userId/classrooms', user_classroomController.getWithUserID);
+router.get('/:userId/classrooms', user_classroomController.findClassroomsOfUserHasRole);
 
 module.exports = router;

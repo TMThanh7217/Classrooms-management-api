@@ -51,3 +51,8 @@ exports.updateUserCode = async (userID, classroomID, userCode) => {
         })
         .catch(err => console.log(err));
 };
+
+exports.findClassroomsOfUserHasRole = async (userId, roleList) => {
+    let instance = await user_classroomModel.findClassroomsOfUserHasRole(userId, roleList)
+    return instance
+}

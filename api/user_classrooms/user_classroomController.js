@@ -81,3 +81,12 @@ exports.updateUserCode = async (req, res) => {
             return res.status(409).json({err: 'This user code has been used in this classroom'});
         })
 };
+
+exports.findClassroomsOfUserHasRole = async (req, res) => {
+    const userId = req.params.userId
+    const roles = req.query.roles
+    const instance = await user_classroomService.findClassroomsOfUserHasRole(userId, roles)
+    return instance ? 
+        res.status(200).json(instance) :
+        res.status(500).json({msg: "Unexpected error."})
+}
