@@ -1,5 +1,6 @@
 const student_assignmentService = require('./student_assignmentService');
 const sidService = require('../sid/sidService');
+const userService = require('../users/userService');
 
 exports.create = async (req, res) => {
     let sid = parseInt(req.params.sid);
@@ -24,40 +25,53 @@ exports.create = async (req, res) => {
 }
 
 exports.importGradeForAnAssignment = async (req, res) => {
-    let sid = parseInt(req.params.sid);
     let classroomId = parseInt(req.params.classroomId);
     let assignmentId = parseInt(req.params.assignmentId);
     let data = req.body.data;
     console.log("data");
     console.log(data);
     for (let i = 0; i < data.length; i++) {
-        let sidObj = {
-            sid: parseInt(data[i].sid),
-            name: data[i].name
-        };
+        let sid = parseInt(data[i].sid);
+        let score = data[i].score;
         /*console.log("sidObj");
         console.log(sidObj);*/
-        let result = await sidService.findBySidAndClassroomId(sidObj.sid, classroomId);
-        if (!result) {
-            sidObj.classroomID = classroomId;
-            sidObj.userID = null;
-            let newSid = await sidService.create(sidObj);
-            if (!newSid) {
-                return res.status(500).json({msg: 'Cannot create new Sid'});
+
+        let result = await sidService.findBySidAndClassroomId(sid, classroomId);
+        if (result) {
+            console.log('Pass findBySidAndClassroomId check');
+            let user = await userService.getUserWithID(result.userID);
+            if (user) {
+                console.log('Pass getUserWithID check');
+                let student_assignment = await student_assignmentService.getStudentAssignment(user.id, assignmentId);
+                if (student_assignment) {
+                    updateInfo = {
+                        userID: student_assignment.userID,
+                        assignmentID: student_assignment.assignmentID,
+                        score: score,
+                        status: 1,
+                    }
+                    let updatedSA = await student_assignmentService.update(updateInfo);
+                    if (updatedSA) {
+                        console.log('Update SA successfully');
+                    }
+                    else console.log('Update SA fail');
+                }
+                else {
+                    student_assignmentObj = {
+                        userID: user.id,
+                        assignmentID: assignmentID,
+                        score: score,
+                        status: 1,
+                    }
+                    let newSA = await student_assignmentService.create(student_assignmentObj);
+                    if (newSA)
+                        console.log('Create new SA successfully');
+                    else console.log('Create SA fail');
+                }
             }
-            else {
-                console.log('newSid:');
-                console.log(newSid.SID);
-            }
-        }
-        else { 
-            //let updatedSidObj = await sidService.updateName(result);
-            //if (updatedSidObj)
-            //    console.log('Name updated');
-            console.log('Sid has already existed');
         }
     }
-    return res.status(200).json({msg: 'Import student list successfully'});
+    return res.status(200).json({msg: 'Import grade for this assignment successfully'});
 } 
 
 exports.getStudentAssignment = async (req, res) => {
