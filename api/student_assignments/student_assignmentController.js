@@ -23,6 +23,43 @@ exports.create = async (req, res) => {
     }
 }
 
+exports.importGradeForAnAssignment = async (req, res) => {
+    let sid = parseInt(req.params.sid);
+    let classroomId = parseInt(req.params.classroomId);
+    let assignmentId = parseInt(req.params.assignmentId);
+    let data = req.body.data;
+    console.log("data");
+    console.log(data);
+    for (let i = 0; i < data.length; i++) {
+        let sidObj = {
+            sid: parseInt(data[i].sid),
+            name: data[i].name
+        };
+        /*console.log("sidObj");
+        console.log(sidObj);*/
+        let result = await sidService.findBySidAndClassroomId(sidObj.sid, classroomId);
+        if (!result) {
+            sidObj.classroomID = classroomId;
+            sidObj.userID = null;
+            let newSid = await sidService.create(sidObj);
+            if (!newSid) {
+                return res.status(500).json({msg: 'Cannot create new Sid'});
+            }
+            else {
+                console.log('newSid:');
+                console.log(newSid.SID);
+            }
+        }
+        else { 
+            //let updatedSidObj = await sidService.updateName(result);
+            //if (updatedSidObj)
+            //    console.log('Name updated');
+            console.log('Sid has already existed');
+        }
+    }
+    return res.status(200).json({msg: 'Import student list successfully'});
+} 
+
 exports.getStudentAssignment = async (req, res) => {
     let sid = parseInt(req.params.sid);
     let classroomId = parseInt(req.params.classroomId);

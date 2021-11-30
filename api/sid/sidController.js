@@ -1,31 +1,44 @@
+const { update } = require("../accounts/accountModel");
 const sidService = require("../sid/sidService")
-
+const userService = require("../users/userService");
 
 const sidController = {
     addSID: async (req, res) => {
         let sidObj = {
-            SID: req.body.sid,
-            classroomID: req.body.classroomId ?? req.params.classroomId,
-            userID: req.body.userId ?? null,
+            sid: parseInt(req.body.sid),
+            classroomID: parseInt(req.body.classroomId ?? req.params.classroomId),
+            userID: parseInt(req.body.userId) ?? null,
             name: req.body.name
         }
-        let instance = await sidService.findBySidAndClassroomId(sidObj.SID, sidObj.classroomID)
+        let instance = await sidService.findBySidAndClassroomId(sidObj.sid, sidObj.classroomID)
         console.log(instance)
 
         if(instance) {
             console.log(instance)
-            return res.status(500).json({msg: "This SID has been created in this class."})
+            return res.status(500).json({msg: "This SID has been created in this class."});
         }
         else {
-            const requireFields = ['name', 'sid', 'classroomId']
-            const validateAddData = data => requireFields.every(field => Object.keys(data).includes(field))
-            let isValid = Object.keys(validateAddData(sidObj))
-            if(isValid)
-                sidService
-                .create(sidObj)
-                .then(instance => res.status(200).json({data: instance, msg: "SID was successfully created."}))
-                .catch(err => res.status(500).json({msg: err}))
-            else return res.status(500).json({msg: "Invalid post data."})
+            // check if this user already has this SID
+            let oldSid = await sidService.findByUserId(sidObj.userID);
+            if (!oldSid) {
+                console.log("Fail old SID check");
+                const requireFields = ['name', 'sid', 'classroomId']
+                const validateAddData = data => requireFields.every(field => Object.keys(data).includes(field))
+                let isValid = Object.keys(validateAddData(sidObj))
+                if(isValid)
+                    sidService
+                    .create(sidObj)
+                    .then(instance => res.status(200).json({data: instance, msg: "SID was successfully created."}))
+                    .catch(err => res.status(500).json({msg: err}))
+                else return res.status(500).json({msg: "Invalid post data."});
+            }
+            else {
+                console.log("Pass old SID check");
+                let updatedSid = await sidService.updateSID(sidObj.sid, sidObj.userID, sidObj.classroomID);
+                if (updatedSid)
+                    return res.status(200).json({msg: 'Update SID succesfully'});
+                else return res.status(500).json({msg: "Cannot update SID"});
+            };
         }
     },
     importStudentList: async (req, res) => {

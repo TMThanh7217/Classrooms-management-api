@@ -85,10 +85,21 @@ exports.getBySIDAndClassroomID = async (Sid, classroomID) => {
     })
 }
 
+exports.getByUserID = async (userID) => {
+    return await SID.findOne({
+        raw:true,
+        where: {
+            userID: userID
+        },
+        attributes: {exclude: ['createdAt', 'updatedAt']}
+    })
+}
+
 //----------------------------------------------------------Update----------------------------------------------------------
 exports.updateUserID = async (SIDObj) => {
     return await SID.update({
         userID: SIDObj.userID,
+    }, {
         where: {
             SID: SIDObj.SID,
             classroomID: SIDObj.classroomID
@@ -98,10 +109,22 @@ exports.updateUserID = async (SIDObj) => {
 
 exports.updateName = async (SIDObj) => {
     return await SID.update({
-        name: SIDObj.name,
+        name: SIDObj.name
+    }, {
         where: {
             SID: SIDObj.SID,
             classroomID: SIDObj.classroomID
+        }
+    });
+}
+
+exports.updateSID = async (sid, userID, classroomID) => {
+    return await SID.update({
+        SID: sid,
+    }, {
+        where: {
+            userID: userID,
+            classroomID: classroomID
         }
     });
 }

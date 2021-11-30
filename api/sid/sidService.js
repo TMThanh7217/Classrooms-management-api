@@ -25,7 +25,14 @@ const sidService = {
     findBySidAndClassroomId: (sid, classroomId) => sidModel
         .getBySIDAndClassroomID(sid, classroomId)
         .then(instance => instance)
-        .catch(err => { 
+        .catch(err => {
+            console.log(err)
+            return err
+        }),
+    findByUserId: (userId) => sidModel
+        .getByUserID(userId)
+        .then(instance => instance)
+        .catch(err => {
             console.log(err)
             return err
         }),
@@ -38,8 +45,16 @@ const sidService = {
         }),
     updateName: (sidObj) => sidModel
         .updateName(sidObj)
-        .then(resutl => result)
-        .catch(err => console.log(err))
+        .then(result => result)
+        .catch(err => {
+            console.log(err);
+        }),
+    updateSID: (sid, userID, classroomID) => sidModel
+        .updateSID(sid, userID, classroomID)
+        .then(result => result)
+        .catch(err => {
+            console.log(err);
+        }),
 }
 
 module.exports = sidService
