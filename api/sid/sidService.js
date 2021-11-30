@@ -35,7 +35,11 @@ const sidService = {
         .catch(err => {
             console.log(err);
             return err;
-        })
+        }),
+    updateName: (sidObj) => sidModel
+        .updateName(sidObj)
+        .then(resutl => result)
+        .catch(err => console.log(err))
 }
 
 module.exports = sidService

@@ -29,7 +29,33 @@ const sidController = {
         }
     },
     importStudentList: async (req, res) => {
-        console.log(req);
+        let data = req.body;
+        let clasroomId = parseInt(req.params.clasroomId);
+        console.log(data);
+        for (let sidObj in data) {
+            console.log(sidObj);
+            sidObj.sid = parseInt(sidObj.sid);
+            let result = await sidService.findBySidAndClassroomId(sidObj.sid, clasroomId);
+            if (!result) {
+                sidObj.classroomID = classroomId;
+                sidObj.userID = null;
+                let newSid = await sidService.create(sidObj);
+                if (!newSid) {
+                    return res.status(500).json({msg: 'Cannot create new Sid'});
+                }
+                else {
+                    console.log('newSid:');
+                    console.log(newSid);
+                }
+            }
+            else { 
+                let updatedSidObj = await sidService.updateName(result);
+                if (updatedSidObj)
+                    console.log('Name updated');
+                console.log('Sid has already existed');
+             }
+        }
+        return res.status(200).json({msg: 'import student list successfully'});
     },
     findAllByClassroomId: async (req, res) => {
         let classroomID = parseInt(req.params.classroomId);

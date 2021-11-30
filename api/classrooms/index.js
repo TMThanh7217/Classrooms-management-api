@@ -9,7 +9,8 @@ const authorization = require('../authorization/classroomAuth');
 const classroomController = require('./classroomController');
 const user_classroomController = require('../user_classrooms/user_classroomController');
 const assignmentController = require('../assignments/assignmentController');
-const sidController = require("../sid/sidController")
+const sidController = require('../sid/sidController');
+const student_assignmentController = require('../student_assignments/student_assignmentController');
 
 /* List all classes  */
 //router.get('/listAll', classroomController.listAllClassroom);
@@ -41,14 +42,18 @@ router.delete('/:classroomId/assignments/:assignmentId', passport.authenticate('
 
 /* SID */
 // get all sid with classroomID
-router.get('/:classroomId/sids', passport.authenticate('jwt', { session: false }), sidController.findAllByClassroomId)
+router.get('/:classroomId/sids', passport.authenticate('jwt', { session: false }), sidController.findAllByClassroomId);
 
-router.get('/:classroomId/scoreboard', passport.authenticate('jwt', { session: false }), sidController.findStudentAndScoreByClassroomID)
+router.get('/:classroomId/scoreboard', passport.authenticate('jwt', { session: false }), sidController.findStudentAndScoreByClassroomID);
 
-router.post('classrooms/:classroomId/assignments/:assginmentId/import',);
+// import student list
+router.post('classrooms/:classroomId/sids/import', passport.authenticate('jwt', { session: false }), sidController.importStudentList);
+
+// import grade for an assignment
+router.post('classrooms/:classroomId/assingments/:assignmentId/scores/import', passport.authenticate('jwt', { session: false }));
 
 // Add studentId
-router.post('/:classroomId/sids', passport.authenticate('jwt', { session: false }), sidController.addSID)
+router.post('/:classroomId/sids', passport.authenticate('jwt', { session: false }), sidController.addSID);
 
 /* Invite  */
 router.post('/:id/userCode', user_classroomController.updateUserCode)

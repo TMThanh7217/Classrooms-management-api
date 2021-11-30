@@ -154,7 +154,6 @@ exports.update = async (req, res) => {
     else return res.status(404).json({msg: 'Cannot find this assignment'});
 }
 
-
 exports.updateAssignmentPosition = async (req, res) => {
     /*
         let id = parseInt(req.params.asignmentId);
@@ -203,26 +202,26 @@ exports.updateAssignmentPosition = async (req, res) => {
         
         //async handle using await
         console.log("In loop");
-            let assignment = await assignmentService.getAssignmentWithID(parseInt(assignmentList[i].id))
-            if (assignment) {
-                if (assignment.position != i + 1) {
-                    console.log('position:')
-                    console.log(assignment.position);
-                    console.log('i:');
-                    console.log(i + 1);
-                    // oh would you look at that, instead of using i + 1, i use assignment.position instead
-                    // yikes best 1hr wasted of my life
-                    let result = await assignmentService
-                        .updateAssignmentPosition(assignment.id, assignment.classroomID, i + 1)
-                    if (!result)
-                        return res.status(500).json({msg: "Cannot update assignment's position"});
-                    else {
-                        console.log('result:');
-                        console.log(result);
-                    }
+        let assignment = await assignmentService.getAssignmentWithID(parseInt(assignmentList[i].id))
+        if (assignment) {
+            if (assignment.position != i + 1) {
+                console.log('position:')
+                console.log(assignment.position);
+                console.log('i:');
+                console.log(i + 1);
+                // oh would you look at that, instead of using i + 1, i use assignment.position instead
+                // yikes best 1hr wasted of my life
+                let result = await assignmentService
+                    .updateAssignmentPosition(assignment.id, assignment.classroomID, i + 1)
+                if (!result)
+                    return res.status(500).json({msg: "Cannot update assignment's position"});
+                else {
+                    console.log('result:');
+                    console.log(result);
                 }
             }
-            else return res.status(500).json({msg: 'Cannot find assignment with the given id'});
+        }
+        else return res.status(500).json({msg: 'Cannot find assignment with the given id'});
     }
     console.log('Out loop');
     res.status(200).json({msg: 'update assignment pos success'});
