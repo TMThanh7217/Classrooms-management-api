@@ -36,7 +36,16 @@ const sidController = {
             return res.status(200).json(result);
         }
         else return res.status(500).json({err: 'Cannot find with classroom id'});
-    }
+    },
+    findStudentAndScoreByClassroomID: async(req, res) => {
+        let classroomId = parseInt(req.params.classroomId);
+        let result = await sidService.findStudentAndScoreByClassroomID(classroomId)
+        if (result) {
+            console.log(result);
+            return res.status(200).json(result);
+        }
+        else return res.status(500).json({err: 'Cannot find student and score with this classroom id'});
+    },
 }
 
 module.exports = sidController

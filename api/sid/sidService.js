@@ -16,7 +16,7 @@ const sidService = {
             return err
         }),
     findAllByClassroomId: (classroomId) => sidModel
-        .getByClassroomID(classroomId)
+        .getAllByClassroomID(classroomId)
         .then(result => result)
         .catch(err => {
             console.log(err);
@@ -29,6 +29,13 @@ const sidService = {
             console.log(err)
             return err
         }),
+    findStudentAndScoreByClassroomID: (classroomId) => sidModel
+        .getStudentAndScoreByClassroomID(classroomId)
+        .then(result => result)
+        .catch(err => {
+            console.log(err);
+            return err;
+        })
 }
 
 module.exports = sidService

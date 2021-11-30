@@ -1,6 +1,9 @@
 const model = require("../../models");
 const SID = model.SID;
 const User = model.User;
+const { Op } = require("sequelize");
+const { QueryTypes } = require('sequelize');
+const { sequelize } = require('../../models');
 
 //----------------------------------------------------------Create----------------------------------------------------------
 exports.create = async (SIDObj) => {
@@ -34,7 +37,7 @@ exports.getBySID = async sid => {
     })
 }
 
-exports.getByClassroomID = async classroomID => {
+exports.getAllByClassroomID = async classroomID => {
     return await SID.findAll({
         raw: true,
         where: {
@@ -42,6 +45,30 @@ exports.getByClassroomID = async classroomID => {
         },
         attributes: {exclude: ['createdAt', 'updatedAt']}
     })
+}
+
+exports.getStudentByClassroomID = async classroomID => {
+    return await sequelize.query(   
+        'SELECT * FROM SID where ',
+        {
+            replacements: {},
+            type: QueryTypes.SELECT
+        }
+    );
+}
+
+exports.getStudentAndScoreByClassroomID = async classroomID => {
+    return await sequelize.query(   
+        `SELECT s.SID AS sid , u.id AS userID, u.name AS studentName, a.id AS assignmentID, a.name AS assignmentName, 
+            sa.score AS score, a.maxPoint AS maxScore
+        FROM Users AS u JOIN StudentAssignments AS sa ON (u.id = sa.userID) JOIN 
+            Assignments AS a ON (a.id = sa.assignmentID) LEFT JOIN SIDs AS s ON (s.userID = u.id)
+        WHERE a.classroomID = :classroomId AND s.userID IS NOT NULL`,
+        {
+            replacements: {classroomId: classroomID},
+            type: QueryTypes.SELECT
+        }
+    );
 }
 
 exports.getBySIDAndClassroomID = async (Sid, classroomID) => {
