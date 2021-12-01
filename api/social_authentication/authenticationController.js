@@ -57,7 +57,8 @@ exports.googleAuthentication = async (req, res) => {
         return {
             account: {id: output_id, userID: output_userID},
             token: jwt.sign({
-                id: output_id
+                id: output_id,
+                name: name
             }, process.env.JWT_SECRET)
         };
     }
@@ -134,7 +135,8 @@ exports.googleAuthentication = async (req, res) => {
                         return res.status(200).json({
                             account: {id: parseInt(newAccount), userID: parseInt(newUser)},
                             token: jwt.sign({
-                                id: parseInt(newAccount)
+                                id: parseInt(newAccount),
+                                name: name,
                             }, process.env.JWT_SECRET)
                         });
                     })
