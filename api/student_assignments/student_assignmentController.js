@@ -59,7 +59,7 @@ exports.importGradeForAnAssignment = async (req, res) => {
                 else {
                     student_assignmentObj = {
                         userID: user.id,
-                        assignmentID: assignmentID,
+                        assignmentID: assignmentId,
                         score: score,
                         status: 1,
                     }

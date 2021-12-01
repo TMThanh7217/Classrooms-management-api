@@ -129,6 +129,18 @@ exports.updateSID = async (sid, userID, classroomID) => {
     });
 }
 
+exports.updateNameAndUserID = async ({sid, userID, classroomID, name}) => {
+    return await SID.update({
+        name: name,
+        userID: userID
+    }, {
+        where: {
+            sid: sid,
+            classroomID: classroomID
+        }
+    });
+}
+
 //----------------------------------------------------------Delete----------------------------------------------------------
 exports.deleteByID = async (id) => {
     return await SID.destroy({

@@ -54,7 +54,23 @@ const sidService = {
         .then(result => result)
         .catch(err => {
             console.log(err);
+            return err
         }),
+    updateUserID: (sid, userID, classroomID) => sidModel
+        .updateUserID(sid, userID, classroomID)
+        .then(result => result)
+        .catch(err => {
+            console.log(err);
+            return err
+        }),
+    updateNameAndUserID: (sidObj) => sidModel
+        .updateNameAndUserID(sidObj)
+        .then(result => result)
+        .catch(err => {
+            console.log(err);
+            return err
+        }),
+    
 }
 
 module.exports = sidService
