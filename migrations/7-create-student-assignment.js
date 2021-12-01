@@ -23,7 +23,7 @@ module.exports = {
         }
       },
       score: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL(10, 1)
       },
       status: {
         type: Sequelize.INTEGER
@@ -36,6 +36,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
+    }, {
+      charset: 'utf8',
+      collate: 'utf8_unicode_ci'
     });
   },
   down: async (queryInterface, Sequelize) => {

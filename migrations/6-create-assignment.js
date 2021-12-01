@@ -19,7 +19,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       maxPoint: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL(10, 1)
       },
       description: {
         type: Sequelize.TEXT
@@ -41,6 +41,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
+    }, {
+      charset: 'utf8',
+      collate: 'utf8_unicode_ci'
     });
   },
   down: async (queryInterface, Sequelize) => {
