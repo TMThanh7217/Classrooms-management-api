@@ -53,7 +53,7 @@ router.post('/:classroomId/sids/import', passport.authenticate('jwt', { session:
 router.post('/:classroomId/assignments/:assignmentId/scores/import', passport.authenticate('jwt', { session: false }), student_assignmentController.importGradeForAnAssignment);
 
 // update gradboard score
-router.post('/:classroomId/assignments/:assignmentId/scores/:userId', passport.authenticate('jwt', { session: false }), student_assignmentController.updateScore);
+router.put('/:classroomId/assignments/:assignmentId/scores/:userId', passport.authenticate('jwt', { session: false }), student_assignmentController.updateScore);
 
 // Add studentId
 router.post('/:classroomId/sids', passport.authenticate('jwt', { session: false }), sidController.addSID);

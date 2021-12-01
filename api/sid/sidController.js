@@ -104,6 +104,7 @@ const sidController = {
         let classroomId = parseInt(req.params.classroomId);
         let result = await sidService.findStudentAndScoreByClassroomID(classroomId)
         if (result) {
+            //console.log("findStudentAndScoreByClassroomID", result);
             return res.status(200).json(result);
         }
         else return res.status(500).json({err: 'Cannot find student and score with this classroom id'});
