@@ -94,22 +94,43 @@ exports.getStudentAssignment = async (req, res) => {
     }
 }
 
-exports.update = async (req, res) => {
-    let sid = parseInt(req.params.sid);
+exports.updateScore = async (req, res) => {
+    let userId = parseInt(req.params.userId);
     let classroomId = parseInt(req.params.classroomId);
-    let result = await sidService.findBySidAndClassroomId(sid, classroomId);
+    let assignmentId = parseInt(req.params.assignmentId);
+    let result = await sidService.findByUserIDAndClassroomID(userId, classroomId);
     if (result) {
         let student_assignment = {
             userID: result.userID,
-            assignmentID: parseInt(req.params.assignmentId),
-            score: parseFloat(req.body.score).toFixed(1),
+            assignmentID: assignmentId,
+            score: parseFloat(req.body.score),
             status: 1
         }
-        let updatedSA = await student_assignmentService.update(student_assignment);
+        /*let updatedSA = await student_assignmentService.update(student_assignment);
         if (updatedSA) {
+            console.log("student assignment", student_assignment);
+            console.log("updatedSA", updatedSA);
             return res.status(200).json({msg: 'Update successfully'});
         }
-        else return res.status(500).json({msg: 'Update fail'});
+        else return res.status(500).json({msg: 'Update fail'});*/
+        let oldSA = await student_assignmentService.getStudentAssignment(student_assignment.userID, student_assignment.assignmentID);
+        if (oldSA) {
+            let updatedSA = await student_assignmentService.update(student_assignment);
+            if (updatedSA) {
+                //console.log("student assignment", student_assignment);
+                console.log("updatedSA", updatedSA);
+                return res.status(200).json({msg: 'Update successfully'});
+            }
+            else return res.status(500).json({msg: 'Update fail'});
+        }
+        else {
+            let newSA = await student_assignmentService.create(student_assignment);
+            if (newSA) {
+                console.log('newSA: ', newSA.userID, newSA.assignmentID);
+                return res.status(200).json({msg: 'Create successfully'});
+            }
+            else return res.status(500).json({msg: 'Create fail'});
+        }
     }
     else {
         return res.status(404).json({msg: 'This SID does not belong to any user'});

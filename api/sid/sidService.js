@@ -36,6 +36,13 @@ const sidService = {
             console.log(err)
             return err
         }),
+    findByUserIDAndClassroomID: (userId, classroomId) => sidModel
+        .getByUserIDAndClassroomID(userId, classroomId)
+        .then(result => result)
+        .catch(err => {
+            console.log(err);
+            return err;
+        }),
     findStudentAndScoreByClassroomID: (classroomId) => sidModel
         .getStudentAndScoreByClassroomID(classroomId)
         .then(result => result)

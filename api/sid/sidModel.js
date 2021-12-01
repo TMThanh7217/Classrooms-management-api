@@ -57,6 +57,17 @@ exports.getStudentByClassroomID = async classroomID => {
     );
 }
 
+exports.getByUserIDAndClassroomID = async (userID, classroomID) => {
+    return await SID.findOne({
+        raw: true,
+        where: {
+            userID: userID,
+            classroomID: classroomID
+        },
+        attributes: {exclude: ['createdAt', 'updatedAt']}
+    })
+}
+
 exports.getStudentAndScoreByClassroomID = async classroomID => {
     return await sequelize.query(   
         `SELECT s.SID AS sid, s.name AS studentName, u.id AS userID, u.name as UserName, 
