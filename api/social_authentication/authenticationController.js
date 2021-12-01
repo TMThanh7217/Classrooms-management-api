@@ -117,6 +117,7 @@ exports.googleAuthentication = async (req, res) => {
         //console.log('Ey yooo');
         userService.create(new_user)
             .then(newUser => {
+                console.log("new_user", new_user);
                 new_user.id = parseInt(newUser);
                 new_account.userID = parseInt(newUser);
                 //account.username = account.username.toLowerCase()

@@ -31,7 +31,7 @@ const sidController = {
                 }
                 else return res.status(500).json({msg: "Invalid post data."});
             }
-            return res.status(500).json({msg: "This SID has been created in this class."});
+            else return res.status(500).json({msg: "This SID has been created in this class."});
         }
         else {
             const foundSID = await sidService.findByUserId(sidObj.userID)

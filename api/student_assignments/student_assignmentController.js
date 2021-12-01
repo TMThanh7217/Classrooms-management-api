@@ -32,7 +32,7 @@ exports.importGradeForAnAssignment = async (req, res) => {
     console.log(data);
     for (let i = 0; i < data.length; i++) {
         let sid = parseInt(data[i].sid);
-        let score = data[i].score;
+        let score = data[i].point;
         /*console.log("sidObj");
         console.log(sidObj);*/
 
