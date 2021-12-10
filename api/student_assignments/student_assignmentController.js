@@ -99,6 +99,9 @@ exports.updateScore = async (req, res) => {
     let classroomId = parseInt(req.params.classroomId);
     let assignmentId = parseInt(req.params.assignmentId);
     let result = await sidService.findByUserIDAndClassroomID(userId, classroomId);
+    /*console.log("userId:", userId);
+    console.log("classroomId:", classroomId);
+    console.log("assignmentId:", assignmentId);*/
     if (result) {
         let student_assignment = {
             userID: result.userID,
