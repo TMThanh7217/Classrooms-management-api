@@ -27,6 +27,9 @@ module.exports = {
       googleToken: {
         type: Sequelize.STRING
       },
+      role: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

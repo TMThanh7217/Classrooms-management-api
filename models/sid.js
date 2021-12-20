@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      SID.belongsToMany(models.Assignment, {
+        through: "StudentAssignment",
+        foreignKey: 'SID'
+      }, {onDelete: 'CASCADE'});
     }
   };
   SID.init({

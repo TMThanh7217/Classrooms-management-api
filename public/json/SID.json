@@ -2,15 +2,10 @@
     "SID": "33161455",
     "classroomID": 5,
     "userID": 1,
-    "name": "Admin placeholder name"
+    "name": "Teacher placeholder name"
   }, {
     "SID": "30697813",
     "classroomID": 5,
     "userID": 2,
     "name": "Student placeholder name"
-  }, {
-    "SID": "29942862",
-    "classroomID": 1,
-    "userID": 3,
-    "name": "This is a name from SID"
 }]

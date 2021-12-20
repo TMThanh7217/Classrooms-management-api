@@ -22,9 +22,6 @@ module.exports = {
           key: 'id',
         }
       },
-      role: {
-        type: Sequelize.INTEGER
-      },
       userCode: {
         type: Sequelize.STRING
       },

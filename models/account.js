@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     userID: DataTypes.INTEGER,
     createdDate: DataTypes.DATE,
-    googleToken: DataTypes.STRING
+    googleToken: DataTypes.STRING,
+    role: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Account',
