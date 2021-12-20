@@ -9,9 +9,9 @@ exports.create = async (student_assignment) => {
         .catch(err => console.log(err));
 }
 
-exports.getStudentAssignment = async (userID, assignmentID) => {
+exports.getStudentAssignment = async (SID, assignmentID) => {
     return await student_assignmentModel
-        .getStudentAssignment(userID, assignmentID)
+        .getStudentAssignment(SID, assignmentID)
         .then(result => {
             return result;
         })
@@ -25,9 +25,9 @@ exports.update = async (student_assignment) => {
         .catch(err => console.log(err));
 }
 
-exports.delete = async (userID, assignmentID) => {
+exports.delete = async (SID, assignmentID) => {
     return await student_assignmentModel
-        .delete(userID, assignmentID)
+        .delete(SID, assignmentID)
         .then(result => result)
         .catch(err => console.log(err));
 }

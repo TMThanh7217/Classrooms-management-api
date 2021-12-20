@@ -11,6 +11,7 @@ const user_classroomController = require('../user_classrooms/user_classroomContr
 const assignmentController = require('../assignments/assignmentController');
 const sidController = require('../sid/sidController');
 const student_assignmentController = require('../student_assignments/student_assignmentController');
+const accountController = require('../accounts/accountController');
 
 /* List all classes  */
 //router.get('/listAll', classroomController.listAllClassroom);
@@ -64,8 +65,9 @@ router.post('/:id/userCode', user_classroomController.updateUserCode)
 router.get('/invite/:inviteLink', classroomController.getClassroomDetailWithInviteLink);
 
 /* Role */
-router.get('/:classroomId/users/:userId/role', user_classroomController.getRole);
+router.get('/:classroomId/users/:userId/role', accountController.getRole);
 
+// This gonna be a pain to fix
 router.post('/invite/join', user_classroomController.createWithRole);
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const classoomService = require('../classrooms/classroomService');
 const userService = require('../users/userService');
-const user_classroomService = require('../user_classrooms/user_classroomService');
+const accountService = require('../accounts/accountService');
 
 exports.checkAllRole = async (req, res, next) => {
     console.log('Checking user jwt');
@@ -8,10 +8,10 @@ exports.checkAllRole = async (req, res, next) => {
     let classroomID = parseInt(req.params.classroomId) || parseInt(req.params.id); // be mindfull about which parameter in req hold classroom id
     /*console.log("Classroom id here: ");
     console.log(classroomID);*/
-    let userID = req.user.userID;
-    await user_classroomService.getRole(userID, classroomID)
+    let userID = parseInt(req.user.userID); // Oh wow did not parseInt here before. How can this even work?
+    await accountService.getRoleWithUserID(userID)
         .then(result => {
-            if (result)
+            if (result) // does not need to check the role here
                 next();
             else res.status(500).json({msg: 'Check authorization fail'});
         })
@@ -23,9 +23,10 @@ exports.checkStudentRole = async (req, res, next) => {
     let classroomID = parseInt(req.params.classroomId) || parseInt(req.params.id); // be mindfull about which parameter in req hold classroom id
     /*console.log("Classroom id here: ");
     console.log(classroomID);*/
-    let userID = req.user.userID
-    await user_classroomService.getRole(userID, classroomID)
+    let userID = parseInt(req.user.userID);  // Also not parseInt here either.
+    await accountService.getRoleWithUserID(userID)
         .then(result => {
+            // log here later if something went wrong
             if (result.role == 2)
                 next();
             else res.status(500).json({msg: 'Check authorization fail'});
@@ -39,11 +40,11 @@ exports.checkTeacherRole = async (req, res, next) => {
     let classroomID = parseInt(req.params.classroomId) || parseInt(req.params.id);
     console.log("Classroom id here: ");
     console.log(classroomID);
-    let userID = req.user.userID
-    await user_classroomService.getRole(userID, classroomID)
+    let userID = parseInt(req.user.userID); // Also here
+    await accountService.getRoleWithUserID(userID)
         .then(result => {
             console.log(result);
-            if (result.role == 0 || result.role == 1)
+            if (result.role == 0 || result.role == 1)  // 0 is reserved for admin after changing the database structure but oh well. Whatever i guess
                 next();
             else res.status(500).json({msg: 'Check authorization fail'});
         })

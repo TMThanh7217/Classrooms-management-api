@@ -1,6 +1,7 @@
 const student_assignmentService = require('./student_assignmentService');
 const sidService = require('../sid/sidService');
 const userService = require('../users/userService');
+const accountService = require('../accounts/accountService');
 
 exports.create = async (req, res) => {
     let sid = parseInt(req.params.sid);
@@ -8,7 +9,7 @@ exports.create = async (req, res) => {
     let result = await sidService.findBySidAndClassroomId(sid, classroomId);
     if (result) {
         let student_assignment = {
-            userID: result.userID,
+            SID: result.SID,
             assignmentID: parseInt(req.params.assignmentId),
             score: parseFloat(req.body.score).toFixed(1),
             status: 1
@@ -39,13 +40,15 @@ exports.importGradeForAnAssignment = async (req, res) => {
         let result = await sidService.findBySidAndClassroomId(sid, classroomId);
         if (result) {
             console.log('Pass findBySidAndClassroomId check');
+            // yeah need a fix here. Not sure a bout checking account or user here. Maybe just straight up remove the check and pretend nothing happened.
+            // Did some slight modification on sid
             let user = await userService.getUserWithID(result.userID);
             if (user) {
                 console.log('Pass getUserWithID check');
-                let student_assignment = await student_assignmentService.getStudentAssignment(user.id, assignmentId);
+                let student_assignment = await student_assignmentService.getStudentAssignment(sid, assignmentId);
                 if (student_assignment) {
                     updateInfo = {
-                        userID: student_assignment.userID,
+                        SID: sid,
                         assignmentID: student_assignment.assignmentID,
                         score: score,
                         status: 1,
@@ -58,7 +61,7 @@ exports.importGradeForAnAssignment = async (req, res) => {
                 }
                 else {
                     student_assignmentObj = {
-                        userID: user.id,
+                        SID: sid,
                         assignmentID: assignmentId,
                         score: score,
                         status: 1,
@@ -80,20 +83,21 @@ exports.getStudentAssignment = async (req, res) => {
     let result = await sidService.findBySidAndClassroomId(sid, classroomId);
     if (result) {
         let student_assignment = {
-            userID: result.userID,
+            SID: result.SID,
             assignmentID: parseInt(req.params.assignmentId),
         }
-        let result = await student_assignmentService.getStudentAssignment(student_assignment.userID, student_assignment.assignmentID);
+        let result = await student_assignmentService.getStudentAssignment(student_assignment.SID, student_assignment.assignmentID);
         if (result) {
             return res.status(200).json(result);
         }
-        else return res.status(500).json({msg: 'Cannot find result match this userID, assignmentID'});
+        else return res.status(500).json({msg: 'Cannot find result match this SID, assignmentID'});
     }
     else {
         return res.status(404).json({msg: 'This SID does not belong to any user'});
     }
 }
 
+// oh boi another fun one to fix
 exports.updateScore = async (req, res) => {
     let userId = parseInt(req.params.userId);
     let classroomId = parseInt(req.params.classroomId);
@@ -146,10 +150,10 @@ exports.delete = async (req, res) => {
     let result = await sidService.findBySidAndClassroomId(sid, classroomId);
     if (result) {
         let student_assignment = {
-            userID: result.userID,
+            SID: result.SID,
             assignmentID: parseInt(req.params.assignmentId),
         }
-        let result = await student_assignmentService.delete(student_assignment.userID, student_assignment.assignmentID);
+        let result = await student_assignmentService.delete(student_assignment.SID, student_assignment.assignmentID);
         if (result) {
             return res.status(200).json({msg: 'Delete successfully'});
         }

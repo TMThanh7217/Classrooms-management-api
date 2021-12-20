@@ -24,20 +24,6 @@ exports.createWithRole = async (req, res) => {
         })
 }
 
-exports.getRole = async(req, res) => {
-    let userID = parseInt(req.params.userId);
-    let classroomID = parseInt(req.params.classroomId);
-    user_classroomService.getRole(userID, classroomID)
-        .then( result => {
-            if (result) {
-                /*console.log(result);
-                console.log(result.role);*/
-                return res.status(200).json(result.role);
-            }
-            else return res.status(404).json({msg: 'Cannot find the role of this user'});
-        });
-};
-
 exports.getWithUserID = async(req, res) => {
     let userID = parseInt(req.params.userId);
     let query = req.query;
@@ -82,6 +68,7 @@ exports.updateUserCode = async (req, res) => {
         })
 };
 
+// fuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu hahh. Inhale, exhale, inhale, exhale ...
 exports.findClassroomsOfUserHasRole = async (req, res) => {
     const userId = req.params.userId
     const roles = req.query.roles

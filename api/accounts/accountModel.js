@@ -9,7 +9,19 @@ exports.create = async (account) => {
         password: account.password,
         userID: account.userID,
         createdDate: account.createdDate,
-        googleToken: account.googleToken
+        googleToken: account.googleToken,
+        role: 2
+    })
+}
+
+exports.createWithRole = async (account, role) => {
+    return await Account.create({
+        username: account.username,
+        password: account.password,
+        userID: account.userID,
+        createdDate: account.createdDate,
+        googleToken: account.googleToken,
+        role: role
     })
 }
 
@@ -20,6 +32,9 @@ exports.getAccountWithID = async (id) => {
         where: {
             id: id
         },
+        attributes: {
+            exclude: ['createdAt', 'updatedAt', 'createdDate']
+        },
         raw: true
     });
 };
@@ -29,6 +44,9 @@ exports.getAccountWithUserID = async (userID) => {
     return await Account.findOne({
         where: {
             userID: userID
+        },
+        attributes: {
+            exclude: ['createdAt', 'updatedAt', 'createdDate']
         },
         raw: true
     });
@@ -42,6 +60,16 @@ exports.getAccountWithUsername = async (username) => {
         attributes: {
             exclude: ['createdAt', 'updatedAt', 'createdDate']
         },
+        raw: true
+    });
+}
+
+exports.getRoleWithUserID = async (userID) => {
+    return await Account.findOne({
+        where: {
+            userID: userID
+        },
+        attributes: ['role'],
         raw: true
     });
 }
@@ -62,6 +90,16 @@ exports.update = async (account) => {
         username: account.username,
         password: account.password,
         googleToken: account.googleToken
+    }, {
+        where: {
+            id: account.id
+        }
+    });
+}
+
+exports.updateRole = async (account) => {
+    return await Account.update({
+        role: account.role
     }, {
         where: {
             id: account.id

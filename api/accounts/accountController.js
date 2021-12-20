@@ -17,7 +17,23 @@ exports.info = async function(req, res) {
             else 
                 return res.status(404).json({msg: 'Cannot find account info with the given id'});
         })
-}
+};
+
+// This is almost the same as the old user_classroom getRole function
+exports.getRole = async function(req, res) {
+    let userID = parseInt(req.params.userId);
+    accountService.getRoleWithUserID(userID)
+        .then( result => {
+            if (result) {
+                /*console.log(result);
+                console.log(result.role);*/
+                //return res.status(200).json(result);
+                // Why do i use result.role before in user_classroomController? idk check later
+                return res.status(200).json(result.role);
+            }
+            else return res.status(404).json({msg: 'Cannot find the role of this user'});
+        });
+};
 
 exports.register = async function(req, res) {
     // not really sure where username, password is store
@@ -70,7 +86,7 @@ exports.register = async function(req, res) {
                 });*/
                 console.log(account);
                 accountService
-                    .create(account)
+                    .create(account, 2) // default create set role to student
                     .then(newAccount => {
                         /*console.log('\nnew account id:');
                         console.log(newAccountID);*/
@@ -93,6 +109,7 @@ exports.listAllAccount = async (req, res) => {
         })
 };
 
+// this update user info only
 exports.update = async (req, res) => {
     let user = {
         id: parseInt(req.params.id)
@@ -181,7 +198,7 @@ exports.updateAccountInfo = async (req, res) => {
             account.googleToken = googleToken;
 
         accountService
-            .update(account)
+            .update(account) // update does not update role
             .then(updatedAccount => {
                 if (updatedAccount){
                     return res.status(200).json(updatedAccount);

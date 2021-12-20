@@ -1,8 +1,8 @@
 const user_classroomModel = require('./user_classroomModel');
 
-exports.create = async (user_classroom, role) => {
+exports.create = async (user_classroom) => {
     return await user_classroomModel
-        .create(user_classroom, role)
+        .create(user_classroom)
         .then(result => {
             return result;
         })
@@ -17,15 +17,6 @@ exports.findUserInClassroom = async (userID, classroomID) => {
         })
         .catch(err => console.log(err));
 };
-
-exports.getRole = async (userID, classroomID) => {
-    return await user_classroomModel
-        .getRole(userID, classroomID)
-        .then(result => {
-            return result;
-        })
-        .catch(err => console.log(err));
-}
 
 exports.getWithUserID = async (userID) => {
     return await user_classroomModel
@@ -51,8 +42,3 @@ exports.updateUserCode = async (userID, classroomID, userCode) => {
         })
         .catch(err => console.log(err));
 };
-
-exports.findClassroomsOfUserHasRole = async (userId, roleList) => {
-    let instance = await user_classroomModel.findClassroomsOfUserHasRole(userId, roleList)
-    return instance
-}

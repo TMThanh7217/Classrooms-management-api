@@ -68,6 +68,7 @@ exports.getByUserIDAndClassroomID = async (userID, classroomID) => {
     })
 }
 
+// uh oh
 exports.getStudentAndScoreByClassroomID = async classroomID => {
     return await sequelize.query(   
         `SELECT s.SID AS sid, s.name AS studentName, u.id AS userID, u.name as UserName, 

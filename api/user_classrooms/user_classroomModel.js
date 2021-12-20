@@ -4,11 +4,10 @@ const { Op } = require("sequelize");
 const { QueryTypes } = require('sequelize');
 const { sequelize } = require('../../models');
 
-exports.create = async (user_classroom, role) => {
+exports.create = async (user_classroom) => {
     return await UserClassroom.create({
         userID: user_classroom.userID,
-        classroomID: user_classroom.classroomID, 
-        role: role, // change this later, default = student 
+        classroomID: user_classroom.classroomID,
         userCode: user_classroom.userCode
     });
 }
@@ -22,17 +21,6 @@ exports.findUserInClassroom = async (userID, classroomID) => {
         },
         attributes: { exclude: ['createdAt', 'updatedAt'] }
     })
-}
-
-exports.getRole = async (userID, classroomID) => {
-    return await UserClassroom.findOne({
-        raw: true,
-        where: {
-            userID: userID,
-            classroomID: classroomID,
-        },
-        attributes: ['role']
-    });
 }
 
 exports.getWithUserID = async (userID) => {
@@ -67,6 +55,7 @@ exports.updateUserCode = async (userID, classroomID, userCode) => {
     })
 }
 
+// uh oh
 exports.findClassroomsOfUserHasRole = async (userId, roleList) => {
     return await sequelize.query(
         `SELECT Classrooms.name, Classrooms.id
