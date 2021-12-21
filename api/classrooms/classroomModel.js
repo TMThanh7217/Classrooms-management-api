@@ -96,7 +96,7 @@ exports.getUserListWithClassroomID = async (id) => {
 
 //----------------------------------------------------------Delete----------------------------------------------------------
 // Delete a classroom using id from Classroom model
-// Might want to fix this later, idk. In case need to return the deleted row try find with id firt before calling delete
+// Might want to fix this later, idk. In case need to return the deleted row try find with id first before calling delete
 exports.delete = async (id) => {
     return await Classroom.destroy({
         where: {

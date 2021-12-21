@@ -45,15 +45,20 @@ router.delete('/:classroomId/assignments/:assignmentId', passport.authenticate('
 // get all sid with classroomID
 router.get('/:classroomId/sids', passport.authenticate('jwt', { session: false }), sidController.findAllByClassroomId);
 
+// This one used the old SQL query before changing the database structure. Need a fix
 router.get('/:classroomId/scoreboard', passport.authenticate('jwt', { session: false }), sidController.findStudentAndScoreByClassroomID);
 
 // import student list
 router.post('/:classroomId/sids/import', passport.authenticate('jwt', { session: false }), sidController.importStudentList);
 
 // import grade for an assignment
+// also need a fix
+// did some adjustment not sure if working as intended
 router.post('/:classroomId/assignments/:assignmentId/scores/import', passport.authenticate('jwt', { session: false }), student_assignmentController.importGradeForAnAssignment);
 
 // update gradeboard score
+// yep this need some adjustment too
+// did some adjusment not sure if working as intended again
 router.put('/:classroomId/assignments/:assignmentId/scores/:userId', passport.authenticate('jwt', { session: false }), student_assignmentController.updateScore);
 
 // Add studentId
@@ -67,7 +72,7 @@ router.get('/invite/:inviteLink', classroomController.getClassroomDetailWithInvi
 /* Role */
 router.get('/:classroomId/users/:userId/role', accountController.getRole);
 
-// This gonna be a pain to fix
-router.post('/invite/join', user_classroomController.createWithRole);
+// user_classroom does not hold role anymore, account do now (the default role is 2). So just create should be suffice.
+router.post('/invite/join', user_classroomController.create);
 
 module.exports = router;

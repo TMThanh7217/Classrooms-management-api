@@ -1,10 +1,9 @@
 const user_classroomService = require('./user_classroomService');
 
-exports.createWithRole = async (req, res) => {
+exports.create = async (req, res) => {
     let user_classroom = {
         userID: parseInt(req.body.userID),
         classroomID: parseInt(req.body.classroomID),
-        role: parseInt(req.body.role), // change this later, default = student 
         userCode: ''
     }
     
@@ -13,7 +12,7 @@ exports.createWithRole = async (req, res) => {
         .then((userclassroom) => {
             console.log('a',userclassroom) 
             if (!userclassroom) {
-                user_classroomService.create(user_classroom, user_classroom.role) // 2 = Student, default should be this
+                user_classroomService.create(user_classroom) // 2 = Student, default should be this
                 .then(result => {
                     if (result)
                         return res.status(200).json(result);
@@ -72,6 +71,7 @@ exports.updateUserCode = async (req, res) => {
 exports.findClassroomsOfUserHasRole = async (req, res) => {
     const userId = req.params.userId
     const roles = req.query.roles
+    // delete the function in user_classroomService at some point. Find a fix later 
     const instance = await user_classroomService.findClassroomsOfUserHasRole(userId, roles)
     return instance ? 
         res.status(200).json(instance) :

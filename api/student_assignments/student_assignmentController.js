@@ -40,38 +40,37 @@ exports.importGradeForAnAssignment = async (req, res) => {
         let result = await sidService.findBySidAndClassroomId(sid, classroomId);
         if (result) {
             console.log('Pass findBySidAndClassroomId check');
-            // yeah need a fix here. Not sure a bout checking account or user here. Maybe just straight up remove the check and pretend nothing happened.
-            // Did some slight modification on sid
-            let user = await userService.getUserWithID(result.userID);
-            if (user) {
-                console.log('Pass getUserWithID check');
-                let student_assignment = await student_assignmentService.getStudentAssignment(sid, assignmentId);
-                if (student_assignment) {
-                    updateInfo = {
-                        SID: sid,
-                        assignmentID: student_assignment.assignmentID,
-                        score: score,
-                        status: 1,
-                    }
-                    let updatedSA = await student_assignmentService.update(updateInfo);
-                    if (updatedSA) {
-                        console.log('Update SA successfully');
-                    }
-                    else console.log('Update SA fail');
+            // Yep no need to check here, if there is an SID, show it and done
+            let student_assignment = await student_assignmentService.getStudentAssignment(sid, assignmentId);
+            if (student_assignment) {
+                updateInfo = {
+                    SID: sid,
+                    assignmentID: student_assignment.assignmentID,
+                    score: score,
+                    status: 1, // Think this was to mark the assignment is done. No need for it now
                 }
-                else {
-                    student_assignmentObj = {
-                        SID: sid,
-                        assignmentID: assignmentId,
-                        score: score,
-                        status: 1,
-                    }
-                    let newSA = await student_assignmentService.create(student_assignmentObj);
-                    if (newSA)
-                        console.log('Create new SA successfully');
-                    else console.log('Create SA fail');
+                // This update does not update SID and assignmentID, need these two for where clause though
+                let updatedSA = await student_assignmentService.update(updateInfo);
+                if (updatedSA) {
+                    console.log('Update SA successfully');
                 }
+                else console.log('Update SA fail');
             }
+            else {
+                student_assignmentObj = {
+                    SID: sid,
+                    assignmentID: assignmentId,
+                    score: score,
+                    status: 1,
+                }
+                let newSA = await student_assignmentService.create(student_assignmentObj);
+                if (newSA)
+                    console.log('Create new SA successfully');
+                else console.log('Create SA fail');
+            }
+        }
+        else {
+            console.log(`Cannot find with sid: ${sid} in classroom ${classroomId}`);
         }
     }
     return res.status(200).json({msg: 'Import grade for this assignment successfully'});
@@ -98,6 +97,7 @@ exports.getStudentAssignment = async (req, res) => {
 }
 
 // oh boi another fun one to fix
+// Currently this do a check if anyone has map with this SID, if not then don't update the score.
 exports.updateScore = async (req, res) => {
     let userId = parseInt(req.params.userId);
     let classroomId = parseInt(req.params.classroomId);
@@ -108,7 +108,7 @@ exports.updateScore = async (req, res) => {
     console.log("assignmentId:", assignmentId);*/
     if (result) {
         let student_assignment = {
-            userID: result.userID,
+            SID: result.SID,
             assignmentID: assignmentId,
             score: parseFloat(req.body.score),
             status: 1
@@ -120,8 +120,9 @@ exports.updateScore = async (req, res) => {
             return res.status(200).json({msg: 'Update successfully'});
         }
         else return res.status(500).json({msg: 'Update fail'});*/
-        let oldSA = await student_assignmentService.getStudentAssignment(student_assignment.userID, student_assignment.assignmentID);
+        let oldSA = await student_assignmentService.getStudentAssignment(student_assignment.SID, student_assignment.assignmentID);
         if (oldSA) {
+            // update score and status, SID and assignmentID is used for where clause
             let updatedSA = await student_assignmentService.update(student_assignment);
             if (updatedSA) {
                 //console.log("student assignment", student_assignment);
@@ -131,12 +132,63 @@ exports.updateScore = async (req, res) => {
             else return res.status(500).json({msg: 'Update fail'});
         }
         else {
+            // Why do i create a new SA when this is a update function? Wah?
             let newSA = await student_assignmentService.create(student_assignment);
             if (newSA) {
-                console.log('newSA: ', newSA.userID, newSA.assignmentID);
-                return res.status(200).json({msg: 'Create successfully'});
+                console.log('newSA: ', newSA.SID, newSA.assignmentID);
+                return res.status(200).json({msg: 'Create new SA successfully'});
             }
-            else return res.status(500).json({msg: 'Create fail'});
+            else return res.status(500).json({msg: 'Create new SA fail'});
+        }
+    }
+    else {
+        return res.status(404).json({msg: 'This SID does not belong to any user'});
+    }
+}
+
+// Copy paste from above, this one need the SID from req.parms
+// Change the function name later
+exports.updateScoreUsingSID = async (req, res) => {
+    let SID = parseInt(req.params.SID);
+    let classroomId = parseInt(req.params.classroomId);
+    let assignmentId = parseInt(req.params.assignmentId);
+    let result = await sidService.findBySidAndClassroomId(SID, classroomId);
+    /*console.log("userId:", userId);
+    console.log("classroomId:", classroomId);
+    console.log("assignmentId:", assignmentId);*/
+    if (result) {
+        let student_assignment = {
+            SID: result.SID,
+            assignmentID: assignmentId,
+            score: parseFloat(req.body.score),
+            status: 1
+        }
+        /*let updatedSA = await student_assignmentService.update(student_assignment);
+        if (updatedSA) {
+            console.log("student assignment", student_assignment);
+            console.log("updatedSA", updatedSA);
+            return res.status(200).json({msg: 'Update successfully'});
+        }
+        else return res.status(500).json({msg: 'Update fail'});*/
+        let oldSA = await student_assignmentService.getStudentAssignment(student_assignment.SID, student_assignment.assignmentID);
+        if (oldSA) {
+            // update score and status, SID and assignmentID is used for where clause
+            let updatedSA = await student_assignmentService.update(student_assignment);
+            if (updatedSA) {
+                //console.log("student assignment", student_assignment);
+                console.log("updatedSA", updatedSA);
+                return res.status(200).json({msg: 'Update successfully'});
+            }
+            else return res.status(500).json({msg: 'Update fail'});
+        }
+        else {
+            // Why do i create a new SA when this is a update function? Wah?
+            let newSA = await student_assignmentService.create(student_assignment);
+            if (newSA) {
+                console.log('newSA: ', newSA.SID, newSA.assignmentID);
+                return res.status(200).json({msg: 'Create new SA successfully'});
+            }
+            else return res.status(500).json({msg: 'Create new SA fail'});
         }
     }
     else {
