@@ -9,12 +9,13 @@ API for Classrooms-management-website repos
 ## Host:
 * Midterm: https://classrooms-management-api.herokuapp.com/
 * BTN01 - Manage grade structure: https://classroom-managment-btn01.herokuapp.com/
-* BTN02 - Grade management: ...
+* BTN02 - Grade management: https://classroom-managment-btn02.herokuapp.com/
 
 ## Branch:
 * Development: main
 * Midterm: midterm-ver
 * BTN01 - Manage grade structure: btn01
+* BTN02 - Grade management: btn02
 
 ## Database script:
 * sequelize db:migrate
