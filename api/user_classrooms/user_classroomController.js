@@ -1,4 +1,5 @@
 const user_classroomService = require('./user_classroomService');
+const accountService = require('../accounts/accountService');
 
 exports.create = async (req, res) => {
     let user_classroom = {
@@ -68,7 +69,9 @@ exports.updateUserCode = async (req, res) => {
 };
 
 // fuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu hahh. Inhale, exhale, inhale, exhale ...
-exports.findClassroomsOfUserHasRole = async (req, res) => {
+// Frontend use this in getClassroomsThatUserHasRoleTeacher.
+// Look like this was used to get all classrooms that this user has role teacher in those classrooms.
+/*exports.findClassroomsOfUserHasRole = async (req, res) => {
     const userId = req.params.userId
     const roles = req.query.roles
     // delete the function in user_classroomService at some point. Find a fix later 
@@ -76,4 +79,28 @@ exports.findClassroomsOfUserHasRole = async (req, res) => {
     return instance ? 
         res.status(200).json(instance) :
         res.status(500).json({msg: "Unexpected error."})
+}*/
+
+// Change the function so that it check the role of req userId fist if they has teacher role. If not return error, if yes return the userclassroom list 
+exports.findClassroomsOfUserHasRole = async (req, res) => {
+    const userId = req.params.userId
+    const roles = req.query.roles
+    console.log("roles: ", roles);
+    // delete the function in user_classroomService at some point. Find a fix later 
+    const instance = await accountService.getAccountWithUserID(userId);
+    if (instance) {
+        if (instance.role == 1) {
+            let result = await user_classroomService.findClassroomsWithUserId(userId);
+            console.log("result: ",result);
+            return result ? 
+                res.status(200).json(result) :
+                res.status(500).json({msg: "Unexpected error."})
+        }
+        else {
+            return res.status(500).json({msg: "This user does not has role teacher."});
+        }
+    }
+    else {
+        return res.status(500).json({msg: "Cannot find any result match this userId"});
+    }
 }

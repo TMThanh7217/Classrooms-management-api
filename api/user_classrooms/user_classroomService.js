@@ -18,6 +18,15 @@ exports.findUserInClassroom = async (userID, classroomID) => {
         .catch(err => console.log(err));
 };
 
+exports.findClassroomsWithUserId = async (userID) => {
+    return await user_classroomModel
+        .findClassroomsWithUserId(userID)
+        .then(result => {
+            return result;
+        })
+        .catch(err => console.log(err));
+};
+
 exports.getWithUserID = async (userID) => {
     return await user_classroomModel
         .getWithUserID(userID)

@@ -76,7 +76,7 @@ exports.getUserListWithClassroomID = async (id) => {
         include: [{
             model: model.User,
             through: {
-                attributes: ['userID', 'classroomID', 'role', 'userCode'] // pass nothing if don't want any other attributes in the UserClassroom model 
+                attributes: ['userID', 'classroomID', 'userCode'] // pass nothing if don't want any other attributes in the UserClassroom model 
             },
             attributes: ['id', 'name', 'dob', 'email', 'sex']
             //attributes: [[Sequelize.col('id'), 'user_id'], [Sequelize.col('name'), 'user_name'], 'dob', 'email', 'sex']

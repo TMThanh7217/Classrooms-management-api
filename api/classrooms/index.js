@@ -45,7 +45,7 @@ router.delete('/:classroomId/assignments/:assignmentId', passport.authenticate('
 // get all sid with classroomID
 router.get('/:classroomId/sids', passport.authenticate('jwt', { session: false }), sidController.findAllByClassroomId);
 
-// This one used the old SQL query before changing the database structure. Need a fix
+// Change the sql statement a bit. May need further testing
 router.get('/:classroomId/scoreboard', passport.authenticate('jwt', { session: false }), sidController.findStudentAndScoreByClassroomID);
 
 // import student list

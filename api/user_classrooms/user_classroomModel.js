@@ -56,13 +56,15 @@ exports.updateUserCode = async (userID, classroomID, userCode) => {
 }
 
 // uh oh
-exports.findClassroomsOfUserHasRole = async (userId, roleList) => {
+// Change findClassroomsOfUserHasRole to findClassroomsWithUserId so that it use userId for where clause only since the role was moved to Account.
+// The check for role was done before calling this 
+exports.findClassroomsWithUserId = async (userId) => {
     return await sequelize.query(
         `SELECT Classrooms.name, Classrooms.id
         FROM UserClassrooms JOIN Classrooms ON (UserClassrooms.ClassroomID = Classrooms.id)
-        WHERE UserClassrooms.userID = :userId AND UserClassrooms.role IN (:role)`,
+        WHERE UserClassrooms.userID = :userId`,
         {
-            replacements: { userId: userId, role: roleList },
+            replacements: { userId: userId },
             type: QueryTypes.SELECT
         }
     )
