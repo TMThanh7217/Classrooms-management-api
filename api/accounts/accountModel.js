@@ -80,7 +80,19 @@ exports.getAllAccount = async () => {
         attributes: {
             exclude: ['createdAt', 'updatedAt', 'createdDate']
         }
-    })
+    });
+}
+
+getAllAccountWithRole = async (role) => {
+    return await Account.findAll({
+        raw: true,
+        where: {
+            role: role
+        },
+        attributes: {
+            exclude: ['createdAt', 'updatedAt', 'createdDate']
+        }
+    });
 }
 
 //----------------------------------------------------------Update----------------------------------------------------------

@@ -54,6 +54,15 @@ exports.getRoleWithUserID = async (userID) => {
         .catch(err => (console.log(err)));
 }
 
+exports.getAllAccountWithRole = async (role) => {
+    return await accountModel
+        .getAllAccountWithRole(role)
+        .then(result => {
+            return result;
+        })
+        .catch(err => console.log(err));
+}
+
 exports.create = async (account, role) => {
     return await accountModel
         .createWithRole(account, role)
