@@ -5,7 +5,8 @@
     "description": "Compatible 4th generation projection",
     "start_time": "2021-09-16",
     "end_time": "2021-01-01",
-    "position": 1
+    "position": 1,
+    "finalize": 0
   }, {
     "classroomID": 1,
     "name": "Bigtax",
@@ -13,7 +14,8 @@
     "description": "Down-sized secondary local area network",
     "start_time": "2021-06-17",
     "end_time": "2020-11-27",
-    "position": 2
+    "position": 2,
+    "finalize": 0
   }, {
     "classroomID": 2,
     "name": "Flexidy",
@@ -21,7 +23,8 @@
     "description": "Upgradable homogeneous forecast",
     "start_time": "2021-06-01",
     "end_time": "2021-09-10",
-    "position": 1
+    "position": 1,
+    "finalize": 0
   }, {
     "classroomID": 3,
     "name": "Keylex",
@@ -29,7 +32,8 @@
     "description": "Cross-group logistical methodology",
     "start_time": "2021-08-19",
     "end_time": "2021-03-01",
-    "position": 1
+    "position": 1,
+    "finalize": 0
   }, {
     "classroomID": 4,
     "name": "Cardguard",
@@ -37,7 +41,8 @@
     "description": "Front-line responsive flexibility",
     "start_time": "2021-09-03",
     "end_time": "2021-06-03",
-    "position": 1
+    "position": 1,
+    "finalize": 0
   }, {
     "classroomID": 5,
     "name": "Sonsing",
@@ -45,7 +50,8 @@
     "description": "Virtual well-modulated support",
     "start_time": "2021-10-29",
     "end_time": "2020-12-30",
-    "position": 1
+    "position": 1,
+    "finalize": 0
   }, {
     "classroomID": 6,
     "name": "Zaam-Dox",
@@ -53,7 +59,8 @@
     "description": "Re-contextualized demand-driven intranet",
     "start_time": "2021-02-17",
     "end_time": "2021-10-12",
-    "position": 1
+    "position": 1,
+    "finalize": 0
   }, {
     "classroomID": 7,
     "name": "Kanlam",
@@ -61,7 +68,8 @@
     "description": "Team-oriented optimal analyzer",
     "start_time": "2021-08-09",
     "end_time": "2021-02-04",
-    "position": 1
+    "position": 1,
+    "finalize": 0
   }, {
     "classroomID": 8,
     "name": "Tres-Zap",
@@ -69,7 +77,8 @@
     "description": "Inverse motivating concept",
     "start_time": "2021-07-31",
     "end_time": "2020-12-05",
-    "position": 1
+    "position": 1,
+    "finalize": 0
   }, {
     "classroomID": 9,
     "name": "Transcof",
@@ -77,7 +86,8 @@
     "description": "Multi-lateral logistical info-mediaries",
     "start_time": "2021-04-01",
     "end_time": "2021-08-11",
-    "position": 1
+    "position": 1,
+    "finalize": 0
   }, {
     "classroomID": 10,
     "name": "Holdlamis",
@@ -85,7 +95,8 @@
     "description": "Organic incremental contingency",
     "start_time": "2021-11-07",
     "end_time": "2021-09-12",
-    "position": 1
+    "position": 1,
+    "finalize": 0
   }, {
     "classroomID": 5,
     "name": "Otcom",
@@ -93,7 +104,8 @@
     "description": "Digitized clear-thinking protocol",
     "start_time": "2021-11-05",
     "end_time": "2021-02-17",
-    "position": 2
+    "position": 2,
+    "finalize": 0
   }, {
     "classroomID": 3,
     "name": "Voltsillam",
@@ -101,7 +113,8 @@
     "description": "Configurable demand-driven orchestration",
     "start_time": "2021-02-10",
     "end_time": "2021-08-15",
-    "position": 2
+    "position": 2,
+    "finalize": 0
   }, {
     "classroomID": 2,
     "name": "Andalax",
@@ -109,7 +122,8 @@
     "description": "Cross-platform user-facing intranet",
     "start_time": "2021-03-27",
     "end_time": "2020-12-29",
-    "position": 2
+    "position": 2,
+    "finalize": 0
   }, {
     "classroomID": 5,
     "name": "Prodder",
@@ -117,6 +131,7 @@
     "description": "Persistent demand-driven migration",
     "start_time": "2021-05-18",
     "end_time": "2021-05-25",
-    "position": 3
+    "position": 3,
+    "finalize": 0
   }]
   

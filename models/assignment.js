@@ -25,7 +25,8 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT,
     start_time: DataTypes.DATE,
     end_time: DataTypes.DATE,
-    position: DataTypes.INTEGER
+    position: DataTypes.INTEGER,
+    finalize: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Assignment',

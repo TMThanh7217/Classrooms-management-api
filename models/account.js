@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     createdDate: DataTypes.DATE,
     googleToken: DataTypes.STRING,
     role: DataTypes.INTEGER,
+    status: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Account',

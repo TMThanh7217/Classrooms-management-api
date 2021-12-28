@@ -33,6 +33,9 @@ module.exports = {
       position: {
         type: Sequelize.INTEGER
       },
+      finalize: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

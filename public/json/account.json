@@ -4,68 +4,78 @@
     "userID": 1,
     "createdDate": "2021-03-03",
     "googleToken": "",
-    "role": 1
+    "role": 1,
+    "status": 0
   }, {
     "username": "student",
     "password": "student",
     "userID": 2,
     "createdDate": "2021-10-24",
     "googleToken": "",
-    "role": 2
+    "role": 1,
+    "status": 0
   }, {
     "username": "admin",
     "password": "admin",
     "userID": 3,
     "createdDate": "2021-03-12",
     "googleToken": "",
-    "role": 0
+    "role": 0,
+    "status": 0
   }, {
     "username": "cespino3",
     "password": "MFTIFbJP",
     "userID": 4,
     "createdDate": "2021-09-27",
     "googleToken": "",
-    "role": 2
+    "role": 1,
+    "status": 0
   }, {
     "username": "ejeandeau4",
     "password": "FcDrE7VMtU",
     "userID": 5,
     "createdDate": "2020-12-31",
     "googleToken": "",
-    "role": 2
+    "role": 1,
+    "status": 0
   }, {
     "username": "zkubik5",
     "password": "t4bRlmb",
     "userID": 6,
     "createdDate": "2021-02-05",
     "googleToken": "",
-    "role": 2
+    "role": 1,
+    "status": 0
   }, {
     "username": "gcrowne6",
     "password": "loOc5PpfB",
     "userID": 7,
     "createdDate": "2021-04-29",
     "googleToken": "",
-    "role": 2
+    "role": 1,
+    "status": 0
   }, {
     "username": "fluna7",
     "password": "AnHHLoC",
     "userID": 8,
     "createdDate": "2021-01-06",
     "googleToken": "",
-    "role": 2
+    "role": 1,
+    "status": 0
   }, {
     "username": "rnuzzetti8",
     "password": "0dwSUm0tACEG",
     "userID": 9,
     "createdDate": "2021-06-01",
     "googleToken": "",
-    "role": 2
+    "role": 1,
+    "status": 0
   }, {
     "username": "fcheeseman9",
     "password": "VEnz8BmmYA",
     "userID": 10,
     "createdDate": "2021-10-07",
     "googleToken": "",
-    "role": 2
+    "role": 1,
+    "status": 0
   }]
