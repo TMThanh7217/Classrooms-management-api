@@ -44,7 +44,24 @@ exports.checkTeacherRole = async (req, res, next) => {
     await accountService.getRoleWithUserID(userID)
         .then(result => {
             console.log(result);
-            if (result.role == 0 || result.role == 1)  // 0 is reserved for admin after changing the database structure but oh well. Whatever i guess
+            if (result.role == 1)
+                next();
+            else res.status(500).json({msg: 'Check authorization fail'});
+        })
+}
+
+exports.checkAdminRole = async (req, res, next) => {
+    console.log('Checking user jwt');
+    console.log(req.user)
+    // be mindfull about which parameter in req hold classroom id
+    let classroomID = parseInt(req.params.classroomId) || parseInt(req.params.id);
+    console.log("Classroom id here: ");
+    console.log(classroomID);
+    let userID = parseInt(req.user.userID); // Also here
+    await accountService.getRoleWithUserID(userID)
+        .then(result => {
+            console.log(result);
+            if (result.role == 0)
                 next();
             else res.status(500).json({msg: 'Check authorization fail'});
         })

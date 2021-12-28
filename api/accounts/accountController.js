@@ -208,3 +208,23 @@ exports.updateAccountInfo = async (req, res) => {
     }
     else return res.status(404).json({msg: 'Cannot find this account'});
 }
+
+exports.updateStatus = async (req, res) => {
+    let account = {
+        id: parseInt(req.body.id),
+        status: parseInt(req.body.status),
+    }
+
+    let oldAccount = await accountService.getAccountWithID(account.id);
+    if (oldAccount) {
+        accountService
+            .updateStatus(account.id, account.status)
+            .then(result => {
+                if (result){
+                    return res.status(200).json(result);
+                }
+                else return res.status(500).json({msg: 'Cannot update account status'});
+            })
+    }
+    else return res.status(404).json({msg: 'Cannot find this account'});
+}

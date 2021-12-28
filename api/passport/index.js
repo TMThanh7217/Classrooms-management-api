@@ -17,6 +17,11 @@ passport.use(new LocalStrategy( async (username, password, done) => {
     let account = await accountModel.getAccountWithUsername(username.toLowerCase());
     //console.log(account);
     if (account) {
+        // account status used to show if an account is normal or lock, ...
+        // 0 = default = not lock, 1 = lock/ban
+        if (account.status == 1)
+            return done(null, false, { message: 'This account has been locked.'});
+            
         /*console.log('account check when log in');
         console.log(account);*/
         /*bcrypt.compare(password, account.password, (err, same) => {
@@ -33,7 +38,7 @@ passport.use(new LocalStrategy( async (username, password, done) => {
         }
         return done(null, false, { message: 'Incorrect username or password.'});
     }
-    return done(null, false, { message: 'error'});
+    return done(null, false, { message: 'Error'});
 }));
 
 // Using passport-jwt to verify JWT

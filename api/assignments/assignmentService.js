@@ -71,6 +71,15 @@ exports.updateAssignmentPosition = async (id, classroomID, position) => {
         .catch(err => console.log(err));
 }
 
+exports.updateFinalize = async (id, classroomID, finalize) => {
+    return await assignmentModel
+        .updateFinalize(id, classroomID, finalize)
+        .then(result => {
+            return result;
+        })
+        .catch(err => console.log(err));
+}
+
 //----------------------------------------------------------Delete----------------------------------------------------------
 // may need to check this later
 exports.delete = async (id, name, classroomID) => {

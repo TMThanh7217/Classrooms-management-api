@@ -73,3 +73,12 @@ exports.update = async (account) => {
         })
         .catch(err => (console.log(err)));
 }
+
+exports.updateStatus = async (id, status) => {
+    return await accountModel
+        .updateStatus(id, status)
+        .then( result => {
+            return result;
+        })
+        .catch(err => (console.log(err)));
+}

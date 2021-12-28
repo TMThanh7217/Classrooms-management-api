@@ -227,6 +227,23 @@ exports.updateAssignmentPosition = async (req, res) => {
     res.status(200).json({msg: 'update assignment pos success'});
 }
 
+exports.setFinalize = async (req, res) => {
+    let assignment = {
+        id: parseInt(req.params.assignmentId),
+        classroomID: parseInt(req.params.classroomId),
+        //name: req.body.name,
+    }
+    
+    let finalize = parseInt(req.body.finalize); // 0 = not finalize, 1 = finalize
+
+    assignmentService.updateFinalize(assignment.id, assignment.classroomID, finalize)
+        .then(result => {
+            if (result) 
+                return res.status(200).json(result);
+            else return res.status(500).json({msg: 'Cannot finalize this grade composition'});
+            }) 
+}
+
 //----------------------------------------------------------Delete----------------------------------------------------------
 // may need to check this later
 exports.delete = async (req, res) => {

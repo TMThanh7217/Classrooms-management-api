@@ -34,6 +34,9 @@ router.post('/:classroomId/assignments', passport.authenticate('jwt', { session:
 //update assignment
 router.put('/:classroomId/assignments/:assignmentId', passport.authenticate('jwt', { session: false }), authorization.checkTeacherRole, assignmentController.update);
 
+//finalize assignment/grade composition
+router.put('/:classroomId/assignments/:assignmentId', passport.authenticate('jwt', { session: false }), authorization.checkTeacherRole, assignmentController.setFinalize);
+
 // check the role of these two router later
 // update assignment's position
 router.put('/:classroomId/assignments/', passport.authenticate('jwt', { session: false }), authorization.checkTeacherRole, assignmentController.updateAssignmentPosition);

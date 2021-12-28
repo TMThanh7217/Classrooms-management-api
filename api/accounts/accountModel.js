@@ -107,6 +107,16 @@ exports.updateRole = async (account) => {
     });
 }
 
+exports.updateStatus = async (id, status) => {
+    return await Account.update({
+        status: status
+    }, {
+        where: {
+            id: id
+        }
+    });
+}
+
 //----------------------------------------------------------Delete----------------------------------------------------------
 exports.delete = async (id) => {
     return await Account.destroy({

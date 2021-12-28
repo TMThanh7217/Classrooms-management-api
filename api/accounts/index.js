@@ -4,6 +4,7 @@ const router = express.Router();
 const passport = require('../passport');
 const jwt = require('jsonwebtoken');
 const accountController = require('./accountController');
+const authorization = require('../authorization/classroomAuth');
 
 // for debugging, delete or comment this later
 router.get('/listAll', accountController.listAllAccount);
@@ -36,9 +37,16 @@ router.post('/register', accountController.register);
 
 // update profile (info in user model)
 router.put('/:id', passport.authenticate('jwt', { session: false }), accountController.update);
+
 // This route id is user id
+// This was called in frontend's updateProfile api
 router.put('/update-user-info/:id', passport.authenticate('jwt', { session: false }), accountController.update);
+
 // This route id is account id
+// This has not been used in frontend yet
 router.put('/update-account-info/:id', passport.authenticate('jwt', { session: false }), accountController.updateAccountInfo);
+
+// Update account status, need account id
+router.put('/update-account-status/:id', passport.authenticate('jwt', { session: false }), authorization.checkAdminRole, accountController.updateStatus);
 
 module.exports = router;
