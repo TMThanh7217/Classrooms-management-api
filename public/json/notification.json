@@ -1,0 +1,9 @@
+[{
+    "title": "Notification test teacher",
+    "content": "This is the content for teacher",
+    "userID": 1
+}, {
+    "title": "Notification test student",
+    "content": "This is the content for student",
+    "userID": 2
+}]
