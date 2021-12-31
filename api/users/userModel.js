@@ -19,7 +19,7 @@ exports.getUserWithID = async (id) => {
             id: id
         },
         attributes: { 
-            exclude: ['createdAt', 'updatedAt']
+            exclude: ['updatedAt']
         },
         raw: true
     });
@@ -32,7 +32,7 @@ exports.getUserWithEmail = async (email) => {
             email: email
         },
         attributes: {
-            exclude: ['createdAt', 'updatedAt']
+            exclude: ['updatedAt']
         }
     })
 }
@@ -53,7 +53,7 @@ exports.getAllUser = async () => {
     return await User.findAll({
         raw: true,
         attributes: { 
-            exclude: ['createdAt', 'updatedAt']
+            exclude: ['updatedAt']
         },
     })
 }

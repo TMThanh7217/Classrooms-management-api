@@ -33,7 +33,7 @@ exports.getAccountWithID = async (id) => {
             id: id
         },
         attributes: {
-            exclude: ['createdAt', 'updatedAt', 'createdDate']
+            exclude: ['updatedAt', 'createdDate']
         },
         raw: true
     });
@@ -46,7 +46,7 @@ exports.getAccountWithUserID = async (userID) => {
             userID: userID
         },
         attributes: {
-            exclude: ['createdAt', 'updatedAt', 'createdDate']
+            exclude: ['updatedAt', 'createdDate']
         },
         raw: true
     });
@@ -58,7 +58,7 @@ exports.getAccountWithUsername = async (username) => {
             username: username
         },
         attributes: {
-            exclude: ['createdAt', 'updatedAt', 'createdDate']
+            exclude: ['updatedAt', 'createdDate']
         },
         raw: true
     });
@@ -78,7 +78,7 @@ exports.getAllAccount = async () => {
     return await Account.findAll({
         raw: true,
         attributes: {
-            exclude: ['createdAt', 'updatedAt', 'createdDate']
+            exclude: ['updatedAt', 'createdDate']
         }
     });
 }
@@ -90,7 +90,7 @@ getAllAccountWithRole = async (role) => {
             role: role
         },
         attributes: {
-            exclude: ['createdAt', 'updatedAt', 'createdDate']
+            exclude: ['updatedAt', 'createdDate']
         }
     });
 }
