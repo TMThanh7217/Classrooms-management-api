@@ -61,7 +61,7 @@ exports.getClassroomDetailWithID = async (id) => {
     });
 };
 
-exports.getClassroomDetailWithInviteLink = async (inviteLink) => {
+exports.getClassroomWithInviteLink = async (inviteLink) => {
     return await Classroom.findOne({
         raw: true,
         where: {

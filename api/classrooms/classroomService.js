@@ -61,9 +61,9 @@ exports.getUserListWithClassroomID = async (id) => {
         .catch(err => console.log(err));
 }
 
-exports.getClassroomDetailWithInviteLink = async (inviteLink) => {
+exports.getClassroomWithInviteLink = async (inviteLink) => {
     return await classroomModel
-        .getClassroomDetailWithInviteLink(inviteLink)
+        .getClassroomWithInviteLink(inviteLink)
         .then(classroomDetail => {
             return classroomDetail;
         })

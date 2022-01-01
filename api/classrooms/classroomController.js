@@ -116,7 +116,7 @@ exports.listAllClassroomWithUserID = async function(req, res) {
   }
 };
 
-exports.getUserListWithClassroomID = async function(req, res) {
+exports.getClassroomDetailWithClassroomID = async function(req, res) {
   let id = parseInt(req.params.id); // maybe change this later
   let classroomDetail = await classroomService.getClassroomDetailWithID(id)
   if (classroomDetail) {
@@ -151,14 +151,13 @@ exports.getUserListWithClassroomID = async function(req, res) {
     }
     else {
       //console.log("No classroom");
-      return res.status(404).json({msg: 'Cannot find classroom with the given id'});
+      return res.status(404).json({msg: 'Cannot find any user in this classroom'});
     }
   }
   else {
     //console.log("No classroom");
     return res.status(404).json({msg: 'Cannot find classroom with the given id'});
   }
-
   /*classroomService.getClassroomDetailWithID(id)
     .then( classroomDetail => {
       if (classroomDetail) {
@@ -210,10 +209,41 @@ exports.getClassroomDetailWithID = function(req, res) {
 exports.getClassroomDetailWithInviteLink = function(req, res) {
   let inviteLink = req.params.inviteLink;
   //console.log(inviteLink);
-  classroomService.getClassroomDetailWithInviteLink(inviteLink)
-    .then(classroomDetail => {
-      if (classroomDetail) {
-        return res.status(200).json(classroomDetail);
+ 
+  classroomService.getClassroomWithInviteLink(inviteLink)
+    .then(classroom => {
+      if (classroom) {
+        // copy paste from getClassroomDetailWithClassroomID, used to be called getUserListWithClassroomID
+        // did some sligth modification
+        let id = classroom.id;
+        let classroomDetail = await classroomService.getClassroomDetailWithID(id)
+        if (classroomDetail) {
+          // userList is an array why idk
+          let userList = await classroomService.getUserListWithClassroomID(id);
+          if (userList) {
+            let creator = await userService.info(userList[0].createdBy);
+            let teacherNumber = 0;
+            let studentNumber = 0;
+            for (let i = 0; i < userList.length; i++) {
+              let role = await accountService.getRoleWithUserID(userList[i].Users.id);
+              userList[i].Users.role = role.role;
+              if (role.role == 1)
+                teacherNumber += 1;
+              if (role.role == 2)
+                studentNumber += 1;
+            }
+            classroomDetail.classmemberAmount = userList.length;
+            classroomDetail.teacherNumber = teacherNumber;
+            classroomDetail.studentNumber = studentNumber;
+            return res.status(200).json({classroomDetail, creator, userList});
+          }
+          else {
+            return res.status(404).json({msg: 'Cannot find any user in this classroom'});
+          }
+        }
+        else {
+          return res.status(404).json({msg: 'Cannot find classroom with the given id'});
+        }
       }
       else {
         return res.status(404).json({msg: 'Cannot find classroom with the invite link'});

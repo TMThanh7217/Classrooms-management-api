@@ -19,7 +19,7 @@ router.get('/', passport.authenticate('jwt', { session: false }), classroomContr
 
 /* Classroom detail */
 //router.get('/:id', classroomController.getClassroomDetailWithID);
-router.get('/:id', passport.authenticate('jwt', { session: false }), authorization.checkAllRole, classroomController.getUserListWithClassroomID);
+router.get('/:id', passport.authenticate('jwt', { session: false }), authorization.checkAllRole, classroomController.getClassroomDetailWithClassroomID);
 
 /* Add a new class */
 router.post('/', passport.authenticate('jwt', { session: false }), classroomController.create);
