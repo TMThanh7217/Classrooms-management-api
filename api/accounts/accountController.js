@@ -3,27 +3,6 @@ const userService = require('../users/userService');
 const bcrypt = require('bcrypt');
 const saltRound = 11;
 
-// This acutally get info inside User model, not info in Account model
-exports.info = async function(req, res) {
-     // The id is returned when user login, store it in local storage or cookies or whatever and use it here
-    let userId = parseInt(req.query.id);
-    // using userService here might be dumb but oh well
-    /*console.log("Hello?");
-    console.log(userId);*/
-    
-    let account = await accountService.getAccountWithUserID(userId);
-    if (account) {
-        let accountInfo = await userService.info(userId);
-        if (accountInfo){
-            // Add the role since this maybe needed
-            accountInfo.role = account.role;
-            return res.status(200).json(accountInfo);
-        }
-        else 
-            return res.status(404).json({msg: 'Cannot find account info with the given id'});
-    }
-};
-
 // This is almost the same as the old user_classroom getRole function
 exports.getRole = async function(req, res) {
     let userID = parseInt(req.params.userId);

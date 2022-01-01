@@ -9,9 +9,6 @@ const authorization = require('../authorization/classroomAuth');
 // for debugging, delete or comment this later
 router.get('/listAll', accountController.listAllAccount);
 
-// profile page
-router.get('/', passport.authenticate('jwt', { session: false }), accountController.info);
-
 // handle login
 router.post('/login', passport.authenticate('local', { session: false }),
     function (req, res) {
@@ -40,6 +37,7 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), accountCont
 
 // This route id is user id
 // This was called in frontend's updateProfile api
+// look like this is a dupicate route.
 router.put('/update-user-info/:id', passport.authenticate('jwt', { session: false }), accountController.update);
 
 // This route id is account id
