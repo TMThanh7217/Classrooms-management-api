@@ -129,15 +129,24 @@ exports.getUserListWithClassroomID = async function(req, res) {
       //console.log("userList", userList);
       //console.log("userList hi hi: ", userList);
       let creator = await userService.info(userList[0].createdBy);
+      let teacherNumber = 0;
+      let studentNumber = 0;
       for (let i = 0; i < userList.length; i++) {
         //console.log("user hi hi: ", userList[i]);
         // holy shiet this is retarded
         let role = await accountService.getRoleWithUserID(userList[i].Users.id);
         // Oh my god this is even more retarded. Why i did this to myself
-        userList[i].Users.UserClassroom.role = role.role; // getRoleWithUserID return an object called role. So yes this does look retarded
+        userList[i].Users.role = role.role; // getRoleWithUserID return an object called role. So yes this does look retarded
         //console.log("user hi hi take 2: ", userList[i]);
+        if (role.role == 1)
+          teacherNumber += 1;
+        if (role.role == 2)
+          studentNumber += 1;
       }
       //console.log("Creator", creator);
+      classroomDetail.classmemberAmount = userList.length;
+      classroomDetail.teacherNumber = teacherNumber;
+      classroomDetail.studentNumber = studentNumber;
       return res.status(200).json({classroomDetail, creator, userList});
     }
     else {
