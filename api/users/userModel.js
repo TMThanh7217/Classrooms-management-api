@@ -58,6 +58,19 @@ exports.getAllUser = async () => {
     })
 }
 
+exports.getAllUserInfoAccountWithRole = async (role) => {
+    return await sequelize.query(
+        acountId, username, email, name, createdAt, role, userId 
+        `SELECT a.id as accountId, a.username, a.userId, a.role, a.createdAt, u.name, u.dob, u.email, u.sex
+        FROM Users as u JOIN Accounts as a ON (u.id = a.userId)
+        WHERE a.role = :role`,
+        {
+            replacements: { role: role },
+            type: QueryTypes.SELECT
+        }
+    )
+}
+
 //----------------------------------------------------------Update----------------------------------------------------------
 // Use this to update user info
 exports.update = async (user) => {
