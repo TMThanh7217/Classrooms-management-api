@@ -101,7 +101,7 @@ exports.getAllJoinedUsers  = async (condition) => {
         type: QueryTypes.SELECT,
     }
     return await model.sequelize.query(
-        `SELECT a.id AS accountID, a.username, u.name, a.userID, a.role, a.createdAt, a.status
+        `SELECT a.id AS accountID, a.username, u.name, u.email, a.userID, a.role, a.createdAt, a.status
         FROM Accounts AS a LEFT JOIN Users AS u ON(a.userID = u.id)
         WHERE ${condition}`
         ,
