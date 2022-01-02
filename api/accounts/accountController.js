@@ -212,3 +212,8 @@ exports.updateStatus = async (req, res) => {
     }
     else return res.status(404).json({msg: 'Cannot find this account'});
 }
+
+
+exports.getAllJoinedUsers = async (req, res) => {
+    return res.json(await accountService.getAllJoinedUsers(req.query))
+}

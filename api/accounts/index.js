@@ -9,6 +9,7 @@ const authorization = require('../authorization/classroomAuth');
 // for debugging, delete or comment this later
 router.get('/listAll', accountController.listAllAccount);
 
+
 // handle login
 router.post('/login', passport.authenticate('local', { session: false }),
     function (req, res) {
@@ -46,5 +47,8 @@ router.put('/update-account-info/:id', passport.authenticate('jwt', { session: f
 
 // Update account status, need account id
 router.put('/update-account-status/:id', passport.authenticate('jwt', { session: false }), authorization.checkAdminRole, accountController.updateStatus);
+
+// All accounts
+router.get('/', passport.authenticate('jwt', { session: false }), authorization.checkAllRole, accountController.getAllJoinedUsers)
 
 module.exports = router;

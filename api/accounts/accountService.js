@@ -91,3 +91,8 @@ exports.updateStatus = async (id, status) => {
         })
         .catch(err => (console.log(err)));
 }
+
+exports.getAllJoinedUsers = async query => {
+    let condition = query.role ? `a.role = ${query.role}` : "1"
+    return await accountModel.getAllJoinedUsers(condition)
+}
