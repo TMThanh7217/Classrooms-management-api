@@ -259,6 +259,8 @@ exports.updateAccountInfo = async (req, res) => {
 }
 
 exports.updateStatus = async (req, res) => {
+    // front end return a list find a way to update everything in the list
+    //let accountList = req.body.accountList;
     let account = {
         id: parseInt(req.body.id),
         status: parseInt(req.body.status),
