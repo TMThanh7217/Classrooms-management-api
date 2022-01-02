@@ -23,20 +23,20 @@
     "role": 0,
     "status": 0
   }, {
-    "username": "cespino3",
-    "password": "MFTIFbJP",
+    "username": "admin2",
+    "password": "admin2",
     "userID": 4,
     "createdDate": "2021-09-27",
     "googleToken": "",
-    "role": 2,
+    "role": 0,
     "status": 0
   }, {
-    "username": "ejeandeau4",
-    "password": "FcDrE7VMtU",
+    "username": "admin3",
+    "password": "admin3",
     "userID": 5,
     "createdDate": "2020-12-31",
     "googleToken": "",
-    "role": 2,
+    "role": 0,
     "status": 0
   }, {
     "username": "zkubik5",
