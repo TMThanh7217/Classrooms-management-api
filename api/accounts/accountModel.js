@@ -11,7 +11,8 @@ exports.create = async (account) => {
         userID: account.userID,
         createdDate: account.createdDate,
         googleToken: account.googleToken,
-        role: 2
+        role: 2,
+        status: 0
     })
 }
 
@@ -22,7 +23,8 @@ exports.createWithRole = async (account, role) => {
         userID: account.userID,
         createdDate: account.createdDate,
         googleToken: account.googleToken,
-        role: role
+        role: role,
+        status: 0
     })
 }
 
