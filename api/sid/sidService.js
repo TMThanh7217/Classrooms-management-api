@@ -56,8 +56,8 @@ const sidService = {
         .catch(err => {
             console.log(err);
         }),
-    updateSID: (sid, userID, classroomID) => sidModel
-        .updateSID(sid, userID, classroomID)
+    updateSID: (sid, userID) => sidModel
+        .updateSID(sid, userID)
         .then(result => result)
         .catch(err => {
             console.log(err);

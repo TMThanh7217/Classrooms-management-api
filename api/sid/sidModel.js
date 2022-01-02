@@ -129,13 +129,12 @@ exports.updateName = async (SIDObj) => {
     });
 }
 
-exports.updateSID = async (sid, userID, classroomID) => {
+exports.updateSID = async (sid, userID) => {
     return await SID.update({
         SID: sid,
     }, {
         where: {
-            userID: userID,
-            classroomID: classroomID
+            userID: userID
         }
     });
 }
@@ -146,8 +145,7 @@ exports.updateNameAndUserID = async ({sid, userID, classroomID, name}) => {
         userID: userID
     }, {
         where: {
-            sid: sid,
-            classroomID: classroomID
+            sid: sid
         }
     });
 }

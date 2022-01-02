@@ -20,6 +20,7 @@ const sidController = {
             console.log("User found", oldSid)
             if (!oldSid) {
                 console.log("Fail old SID check");
+                // The name may or may not required. Check this later
                 const requireFields = ['name', 'sid', 'classroomId']
                 const validateAddData = data => requireFields.every(field => Object.keys(data).includes(field))
                 let isValid = Object.keys(validateAddData(sidObj))
@@ -40,18 +41,20 @@ const sidController = {
                 const requireFields = ['name', 'sid', 'classroomId']
                 const validateAddData = data => requireFields.every(field => Object.keys(data).includes(field))
                 let isValid = Object.keys(validateAddData(sidObj))
-                if(isValid)
+                if(isValid) {
+                    console.log("Call create SID")
                     sidService
                     .create(sidObj)
                     .then(instance => res.status(200).json({data: instance, msg: "SID was successfully created."}))
                     .catch(err => res.status(500).json({msg: err}))
+                }
                 else return res.status(500).json({msg: "Invalid post data."})
             }
             else {
-                console.log("update")
+                console.log("Call update SID")
                 sidService
-                    .updateSID(sidObj.sid, sidObj.userID, sidObj.classroomID)
-                    .then(instance => res.status(200).json({data: instance, msg: "SID was successfully created."}))
+                    .updateSID(sidObj.sid, sidObj.userID)
+                    .then(instance => res.status(200).json({data: instance, msg: "SID was successfully updated."}))
                     .catch(err => res.status(500).json({msg: err}))
             }
         };
@@ -83,6 +86,7 @@ const sidController = {
                 }
             }
             else { 
+                // Duplicate SID log already existed, do not update the id bound with the duplicate SID
                 //let updatedSidObj = await sidService.updateName(result);
                 //if (updatedSidObj)
                 //    console.log('Name updated');
@@ -94,6 +98,7 @@ const sidController = {
     findAllByClassroomId: async (req, res) => {
         let classroomID = parseInt(req.params.classroomId);
         let result = await sidService.findAllByClassroomId(classroomID);
+        
         if (result) {
             console.log(result)
             return res.status(200).json(result);
@@ -103,6 +108,7 @@ const sidController = {
     findStudentAndScoreByClassroomID: async(req, res) => {
         let classroomId = parseInt(req.params.classroomId);
         let result = await sidService.findStudentAndScoreByClassroomID(classroomId)
+
         if (result) {
             //console.log(result);
             //console.log("findStudentAndScoreByClassroomID", result);
@@ -110,6 +116,16 @@ const sidController = {
         }
         else return res.status(500).json({err: 'Cannot find student and score with this classroom id'});
     },
+    updateSID: async (req, res) => {
+        let sid = parseInt(req.body.sid);
+        let userID = parseInt(req.body.userId);
+        let result = await sidService.updateSID(sid, userID);
+
+        if (result) {
+            return res.status(200).json(result);
+        }
+        else return res.status(500).json({err: 'Cannot update SID'});
+    }
 }
 
 module.exports = sidController
