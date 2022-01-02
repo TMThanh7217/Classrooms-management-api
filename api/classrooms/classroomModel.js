@@ -1,3 +1,4 @@
+const { QueryTypes } = require("sequelize");
 const model = require("../../models");
 const Classroom = model.Classroom;
 //const Sequelize = require('sequelize');
@@ -25,10 +26,17 @@ exports.getAllClassroom = async () => {
             .then(data => resolve(data))
             .catch(error => reject(new Error(error)));
     }); */
-    return await Classroom.findAll({
-        raw: true,
-        attributes: ['id', 'name', 'section', 'description', 'createdBy', 'inviteLink']
-    });
+    // return await Classroom.findAll({
+    //     raw: true,
+    //     attributes: ['id', 'name', 'section', 'description', 'createdBy', 'inviteLink']
+    // });
+    return await model.sequelize.query(
+        `SELECT c.id, c.name, c.description, c.section, c.inviteLink, c.createdAt, c.createdBy AS creatorID, u.name AS creatorName
+        FROM Classrooms AS c LEFT JOIN Users AS u ON (c.createdBy = u.id)`,
+        {
+            type: QueryTypes.SELECT
+        }
+    )
 };
 
 // Look like account store userID, might want to use that. UserClassroom hold userID and classroomID
