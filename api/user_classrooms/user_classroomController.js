@@ -1,17 +1,19 @@
 const user_classroomService = require('./user_classroomService');
 const accountService = require('../accounts/accountService');
+const classroomServicce = require('../classrooms/classroomService');
 
 exports.create = async (req, res) => {
     let user_classroom = {
         userID: parseInt(req.body.userID),
-        classroomID: parseInt(req.body.classroomID),
+        classroomID: parseInt(req.body.classroomID), //classroomId received from front end
         userCode: ''
     }
+    console.log("user_classroom", user_classroom);
     
     user_classroomService
         .findUserInClassroom(user_classroom.userID, user_classroom.classroomID)
         .then((userclassroom) => {
-            console.log('a',userclassroom) 
+            console.log('aaaaaaaaa',userclassroom) 
             if (!userclassroom) {
                 user_classroomService.create(user_classroom) // 2 = Student, default should be this
                 .then(result => {
