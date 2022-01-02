@@ -167,7 +167,6 @@ exports.updateAssignmentPosition = async (req, res) => {
                 else return res.status(500).json({msg: 'Cannot update assignment'});
             })
     */
-    
 
     console.log("test update assignment pos")
     let assignmentList = req.body;
