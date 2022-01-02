@@ -83,6 +83,71 @@ exports.register = async function(req, res) {
     }
 };
 
+exports.adminCreateWithRole = async function(req, res) {
+    // not really sure where username, password is store
+    let account = {
+        username: req.body.username,
+        password: req.body.password,
+        createdDate: '',
+        googleToken: '',
+        role: parseInt(req.body.role)
+    };
+
+    let user = {
+        name: req.body.name,
+        dob: req.body.dob,
+        email: req.body.email,
+        sex: req.body.sex
+    };
+
+    let oldEmail = await userService.getUserWithEmail(user.email);
+    let oldAccount = await accountService.getAccountWithUsername(account.username);
+    console.log(oldAccount);
+    if (oldEmail)
+        return res.status(409).json({msg: 'Email has been used'}); 
+
+    if (oldAccount) {
+        // maybe change the status code later
+        return res.status(409).json({msg: 'Account already existed'});
+    }
+    else {
+        userService.create(user)
+            .then(newUser => {
+                /*console.log('\nnew user:');
+                console.log(newUser);*/
+                // create only return the id for now
+                account.userID = newUser;
+                // use bcrypt or something to encrypt password here
+                account.username = account.username.toLowerCase()
+                /*bcrypt.genSalt(saltRound, (err, salt) => {
+                    bcrypt.hash(account.password, salt, (err, hash) => {
+                        console.log(`hash: ${hash}`);
+                        account.password = hash;
+                    })
+                });
+                console.log("account check when register");
+                console.log(account);*/
+                /*bcrypt.genSalt(saltRound, (err, salt) => {
+                    bcrypt.hashSync(account.password, salt, (err, hash) => {
+                        console.log(`hash: ${hash}`);
+                        account.password = hash;
+                    })
+                });*/
+                console.log(account);
+                accountService
+                    .create(account, account.role) // default create set role to student
+                    .then(newAccount => {
+                        /*console.log('\nnew account id:');
+                        console.log(newAccountID);*/
+                        // return only the id of new account lmao
+                        return res.status(200).json({msg: 'Account created', id: newAccount})
+                    })
+                    .catch(err => console.log(err));
+            })
+            .catch(err => console.log(err));
+    }
+};
+
 exports.listAllAccount = async (req, res) => {
     accountService.listAllAccount()
         .then(accountList => {

@@ -33,6 +33,9 @@ router.post('/login', passport.authenticate('local', { session: false }),
 // handle register
 router.post('/register', accountController.register);
 
+// admin create account with role
+router.post('/', passport.authenticate('jwt', { session: false }), authorization.checkAdminRole, accountController.adminCreateWithRole);
+
 // update profile (info in user model)
 router.put('/:id', passport.authenticate('jwt', { session: false }), accountController.update);
 
