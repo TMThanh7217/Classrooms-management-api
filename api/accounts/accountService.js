@@ -93,6 +93,7 @@ exports.updateStatus = async (id, status) => {
 }
 
 exports.getAllJoinedUsers = async query => {
-    let condition = query.role ? `a.role = ${query.role}` : "1"
+    query.roles = query.roles ? query.roles : []
+    let condition = query.roles.toString() !== "" ? `a.role IN (${query.roles.toString()})` : "1"
     return await accountModel.getAllJoinedUsers(condition)
 }
