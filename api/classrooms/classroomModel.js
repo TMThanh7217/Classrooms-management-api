@@ -41,21 +41,32 @@ exports.getAllClassroom = async () => {
 
 // Look like account store userID, might want to use that. UserClassroom hold userID and classroomID
 exports.getAllClassroomWithUserID = async (userID) => {
-    return await  Classroom.findAll({
-        include: [{
-            model: model.User,
-            attributes: [],
-            where: {
-                id: userID
-            },
-            through: {
-                attributes: [] // pass nothing if don't want any other attributes in the UserClassroom model 
-            },
-        }],
-        raw: true,
-        nest: true,
-        attributes: ['id', 'name', 'section', 'description', 'createdBy', 'inviteLink']
-    });
+    // return await  Classroom.findAll({
+    //     include: [{
+    //         model: model.User,
+    //         attributes: [],
+    //         where: {
+    //             id: userID
+    //         },
+    //         through: {
+    //             attributes: [] // pass nothing if don't want any other attributes in the UserClassroom model 
+    //         },
+    //     }],
+    //     raw: true,
+    //     nest: true,
+    //     attributes: ['id', 'name', 'section', 'description', 'createdBy', 'inviteLink']
+    // });
+    return await model.sequelize.query(
+        `SELECT c.id, c.name, c.section, c.description, c.createdAt, creator.name AS creator
+        FROM Classrooms AS c 
+        LEFT JOIN Users AS creator ON(c.createdBy = creator.id)
+        LEFT JOIN UserClassrooms as uc ON(c.id = uc.classroomID)
+        LEFT JOIN Users AS u ON(uc.userID = u.id)
+        WHERE uc.userID = ${userID}`,
+        {
+            type: QueryTypes.SELECT
+        }
+    )
 };
 
 // Use id of Classroom model for this
