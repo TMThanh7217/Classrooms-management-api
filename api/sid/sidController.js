@@ -7,7 +7,7 @@ const sidController = {
         let sidObj = {
             sid: req.body.sid,
             classroomID: parseInt(req.body.classroomId ?? req.params.classroomId),
-            userID: parseInt(req.body.userId) ?? null,
+            userID: parseInt(req.body.userID) ?? null,
             name: req.body.name
         }
         console.log("data", sidObj)
@@ -26,9 +26,9 @@ const sidController = {
                 let isValid = Object.keys(validateAddData(sidObj))
                 if(isValid) {
                     sidService
-                    .updateNameAndUserID(sidObj)
-                    .then(instance => res.status(200).json({data: instance, msg: "SID was successfully created."}))
-                    .catch(err => res.status(500).json({msg: err}))
+                        .updateNameAndUserID(sidObj)
+                        .then(instance => res.status(200).json({data: instance, msg: "SID was successfully created."}))
+                        .catch(err => res.status(500).json({msg: err}))
                 }
                 else return res.status(500).json({msg: "Invalid post data."});
             }
@@ -44,9 +44,9 @@ const sidController = {
                 if(isValid) {
                     console.log("Call create SID")
                     sidService
-                    .create(sidObj)
-                    .then(instance => res.status(200).json({data: instance, msg: "SID was successfully created."}))
-                    .catch(err => res.status(500).json({msg: err}))
+                        .create(sidObj)
+                        .then(instance => res.status(200).json({data: instance, msg: "SID was successfully created."}))
+                        .catch(err => res.status(500).json({msg: err}))
                 }
                 else return res.status(500).json({msg: "Invalid post data."})
             }
