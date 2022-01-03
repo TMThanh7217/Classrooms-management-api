@@ -23,6 +23,16 @@ exports.getStudentAssignment = async (SID, assignmentID) => {
     });
 }
 
+exports.getStudentAssignmentWithSID = async (SID) => {
+    return await StudentAssignment.findAll({
+        raw: true,
+        where: {
+            SID: SID
+        },
+        attributes: { excludes: ['updatedAt', 'createdAt'] }
+    });
+}
+
 //----------------------------------------------------------Update----------------------------------------------------------
 exports.update = async (student_assignment) => {
     return await StudentAssignment.update({
@@ -44,4 +54,12 @@ exports.delete = async (SID, assignmentID) => {
             assignmentID: assignmentID
         }
     });
+}
+
+exports.deleteWithSID = async (SID) => {
+    return await StudentAssignment.destroy({
+        where: { 
+            SID: SID
+        }
+    })
 }

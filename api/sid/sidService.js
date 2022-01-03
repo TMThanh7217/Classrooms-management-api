@@ -84,7 +84,14 @@ const sidService = {
             console.log(err);
             return err
         }),
-    findByPk: pk => sidModel.getBySID(pk)
+    findByPk: pk => sidModel.getBySID(pk),
+    deleteBySID: (Sid) => sidModel
+        .deleteBySID(Sid)
+        .then(result => result)
+        .catch(err => {
+            console.log(err);
+            return err
+        })
 }
 
 module.exports = sidService

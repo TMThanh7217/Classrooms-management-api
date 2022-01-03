@@ -18,6 +18,15 @@ exports.getStudentAssignment = async (SID, assignmentID) => {
         .catch(err => console.log(err));
 }
 
+exports.getStudentAssignmentWithSID = async (SID) => {
+    return await student_assignmentModel
+        .getStudentAssignmentWithSID(SID)
+        .then(result => {
+            return result;
+        })
+        .catch(err => console.log(err));
+}
+
 exports.update = async (student_assignment) => {
     return await student_assignmentModel
         .update(student_assignment)
@@ -28,6 +37,13 @@ exports.update = async (student_assignment) => {
 exports.delete = async (SID, assignmentID) => {
     return await student_assignmentModel
         .delete(SID, assignmentID)
+        .then(result => result)
+        .catch(err => console.log(err));
+}
+
+exports.deleteWithSID = async (SID) => {
+    return await student_assignmentModel
+        .deleteWithSID(SID)
         .then(result => result)
         .catch(err => console.log(err));
 }

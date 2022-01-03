@@ -1,6 +1,7 @@
 const { update } = require("../accounts/accountModel");
 const sidService = require("../sid/sidService")
 const userService = require("../users/userService");
+const studentAssignmentService = require("../student_assignments/student_assignmentService");
 
 const sidController = {
     addSID: async (req, res) => {
@@ -58,12 +59,54 @@ const sidController = {
                 else return res.status(500).json({msg: "Invalid post data."})
             }
             else {
-                // If yes, call update
-                console.log("Call update SID")
-                sidService
-                    .updateSID(sidObj.sid, sidObj.userID)
-                    .then(instance => res.status(200).json({data: instance, msg: "SID was successfully updated."}))
-                    .catch(err => res.status(500).json({msg: err}))
+                // If yes, call update. haha update on m:n association funny hah a
+                // Update SID in student assignment table first or foreign key constrant fails will happen because yada yada and stuff
+                // Okay, to update the existing SID, find every student assignment using this sid first.
+                // Then delete all of them and create the new one.
+                // Is this dumb? maybe
+                // Or
+                // Create a new SID obj from the old SID obj with different SID.
+                // Then update the student assignment based on the newly created SID obj. Then delete the old SID obj
+                let oldSAList = await studentAssignmentService.getStudentAssignmentWithSID(foundSID.SID); // This use findAll so it return an array
+                if (oldSAList) {
+                    console.log("oldSAList", oldSAList);
+                    for (let i = 0; i < oldSAList.length; i++) {
+                        console.log("oldSAList[i]", oldSAList[i]);
+                        let result = await studentAssignmentService.deleteWithSID(oldSAList[i].SID);
+                        if (result) {
+                            let student_assignment = {
+                                SID: sidObj.sid,
+                                assignmentID: oldSAList[i].assignmentID,
+                                score: oldSAList[i].assignmentID,
+                                status: oldSAList[i].assignmentID,
+                            };
+                            // foundSID is an SID object store the old SID
+                            let newSidObj = {...foundSID};
+                            console.log("newSidObj", newSidObj);
+
+                            console.log("student_assignment", student_assignment);
+                            console.log("sidObj", sidObj);
+
+                            newSidObj.SID = sidObj.sid; // yeah ... SID and sid sure hope this doesn't cause some funny haha stuff later.
+                            // This shiet cause problem already holy hell. The create in sid need sid not SID.
+                            newSidObj.sid = sidObj.sid;
+                            console.log("newSidObj", newSidObj);
+                            let deleteResult = await sidService.deleteBySID(foundSID.SID);
+                            if (deleteResult) {
+                                // create a new sid that has the old information of the old sid but the new sid primary key
+                                let instance = await sidService.create(newSidObj);
+                                // because foreign key funny haha thing, had to create a new sid first before create a new student assignment
+                                if (instance) {
+                                    let newSA = await studentAssignmentService.create(student_assignment);
+                                    if (newSA)
+                                        return res.status(200).json({data: instance, msg: "SID was successfully updated."});
+                                    else return res.status(500).json({msg: "Some error occured"});
+                                }
+                            }
+                        }
+                        else console.log("Yikes");
+                    }
+                }
             }
         };
     },
