@@ -1,5 +1,6 @@
 const model = require('../../models');
 const User = model.User;
+const { QueryTypes } = require('sequelize')
 
 //----------------------------------------------------------Create----------------------------------------------------------
 exports.create = async (user) => {
@@ -14,15 +15,27 @@ exports.create = async (user) => {
 //----------------------------------------------------------Read----------------------------------------------------------
 // use id from User model
 exports.getUserWithID = async (id) => {
-    return await User.findOne({
-        where: {
-            id: id
-        },
-        attributes: { 
-            exclude: ['updatedAt']
-        },
-        raw: true
-    });
+    // return await User.findOne({
+    //     where: {
+    //         id: id
+    //     },
+    //     attributes: { 
+    //         exclude: ['updatedAt']
+    //     },
+    //     raw: true
+    // });
+    return await model.sequelize.query(
+        `
+            SELECT s.SID, u.*, a.role
+            FROM Users AS u LEFT JOIN SIDs AS s ON(u.id = s.userID) LEFT JOIN Accounts AS a ON(a.userID = u.id)
+            WHERE u.id = :userId
+        `,{
+            type: QueryTypes.SELECT,
+            replacements: {
+                userId: id
+            }
+        }
+    )
 }
 
 exports.getUserWithEmail = async (email) => {
