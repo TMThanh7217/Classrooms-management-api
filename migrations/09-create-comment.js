@@ -13,14 +13,16 @@ module.exports = {
         references: {
           model: 'Users',
           key: 'id',
-        }
+        },
+        onDelete: 'CASCADE'
       },
       gradeReviewID: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Gradereviews',
           key: 'id',
-        }
+        },
+        onDelete: 'CASCADE'
       },
       content: {
         type: Sequelize.STRING

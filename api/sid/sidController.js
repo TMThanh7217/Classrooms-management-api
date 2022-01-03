@@ -2,6 +2,7 @@ const { update } = require("../accounts/accountModel");
 const sidService = require("../sid/sidService")
 const userService = require("../users/userService");
 const studentAssignmentService = require("../student_assignments/student_assignmentService");
+const studentAssignment = require("../../models/student-assignment");
 
 const sidController = {
     addSID: async (req, res) => {
@@ -67,7 +68,8 @@ const sidController = {
                 // Or
                 // Create a new SID obj from the old SID obj with different SID.
                 // Then update the student assignment based on the newly created SID obj. Then delete the old SID obj
-                let oldSAList = await studentAssignmentService.getStudentAssignmentWithSID(foundSID.SID); // This use findAll so it return an array
+                
+                /*let oldSAList = await studentAssignmentService.getStudentAssignmentWithSID(foundSID.SID); // This use findAll so it return an array
                 if (oldSAList) {
                     console.log("oldSAList", oldSAList);
                     for (let i = 0; i < oldSAList.length; i++) {
@@ -106,7 +108,27 @@ const sidController = {
                         }
                         else console.log("Yikes");
                     }
+                }*/
+
+                let newSidObj = {...foundSID};
+                console.log("newSidObj", newSidObj);
+                console.log("sidObj", sidObj);
+                newSidObj.sid = sidObj.sid;
+                console.log("newSidObj", newSidObj);
+                // delete the SID hold the primary key first, then create a new SID, then update the student assignment
+                let deleteResult = await sidService.deleteBySID(foundSID.SID);
+                if (deleteResult) {
+                    // create a new sid that has the old information of the old sid but the new sid primary key
+                    let instance = await sidService.create(newSidObj);
+                    // because foreign key funny haha thing, had to create a new sid first before create a new student assignment
+                    if (instance) {
+                        let newSA = await studentAssignmentService.updateSID(foundSID.SID, newSidObj.sid);
+                        if (newSA)
+                           return res.status(200).json({data: instance, msg: "SID was successfully updated."});
+                        else return res.status(500).json({msg: "Some error occured"});
+                    }
                 }
+                
             }
         };
     },

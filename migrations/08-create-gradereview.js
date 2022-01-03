@@ -13,14 +13,16 @@ module.exports = {
         references: {
           model: 'Users',
           key: 'id',
-        }
+        },
+        onDelete: 'CASCADE'
       },
       assignmentID: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Assignments',
           key: 'id',
-        }
+        },
+        onDelete: 'CASCADE'
       },
       expectGrade: {
         type: Sequelize.DECIMAL

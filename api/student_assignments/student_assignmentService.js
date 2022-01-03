@@ -34,6 +34,13 @@ exports.update = async (student_assignment) => {
         .catch(err => console.log(err));
 }
 
+exports.updateSID = async (oldSID, newSID) => {
+    return await student_assignmentModel
+        .updateSID(oldSID, newSID)
+        .then(result => result)
+        .catch(err => console.log(err));
+}
+
 exports.delete = async (SID, assignmentID) => {
     return await student_assignmentModel
         .delete(SID, assignmentID)

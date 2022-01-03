@@ -46,6 +46,16 @@ exports.update = async (student_assignment) => {
     });
 }
 
+exports.updateSID = async (oldSID, newSID) => {
+    return await StudentAssignment.update({
+        SID: newSID
+    }, {
+        where: {
+            SID: oldSID
+        }
+    });
+}
+
 //----------------------------------------------------------Delete----------------------------------------------------------
 exports.delete = async (SID, assignmentID) => {
     return await StudentAssignment.destroy({

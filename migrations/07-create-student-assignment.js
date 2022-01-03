@@ -13,14 +13,16 @@ module.exports = {
         references: {
           model: 'SIDs',
           key: 'SID',
-        }
+        },
+        onDelete: 'CASCADE'
       },
       assignmentID: {
         type: Sequelize.INTEGER,
         references: {
           model: 'Assignments',
           key: 'id',
-        }
+        },
+        onDelete: 'CASCADE'
       },
       score: {
         type: Sequelize.DECIMAL(10, 1)
