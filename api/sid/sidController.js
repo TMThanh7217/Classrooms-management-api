@@ -125,6 +125,34 @@ const sidController = {
             return res.status(200).json(result);
         }
         else return res.status(500).json({err: 'Cannot update SID'});
+    },
+    updateOrCreateIfNotExist: async (req, res) => {
+        let sid = req.body.sid;
+        let userID = parseInt(req.body.userId);
+        let foundSIDInstance = await sidService.findByPk(sid)
+        console.log("foundSIDInstance: ", foundSIDInstance)
+        if(foundSIDInstance) {
+            if(foundSIDInstance.userID === userID) {
+                console.log("typeof instance.userID: ", typeof(foundSIDInstance.userID))
+                return res.status(200).json(await sidService.updateSID(sid, userID))
+            }
+            else {
+                return res.status(500).json({ err: "This SID is taken by another student." })
+            }
+        }
+        else {
+            let foundUserInstance = userService.getUserWithID(userID)
+            if(!foundUserInstance) return res.status(500).json({ err: `User with ${userID} not exits.` })
+            
+            let created = await sidService.create({
+                SID: sid,
+                userID: userID,
+                classroomID: 1,
+                name: foundSIDInstance.name
+            })
+
+            return res.status(200).json(created)
+        }
     }
 }
 

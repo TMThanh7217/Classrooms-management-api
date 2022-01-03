@@ -77,7 +77,7 @@ const sidService = {
             console.log(err);
             return err
         }),
-    
+    findByPk: pk => sidModel.getBySID(pk)
 }
 
 module.exports = sidService
