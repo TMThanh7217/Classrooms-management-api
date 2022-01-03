@@ -258,26 +258,30 @@ exports.updateAccountInfo = async (req, res) => {
     else return res.status(404).json({msg: 'Cannot find this account'});
 }
 
-exports.updateStatus = async (req, res) => {
+exports.banAccount = async (req, res) => {
     // front end return a list find a way to update everything in the list
-    //let accountList = req.body.accountList;
-    let account = {
-        id: parseInt(req.body.id),
-        status: parseInt(req.body.status),
-    }
+    let accountList = req.body;
+    //console.log(accountList);
+    //return res.status(200).json({msg: 'ehe'});
+    for (let i = 0 ; i < accountList.length; i++) {
+        /*console.log("accountList");
+        console.log(accountList[i]);*/
 
-    let oldAccount = await accountService.getAccountWithID(account.id);
-    if (oldAccount) {
-        accountService
-            .updateStatus(account.id, account.status)
-            .then(result => {
-                if (result){
-                    return res.status(200).json(result);
-                }
-                else return res.status(500).json({msg: 'Cannot update account status'});
-            })
+        let oldAccount = await accountService.getAccountWithID(parseInt(accountList[i]));
+        if (oldAccount) {
+            //console.log(oldAccount);
+            accountService
+                .updateStatus(oldAccount.id, 1)
+                .then(result => {
+                    if (result) {
+                        console.log(result);
+                    }
+                    else console.log('Cannot update account status');
+                })
+        }
+        else console.log('Cannot find this account');
     }
-    else return res.status(404).json({msg: 'Cannot find this account'});
+    return res.status(200).json({msg: 'Hi'});
 }
 
 

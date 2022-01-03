@@ -9,9 +9,8 @@ const authorization = require('../authorization/classroomAuth');
 // for debugging, delete or comment this later
 router.get('/listAll', accountController.listAllAccount);
 
-
 // handle login
-router.post('/login', passport.authenticate('local', { session: false }),
+router.post('/login', passport.authenticate('local', {session: false }),
     function (req, res) {
         // If this function gets called, authentication was successful.
         // req.user contains the authenticated user
@@ -36,9 +35,6 @@ router.post('/register', accountController.register);
 // admin create account with role
 router.post('/', passport.authenticate('jwt', { session: false }), authorization.checkAdminRole, accountController.adminCreateWithRole);
 
-// update profile (info in user model)
-router.put('/:id', passport.authenticate('jwt', { session: false }), accountController.update);
-
 // This route id is user id
 // This was called in frontend's updateProfile api
 // look like this is a dupicate route.
@@ -48,8 +44,12 @@ router.put('/update-user-info/:id', passport.authenticate('jwt', { session: fals
 // This has not been used in frontend yet
 router.put('/update-account-info/:id', passport.authenticate('jwt', { session: false }), accountController.updateAccountInfo);
 
-// Update account status, need account id
-router.put('/update-account-status/:id', passport.authenticate('jwt', { session: false }), authorization.checkAdminRole, accountController.updateStatus);
+// Ban a list of account
+router.put('/ban', passport.authenticate('jwt', { session: false }), authorization.checkAdminRole, accountController.banAccount);
+
+// Put this at the end
+// update profile (info in user model)
+router.put('/:id', passport.authenticate('jwt', { session: false }), accountController.update);
 
 // All accounts
 router.get('/', passport.authenticate('jwt', { session: false }), authorization.checkAllRole, accountController.getAllJoinedUsers)

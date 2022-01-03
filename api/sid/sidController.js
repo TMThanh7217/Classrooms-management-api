@@ -5,7 +5,7 @@ const userService = require("../users/userService");
 const sidController = {
     addSID: async (req, res) => {
         let sidObj = {
-            sid: parseInt(req.body.sid),
+            sid: req.body.sid,
             classroomID: parseInt(req.body.classroomId ?? req.params.classroomId),
             userID: parseInt(req.body.userId) ?? null,
             name: req.body.name
@@ -67,7 +67,7 @@ const sidController = {
         console.log(data);*/
         for (let i = 0; i < data.length; i++) {
             let sidObj = {
-                sid: parseInt(data[i].sid),
+                sid: data[i].sid,
                 name: data[i].name
             };
             /*console.log("sidObj");
@@ -117,7 +117,7 @@ const sidController = {
         else return res.status(500).json({err: 'Cannot find student and score with this classroom id'});
     },
     updateSID: async (req, res) => {
-        let sid = parseInt(req.body.sid);
+        let sid = req.body.sid;
         let userID = parseInt(req.body.userId);
         let result = await sidService.updateSID(sid, userID);
 
