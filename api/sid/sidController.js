@@ -111,10 +111,10 @@ const sidController = {
                 }*/
 
                 let newSidObj = {...foundSID};
-                console.log("newSidObj", newSidObj);
+                //console.log("newSidObj", newSidObj);
                 console.log("sidObj", sidObj);
                 newSidObj.sid = sidObj.sid;
-                console.log("newSidObj", newSidObj);
+                //console.log("newSidObj", newSidObj);
                 // delete the SID hold the primary key first, then create a new SID, then update the student assignment
                 let deleteResult = await sidService.deleteBySID(foundSID.SID);
                 if (deleteResult) {
@@ -128,7 +128,6 @@ const sidController = {
                         else return res.status(500).json({msg: "Some error occured"});
                     }
                 }
-                
             }
         };
     },
