@@ -9,38 +9,45 @@ const sidController = {
             classroomID: parseInt(req.body.classroomId ?? req.params.classroomId),
             userID: parseInt(req.body.userID) ?? null,
             name: req.body.name
-        }
-        console.log("data", sidObj)
-        let instance = await sidService.findBySID(sidObj.sid)
-        console.log("SID found: ", instance)
+        };
+        console.log("data", sidObj);
+        let instance = await sidService.findBySID(sidObj.sid);
+        console.log("SID found: ", instance);
 
+        // Check if received SID exist
         if(instance) {
-            console.log(instance)
+            // The received SID exist already, no need to create a new one
+            console.log(instance);
+            // Check if SID belong to any user
             let oldSid = await sidService.findByUserId(sidObj.userID);
-            console.log("User found", oldSid)
+            console.log("User found", oldSid);
             if (!oldSid) {
+                // SID exist but does not belong to any user, call update
                 console.log("Fail old SID check");
                 // The name may or may not required. Check this later
-                const requireFields = ['name', 'sid']
-                const validateAddData = data => requireFields.every(field => Object.keys(data).includes(field))
-                let isValid = Object.keys(validateAddData(sidObj))
+                const requireFields = ['name', 'sid'];
+                const validateAddData = data => requireFields.every(field => Object.keys(data).includes(field));
+                let isValid = Object.keys(validateAddData(sidObj));
                 if(isValid) {
                     sidService
                         .updateNameAndUserID(sidObj)
-                        .then(instance => res.status(200).json({data: instance, msg: "SID was successfully created."}))
+                        .then(instance => res.status(200).json({data: instance, msg: "SID was successfully updated."}))
                         .catch(err => res.status(500).json({msg: err}))
                 }
                 else return res.status(500).json({msg: "Invalid post data."});
             }
-            else return res.status(500).json({msg: "This SID has been created."});
+            else return res.status(500).json({msg: "This SID is used by another user."});
         }
         else {
+            // The received SID does not exist
+            // Check if the userID has a SID before
             const foundSID = await sidService.findByUserId(sidObj.userID)
             console.log("found SID", foundSID)
             if(!foundSID) {
-                const requireFields = ['name', 'sid']
-                const validateAddData = data => requireFields.every(field => Object.keys(data).includes(field))
-                let isValid = Object.keys(validateAddData(sidObj))
+                // If not, create a new SID
+                const requireFields = ['name', 'sid'];
+                const validateAddData = data => requireFields.every(field => Object.keys(data).includes(field));
+                let isValid = Object.keys(validateAddData(sidObj));
                 if(isValid) {
                     console.log("Call create SID")
                     sidService
@@ -51,6 +58,7 @@ const sidController = {
                 else return res.status(500).json({msg: "Invalid post data."})
             }
             else {
+                // If yes, call update
                 console.log("Call update SID")
                 sidService
                     .updateSID(sidObj.sid, sidObj.userID)
