@@ -11,7 +11,7 @@ const sidController = {
             name: req.body.name
         }
         console.log("data", sidObj)
-        let instance = await sidService.findBySidAndClassroomId(sidObj.sid, sidObj.classroomID)
+        let instance = await sidService.findBySID(sidObj.sid)
         console.log("SID found: ", instance)
 
         if(instance) {
@@ -21,7 +21,7 @@ const sidController = {
             if (!oldSid) {
                 console.log("Fail old SID check");
                 // The name may or may not required. Check this later
-                const requireFields = ['name', 'sid', 'classroomId']
+                const requireFields = ['name', 'sid']
                 const validateAddData = data => requireFields.every(field => Object.keys(data).includes(field))
                 let isValid = Object.keys(validateAddData(sidObj))
                 if(isValid) {
@@ -32,13 +32,13 @@ const sidController = {
                 }
                 else return res.status(500).json({msg: "Invalid post data."});
             }
-            else return res.status(500).json({msg: "This SID has been created in this class."});
+            else return res.status(500).json({msg: "This SID has been created."});
         }
         else {
             const foundSID = await sidService.findByUserId(sidObj.userID)
             console.log("found SID", foundSID)
             if(!foundSID) {
-                const requireFields = ['name', 'sid', 'classroomId']
+                const requireFields = ['name', 'sid']
                 const validateAddData = data => requireFields.every(field => Object.keys(data).includes(field))
                 let isValid = Object.keys(validateAddData(sidObj))
                 if(isValid) {

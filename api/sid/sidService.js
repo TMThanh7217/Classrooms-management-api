@@ -8,6 +8,13 @@ const sidService = {
             console.log(err)
             return err
         }),
+    findBySID: (sid) => sidModel
+        .getBySID(sid)
+        .then(instance => instance)
+        .catch(err => { 
+            console.log(err)
+            return err
+        }),
     findUserBySidAndClassroomId: (sid, classroomId) => sidModel
         .getUserID(sid, classroomId)
         .then(instance => instance)
