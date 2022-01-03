@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         through: "StudentAssignment",
         foreignKey: 'SID'
       }, {onDelete: 'CASCADE'});
+      SID.belongsTo(models.User, {foreignKey: 'userID'}, {onDelete: 'CASCADE'});
     }
   };
   SID.init({
