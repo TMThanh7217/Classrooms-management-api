@@ -77,7 +77,8 @@ exports.getStudentAndScoreByClassroomID = async classroomID => {
         FROM SIDs AS s LEFT JOIN Users AS u ON (s.userID = u.id) 
             LEFT JOIN Assignments AS a ON(a.classroomID = :classroomId) 
             LEFT JOIN StudentAssignments AS sa ON (sa.assignmentID = a.id)
-        WHERE s.classroomID = :classroomId AND NOT EXISTS (SELECT * FROM Accounts AS acc WHERE u.id = acc.userID AND acc.role IN (0, 1))`,
+            LEFT JOIN UserClassrooms AS uc ON (s.userID = uc.userID)
+        WHERE uc.classroomID = :classroomId AND NOT EXISTS (SELECT * FROM Accounts AS acc WHERE u.id = acc.userID AND acc.role IN (0, 1))`,
         {
             replacements: {classroomId: classroomID},
             type: QueryTypes.SELECT
