@@ -130,20 +130,21 @@ const sidController = {
         let sid = req.body.sid;
         let userID = parseInt(req.body.userId);
         let foundSIDInstance = await sidService.findByPk(sid)
+        let foundUserInstance = await userService.getUserWithID(userID)
+
         console.log("foundSIDInstance: ", foundSIDInstance)
-        if(foundSIDInstance) {
-            if(foundSIDInstance.userID === userID) {
+        console.log("found USer: ", foundUserInstance)
+        if(foundSIDInstance && foundUserInstance) {
+            if(foundSIDInstance.userID != foundUserInstance.id) {
+                return res.status(500).json({ err: "This SID is taken by another student." })
+            }
+            else {
                 console.log("typeof instance.userID: ", typeof(foundSIDInstance.userID))
                 return res.status(200).json(await sidService.updateSID(sid, userID))
             }
-            else {
-                return res.status(500).json({ err: "This SID is taken by another student." })
-            }
         }
-        else {
-            let foundUserInstance = userService.getUserWithID(userID)
-            if(!foundUserInstance) return res.status(500).json({ err: `User with ${userID} not exits.` })
-            
+        else if (foundUserInstance && !foundSIDInstance) {
+
             let created = await sidService.create({
                 SID: sid,
                 userID: userID,
@@ -153,6 +154,8 @@ const sidController = {
 
             return res.status(200).json(created)
         }
+        else return res.status(500).json({ err: "UNK" })
+
     }
 }
 

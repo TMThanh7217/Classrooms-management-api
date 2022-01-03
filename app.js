@@ -14,6 +14,7 @@ const userClassroomRouter = require('./api/user_classrooms');
 const assignmentRouter = require('./api/assignments');
 const passport = require('./api/passport');
 const authRouter = require('./api/social_authentication');
+const sidRouter = require('./api/sid')
 //const loginRouter = require('./api/passport/loginRouter')
 
 const app = express();
@@ -41,6 +42,7 @@ app.use('/users', userRouter);
 app.use('/guest', userClassroomRouter);
 app.use('/assignment', assignmentRouter);
 app.use('/auth', authRouter);
+app.use('/sids', sidRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

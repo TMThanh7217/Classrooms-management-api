@@ -54,9 +54,9 @@ exports.checkAdminRole = async (req, res, next) => {
     console.log('Checking user jwt');
     console.log(req.user);
     // be mindfull about which parameter in req hold classroom id
-    let classroomID = parseInt(req.params.classroomId) || parseInt(req.params.id);
-    console.log("Classroom id here: ");
-    console.log(classroomID);
+    // let classroomID = parseInt(req.params.classroomId) || parseInt(req.params.id);
+    // console.log("Classroom id here: ");
+    // console.log(classroomID);
     let userID = parseInt(req.user.userID); // Also here
     await accountService.getRoleWithUserID(userID)
         .then(result => {
