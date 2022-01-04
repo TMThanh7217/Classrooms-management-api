@@ -105,10 +105,11 @@ exports.update = async (req, res) => {
 
     // if this doesn't work properly then then?
     // properly could just use id but oh well
-    let oldAssignment = await assignmentService
-                                .getAssignmentWithID(assignment.id);
-
+    let oldAssignment = await assignmentService.getAssignmentWithID(assignment.id);
+    console.log("req body", req.body);
+    console.log("assignment outside get check", assignment);
     if (oldAssignment) {
+        console.log("oldAssignment", oldAssignment);
         // if terrary does not affect async switch
         // '' or null? no idea check this again later
         if (req.body.name != '')
@@ -126,14 +127,20 @@ exports.update = async (req, res) => {
         assignment.start_time = oldAssignment.start_time;
         assignment.end_time = oldAssignment.end_time;
 
-        if (req.body.position != '')
+        if (req.body.position != '' || req.body.position == 0)
             assignment.position = parseInt(req.body.position);
         else assignment.position = oldAssignment.position;
 
-        if (req.body.finalize != '')
+        if (req.body.finalize != '' || req.body.finalize == 0) {
+            console.log("yes");
             assignment.finalize = parseInt(req.body.finalize);
-        else assignment.finalize = oldAssignment.finalize;
-        
+        }
+        else {
+            console.log("0 pass the != '' check");
+            assignment.finalize = oldAssignment.finalize;
+        }
+        //assignment.finalize = parseInt(req.body.finalize);
+        console.log("assignment inside get check", assignment);
         /*
         req.body.maxPoint != '' ? assignment.maxPoint = req.body.maxPoint : assignment.maxPoint = oldAssignment.maxPoint;
         req.body.description != '' ? assignment.description = req.body.description : assignment.description = oldAssignment.description;
