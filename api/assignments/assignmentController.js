@@ -127,10 +127,13 @@ exports.update = async (req, res) => {
         assignment.end_time = oldAssignment.end_time;
 
         if (req.body.position != '')
-            assignment.position = req.body.position;
+            assignment.position = parseInt(req.body.position);
         else assignment.position = oldAssignment.position;
-        
 
+        if (req.body.finalize != '')
+            assignment.finalize = parseInt(req.body.finalize);
+        else assignment.finalize = oldAssignment.finalize;
+        
         /*
         req.body.maxPoint != '' ? assignment.maxPoint = req.body.maxPoint : assignment.maxPoint = oldAssignment.maxPoint;
         req.body.description != '' ? assignment.description = req.body.description : assignment.description = oldAssignment.description;

@@ -6,7 +6,7 @@ const accountService = require('../accounts/accountService');
 exports.create = async (req, res) => {
     let sid = parseInt(req.params.sid);
     let classroomId = parseInt(req.params.classroomId);
-    let result = await sidService.findBySidAndClassroomId(sid, classroomId);
+    let result = await sidService.findBySID(sid);
     if (result) {
         let student_assignment = {
             SID: result.SID,
@@ -37,7 +37,7 @@ exports.importGradeForAnAssignment = async (req, res) => {
         /*console.log("sidObj");
         console.log(sidObj);*/
 
-        let result = await sidService.findBySidAndClassroomId(sid, classroomId);
+        let result = await sidService.findBySID(sid);
         if (result) {
             console.log('Pass findBySidAndClassroomId check');
             // Yep no need to check here, if there is an SID, show it and done
@@ -79,7 +79,7 @@ exports.importGradeForAnAssignment = async (req, res) => {
 exports.getStudentAssignment = async (req, res) => {
     let sid = parseInt(req.params.sid);
     let classroomId = parseInt(req.params.classroomId);
-    let result = await sidService.findBySidAndClassroomId(sid, classroomId);
+    let result = await sidService.findBySID(sid);
     if (result) {
         let student_assignment = {
             SID: result.SID,
@@ -102,10 +102,10 @@ exports.updateScore = async (req, res) => {
     let userId = parseInt(req.params.userId);
     let classroomId = parseInt(req.params.classroomId);
     let assignmentId = parseInt(req.params.assignmentId);
-    let result = await sidService.findByUserIDAndClassroomID(userId, classroomId);
-    /*console.log("userId:", userId);
+    let result = await sidService.findByUserId(userId);
+    console.log("userId:", userId);
     console.log("classroomId:", classroomId);
-    console.log("assignmentId:", assignmentId);*/
+    console.log("assignmentId:", assignmentId);
     if (result) {
         let student_assignment = {
             SID: result.SID,
@@ -152,7 +152,7 @@ exports.updateScoreUsingSID = async (req, res) => {
     let SID = parseInt(req.params.SID);
     let classroomId = parseInt(req.params.classroomId);
     let assignmentId = parseInt(req.params.assignmentId);
-    let result = await sidService.findBySidAndClassroomId(SID, classroomId);
+    let result = await sidService.findBySID(SID, classroomId);
     /*console.log("userId:", userId);
     console.log("classroomId:", classroomId);
     console.log("assignmentId:", assignmentId);*/
@@ -199,7 +199,7 @@ exports.updateScoreUsingSID = async (req, res) => {
 exports.delete = async (req, res) => {
     let sid = parseInt(req.params.sid);
     let classroomId = parseInt(req.params.classroomId);
-    let result = await sidService.findBySidAndClassroomId(sid, classroomId);
+    let result = await sidService.findBySID(sid, classroomId);
     if (result) {
         let student_assignment = {
             SID: result.SID,

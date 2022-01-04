@@ -10,7 +10,8 @@ exports.create = async (assignment) => {
         description: assignment.description,	
         start_time: assignment.start_time,
         end_time: assignment.end_time,
-        position: assignment.position 
+        position: assignment.position,
+        finalize: 0
     });
 };
 
@@ -78,7 +79,8 @@ exports.update = async (assignment) => {
         description: assignment.description,	
         start_time: assignment.start_time,
         end_time: assignment.end_time,
-        position: assignment.position
+        position: assignment.position,
+        finalize: assignment.finalize
     }, {
         where: {
             id: assignment.id,

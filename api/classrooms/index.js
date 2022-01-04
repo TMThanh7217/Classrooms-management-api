@@ -52,17 +52,17 @@ router.get('/:classroomId/sids', passport.authenticate('jwt', { session: false }
 router.get('/:classroomId/scoreboard', passport.authenticate('jwt', { session: false }), sidController.findStudentAndScoreByClassroomID);
 
 // import student list
-router.post('/:classroomId/sids/import', passport.authenticate('jwt', { session: false }), sidController.importStudentList);
+router.post('/:classroomId/sids/import', passport.authenticate('jwt', { session: false }), authorization.checkTeacherRole, sidController.importStudentList);
 
 // import grade for an assignment
 // also need a fix
 // did some adjustment not sure if working as intended
-router.post('/:classroomId/assignments/:assignmentId/scores/import', passport.authenticate('jwt', { session: false }), student_assignmentController.importGradeForAnAssignment);
+router.post('/:classroomId/assignments/:assignmentId/scores/import', passport.authenticate('jwt', { session: false }), authorization.checkTeacherRole, student_assignmentController.importGradeForAnAssignment);
 
 // update gradeboard score
 // yep this need some adjustment too
 // did some adjusment not sure if working as intended again
-router.put('/:classroomId/assignments/:assignmentId/scores/:userId', passport.authenticate('jwt', { session: false }), student_assignmentController.updateScore);
+router.put('/:classroomId/assignments/:assignmentId/scores/:userId', passport.authenticate('jwt', { session: false }), authorization.checkTeacherRole, student_assignmentController.updateScore);
 
 // Add studentId
 router.post('/:classroomId/sids', passport.authenticate('jwt', { session: false }), sidController.addSID);
