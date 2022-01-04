@@ -116,7 +116,8 @@ const sidController = {
                 newSidObj.sid = sidObj.sid;
                 //console.log("newSidObj", newSidObj);
                 // delete the SID hold the primary key first, then create a new SID, then update the student assignment
-                let deleteResult = await sidService.deleteBySID(foundSID.SID);
+                // delete the parent will delete all the child that has the reference
+                /*let deleteResult = await sidService.deleteBySID(foundSID.SID);
                 if (deleteResult) {
                     // create a new sid that has the old information of the old sid but the new sid primary key
                     let instance = await sidService.create(newSidObj);
@@ -127,6 +128,20 @@ const sidController = {
                            return res.status(200).json({data: instance, msg: "SID was successfully updated."});
                         else return res.status(500).json({msg: "Some error occured"});
                     }
+                }*/
+
+                // Take 3 to fix this horrendous mess
+                // create a new sid that has the old information of the old sid but the new sid primary key
+                let instance = await sidService.create(newSidObj);
+                // because foreign key funny haha thing, had to create a new sid first before create a new student assignment
+                if (instance) {
+                    let newSA = await studentAssignmentService.updateSID(foundSID.SID, newSidObj.sid);
+                    if (newSA) {
+                        let deleteResult = await sidService.deleteBySID(foundSID.SID);
+                        if (deleteResult) 
+                            return res.status(200).json({data: instance, msg: "SID was successfully updated."});
+                    }
+                    else return res.status(500).json({msg: "Some error occured"});
                 }
             }
         };
