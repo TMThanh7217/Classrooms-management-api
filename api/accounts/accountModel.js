@@ -77,6 +77,16 @@ exports.getRoleWithUserID = async (userID) => {
     });
 }
 
+exports.getRoleByPk = async pk => {
+    return await Account.findOne({
+        where: {
+            id: pk
+        },
+        attributes: ['role'],
+        raw: true
+    });
+}
+
 exports.getAllAccount = async () => {
     return await Account.findAll({
         raw: true,

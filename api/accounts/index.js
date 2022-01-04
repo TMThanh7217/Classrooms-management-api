@@ -54,4 +54,6 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), accountCont
 // All accounts
 router.get('/', passport.authenticate('jwt', { session: false }), authorization.checkAllRole, accountController.getAllJoinedUsers)
 
+router.get('/:id/role', passport.authenticate('jwt', { session: false }), authorization.checkAllRole, accountController.getRoleV2)
+
 module.exports = router;

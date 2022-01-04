@@ -54,6 +54,8 @@ exports.getRoleWithUserID = async (userID) => {
         .catch(err => (console.log(err)));
 }
 
+exports.getRoleByPk = async pk => await accountModel.getRoleByPk(pk)
+
 exports.getAllAccountWithRole = async (role) => {
     return await accountModel
         .getAllAccountWithRole(role)

@@ -19,6 +19,22 @@ exports.getRole = async function(req, res) {
         });
 };
 
+exports.getRoleV2 = async function(req, res) {
+    let pk = parseInt(req.params.id);
+    accountService.getRoleByPk(pk)
+        .then( result => {
+            if (result) {
+                /*console.log(result);
+                console.log(result.role);*/
+                //return res.status(200).json(result);
+                // Why do i use result.role before in user_classroomController? idk check later
+                return res.status(200).json(result.role);
+            }
+            else return res.status(404).json({msg: 'Cannot find the role of this user'});
+        });
+};
+
+
 exports.register = async function(req, res) {
     // not really sure where username, password is store
     let account = {
