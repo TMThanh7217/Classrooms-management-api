@@ -25,7 +25,7 @@ module.exports = {
         onDelete: 'CASCADE'
       },
       score: {
-        type: Sequelize.DECIMAL(10, 1)
+        type: Sequelize.DECIMAL(10, 2)
       },
       status: {
         type: Sequelize.INTEGER

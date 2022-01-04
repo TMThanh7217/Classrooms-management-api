@@ -20,7 +20,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       maxPoint: {
-        type: Sequelize.DECIMAL(10, 1)
+        type: Sequelize.DECIMAL(10, 2)
       },
       description: {
         type: Sequelize.TEXT
