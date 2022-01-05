@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'SID'
       }, {onDelete: 'CASCADE'});
       SID.belongsTo(models.User, {foreignKey: 'userID'}, {onDelete: 'CASCADE'});
+      SID.hasMany(models.Gradereview, {foreignKey: 'SID'}, {onDelete: 'CASCADE'});
     }
   };
   SID.init({

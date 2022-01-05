@@ -11,13 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Gradereview.belongsTo(models.User, {foreignKey: 'studentID'}, {onDelete: 'CASCADE'});
+      Gradereview.belongsTo(models.SID, {foreignKey: 'SID'}, {onDelete: 'CASCADE'});
       Gradereview.belongsTo(models.Assignment, {foreignKey: 'assignmentID'}, {onDelete: 'CASCADE'});
       Gradereview.hasMany(models.Comment, {foreignKey: 'gradereviewID'}, {onDelete: 'CASCADE'});
     }
   };
   Gradereview.init({
-    studentID: DataTypes.INTEGER,
+    SID: DataTypes.STRING,
     assignmentID: DataTypes.INTEGER,
     expectGrade: DataTypes.DECIMAL,
     explaination: DataTypes.STRING

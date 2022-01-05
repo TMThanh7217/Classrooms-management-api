@@ -8,11 +8,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      studentID: {
-        type: Sequelize.INTEGER,
+      SID: {
+        type: Sequelize.STRING,
         references: {
-          model: 'Users',
-          key: 'id',
+          model: 'SIDs',
+          key: 'SID',
         },
         onDelete: 'CASCADE'
       },
