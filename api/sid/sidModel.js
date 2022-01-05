@@ -74,7 +74,7 @@ exports.getStudentAndScoreByClassroomID = async classroomID => {
         `SELECT s.SID AS sid, s.name AS studentName, u.id AS userID, u.name as UserName, 
         a.id AS assignmentID, a.name AS assignmentName, sa.score AS score, a.maxPoint as maxScore
         FROM SIDs AS s LEFT JOIN Users AS u ON (s.userID = u.id) 
-            LEFT JOIN Assignments AS a ON(a.classroomID = :classroomId) 
+            LEFT JOIN Assignments AS a ON (a.classroomID = :classroomId) 
             LEFT JOIN StudentAssignments AS sa ON (sa.assignmentID = a.id)
             LEFT JOIN UserClassrooms AS uc ON (s.userID = uc.userID)
         WHERE uc.classroomID = :classroomId AND NOT EXISTS (SELECT * FROM Accounts AS acc WHERE u.id = acc.userID AND acc.role IN (0, 1))`,
@@ -85,7 +85,7 @@ exports.getStudentAndScoreByClassroomID = async classroomID => {
     );
 }
 
-exports.getStudentAndScoreByClassroomIDWithFinalize = async classroomID => {
+exports.getStudentAndScoreByClassroomIDWithFinalize = async (userID, classroomID) => {
     return await sequelize.query(   
         `SELECT s.SID AS sid, s.name AS studentName, u.id AS userID, u.name as UserName, 
         a.id AS assignmentID, a.name AS assignmentName, sa.score AS score, a.maxPoint as maxScore
@@ -93,9 +93,12 @@ exports.getStudentAndScoreByClassroomIDWithFinalize = async classroomID => {
             LEFT JOIN Assignments AS a ON(a.classroomID = :classroomId) 
             LEFT JOIN StudentAssignments AS sa ON (sa.assignmentID = a.id)
             LEFT JOIN UserClassrooms AS uc ON (s.userID = uc.userID)
-        WHERE a.finalize = 1 AND uc.classroomID = :classroomId AND NOT EXISTS (SELECT * FROM Accounts AS acc WHERE u.id = acc.userID AND acc.role IN (0, 1))`,
+        WHERE s.userID = :userID AND a.finalize = 1 AND uc.classroomID = :classroomId AND NOT EXISTS (SELECT * FROM Accounts AS acc WHERE u.id = acc.userID AND acc.role IN (0, 1))`,
         {
-            replacements: {classroomId: classroomID},
+            replacements: {
+                classroomId: classroomID,
+                userID: userID
+            },
             type: QueryTypes.SELECT
         }
     );

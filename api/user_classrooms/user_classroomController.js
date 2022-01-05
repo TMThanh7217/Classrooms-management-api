@@ -13,7 +13,7 @@ exports.create = async (req, res) => {
     user_classroomService
         .findUserInClassroom(user_classroom.userID, user_classroom.classroomID)
         .then((userclassroom) => {
-            console.log('aaaaaaaaa',userclassroom) 
+            console.log('userclassroom',userclassroom) 
             if (!userclassroom) {
                 user_classroomService.create(user_classroom) // 2 = Student, default should be this
                 .then(result => {

@@ -2,8 +2,9 @@ const { update } = require("../accounts/accountModel");
 const sidService = require("../sid/sidService")
 const userService = require("../users/userService");
 const studentAssignmentService = require("../student_assignments/student_assignmentService");
-const studentAssignment = require("../../models/student-assignment");
+const assignmentService = require("../assignments/assignmentService");
 const accountService = require('../accounts/accountService');
+const userClassroomService = require('../user_classrooms/user_classroomService');
 
 const sidController = {
     addSID: async (req, res) => {
@@ -53,10 +54,54 @@ const sidController = {
                 let isValid = Object.keys(validateAddData(sidObj));
                 if(isValid) {
                     console.log("Call create SID")
-                    sidService
-                        .create(sidObj)
-                        .then(instance => res.status(200).json({data: instance, msg: "SID was successfully created."}))
-                        .catch(err => res.status(500).json({msg: err}))
+                    let newSid = await sidService.create(sidObj);
+                    if (newSid) {
+                        // If a new SID was created, find all assignment in every classroom and create a new student assignment  
+                        let userClassroom = await userClassroomService.getWithUserID(parseInt(newSid.userID));
+                        //console.log("userClassroom", userClassroom);
+                        if (userClassroom) {
+                            // Get unique classroomID value only
+                            // Use map to get a new array from classroomID then use filter, indexOf to get unique value
+                            /*let classroomIDList = userClassroom.map(item => item.classroomID).filter((ele, index, arr) => (arr.indexOf(ele) == index));
+                            console.log("classroomIDList", classroomIDList);
+                            let assignmentIDList = [];
+                            for (let i = 0; i < classroomIDList.length; i++) {
+                                let assignment = await assignmentService.getAssignmentWithClassroomID(classroomIDList[i]);
+                                if (assignment)
+                                assignmentIDList = assignmentIDList.concat(assignment.map(item => item.id));
+                            }
+                            assignmentIDList.filter((ele, index, arr) => (arr.indexOf(ele) == index));
+
+                            let studentAssignment = {
+                                SID: newSid.SID,
+                                score : 0,
+                                status: 0
+                            }
+                            console.log("assignmentIDList", assignmentIDList);
+                            for (let i = 0; i < assignmentIDList.length; i++) {
+                                studentAssignment.assignmentID = assignmentIDList[i];
+                                console.log('studentAssignment', studentAssignment);
+                                let oldSA = studentAssignmentService.getStudentAssignmentWithSID(studentAssignment.SID);
+                                if (!oldSA) {
+                                    let newSA = await studentAssignmentService.create(studentAssignment);
+                                    if (newSA) {
+                                        console.log('newSA', newSA);
+                                    }
+                                    else console.log("Cannot create new SA")
+                                }
+                                else {
+                                    let result = await studentAssignmentService.update(studentAssignment);
+                                    if (result) {
+                                        console.log('Update SA successfully', result);
+                                    }
+                                    else console.log("Cannot update SA")
+                                }
+                            }*/
+
+                            return res.status(200).json({data: instance, msg: "SID was successfully created."})
+                        }
+                    }
+                    else return res.status(500).json({msg: "Cannot create new SID"});
                 }
                 else return res.status(500).json({msg: "Invalid post data."})
             }
@@ -195,20 +240,23 @@ const sidController = {
     },
     findStudentAndScoreByClassroomID: async(req, res) => {
         //console.log("req.user", req.user);
-        let account = await accountService.getAccountWithID(parseInt(req.user.id));
+        let id = parseInt(req.user.id);
+        let userID = parseInt(req.user.userID);
+        let account = await accountService.getAccountWithID(id);
         if (account) {
             let classroomId = parseInt(req.params.classroomId);
             //console.log("account", account);
             let result;
             // Yes this is dumb. Thanks
-            if (account.role == 1) {
-                // For teacher
-                //console.log("No finalize check");
+            if (account.role != 2) {
+                // For teacher, admin
+                console.log("No finalize check");
                 result = await sidService.findStudentAndScoreByClassroomID(classroomId);
             }
             else {
+                // For student
                 console.log("Finalize check");
-                result = await sidService.getStudentAndScoreByClassroomIDWithFinalize(classroomId);
+                result = await sidService.getStudentAndScoreByClassroomIDWithFinalize(userID, classroomId);
             }
             if (result) {
                 console.log("findStudentAndScoreByClassroomID", result);

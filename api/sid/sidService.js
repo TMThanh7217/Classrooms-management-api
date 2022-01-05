@@ -57,8 +57,8 @@ const sidService = {
             console.log(err);
             return err;
         }),
-    getStudentAndScoreByClassroomIDWithFinalize: (classroomId) => sidModel
-        .getStudentAndScoreByClassroomIDWithFinalize(classroomId)
+    getStudentAndScoreByClassroomIDWithFinalize: (userID, classroomId) => sidModel
+        .getStudentAndScoreByClassroomIDWithFinalize(userID, classroomId)
         .then(result => result)
         .catch(err => {
             console.log(err);
