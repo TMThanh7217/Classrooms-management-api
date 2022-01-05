@@ -20,9 +20,9 @@ exports.getWithID = async (id) => {
         .catch(err => console.log(err));
 }
 
-exports.getWithStudentIDAndAssignmentID = async (studentID, assignmentID) => {
+exports.getWithSenderSIDAndAssignmentID = async (senderSID, assignmentID) => {
     return await gradereviewModel
-        .getWithStudentIDAndAssignmentID(studentID, assignmentID)
+        .getWithSenderSIDAndAssignmentID(senderSID, assignmentID)
         .then(result => {
             return result;
         })
@@ -39,9 +39,9 @@ exports.updateWithID = async (id, expectGrade, explaination) => {
         .catch(err => console.log(err));
 }
 
-exports.updateWithStudentIDAndAssignmentID = async (studentID, assignmentID, expectGrade, explaination) => {
+exports.updateWithSenderSIDAndAssignmentID = async (senderSID, assignmentID, expectGrade, explaination) => {
     return await gradereviewModel
-        .updateWithStudentIDAndAssignmentID(studentID, assignmentID, expectGrade, explaination)
+        .updateWithSenderSIDAndAssignmentID(senderSID, assignmentID, expectGrade, explaination)
         .then(result => {
             return result;
         })

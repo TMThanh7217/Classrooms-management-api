@@ -48,8 +48,9 @@ router.delete('/:classroomId/assignments/:assignmentId', passport.authenticate('
 // get all sid with classroomID
 router.get('/:classroomId/sids', passport.authenticate('jwt', { session: false }), sidController.findAllByClassroomId);
 
+// scoreboard
 // Change the sql statement a bit. May need further testing
-router.get('/:classroomId/scoreboard', passport.authenticate('jwt', { session: false }), sidController.findStudentAndScoreByClassroomID);
+router.get('/:classroomId/scoreboard', passport.authenticate('jwt', { session: false }), authorization.checkAllRole, sidController.findStudentAndScoreByClassroomID);
 
 // import student list
 router.post('/:classroomId/sids/import', passport.authenticate('jwt', { session: false }), authorization.checkTeacherRole, sidController.importStudentList);

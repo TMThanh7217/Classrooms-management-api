@@ -2,7 +2,7 @@ const gradereviewService = require('./gradereviewService');
 
 exports.create = async (req, res) => {
     let gradereview = {
-        studentID: parseInt(req.body.studentID),
+        senderSID: parseInt(req.body.senderSID),
         assignmentID: parseInt(req.body.assignmentID),
         expectGrade: req.body.expectGrade, // This may cause some problem, may as well debug it later
         explaination: req.body.explaination

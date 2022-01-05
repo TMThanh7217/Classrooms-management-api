@@ -57,6 +57,13 @@ const sidService = {
             console.log(err);
             return err;
         }),
+    getStudentAndScoreByClassroomIDWithFinalize: (classroomId) => sidModel
+        .getStudentAndScoreByClassroomIDWithFinalize(classroomId)
+        .then(result => result)
+        .catch(err => {
+            console.log(err);
+            return err;
+        }),
     updateName: (sidObj) => sidModel
         .updateName(sidObj)
         .then(result => result)

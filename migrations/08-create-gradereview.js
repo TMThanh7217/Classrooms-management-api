@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      SID: {
+      senderSID: {
         type: Sequelize.STRING,
         references: {
           model: 'SIDs',

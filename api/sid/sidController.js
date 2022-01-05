@@ -3,6 +3,7 @@ const sidService = require("../sid/sidService")
 const userService = require("../users/userService");
 const studentAssignmentService = require("../student_assignments/student_assignmentService");
 const studentAssignment = require("../../models/student-assignment");
+const accountService = require('../accounts/accountService');
 
 const sidController = {
     addSID: async (req, res) => {
@@ -193,14 +194,28 @@ const sidController = {
         else return res.status(500).json({err: 'Cannot find with classroom id'});
     },
     findStudentAndScoreByClassroomID: async(req, res) => {
-        let classroomId = parseInt(req.params.classroomId);
-        let result = await sidService.findStudentAndScoreByClassroomID(classroomId)
-
-        if (result) {
-            console.log("findStudentAndScoreByClassroomID", result);
-            return res.status(200).json(result);
+        //console.log("req.user", req.user);
+        let account = await accountService.getAccountWithID(parseInt(req.user.id));
+        if (account) {
+            let classroomId = parseInt(req.params.classroomId);
+            //console.log("account", account);
+            let result;
+            // Yes this is dumb. Thanks
+            if (account.role == 1) {
+                // For teacher
+                //console.log("No finalize check");
+                result = await sidService.findStudentAndScoreByClassroomID(classroomId);
+            }
+            else {
+                console.log("Finalize check");
+                result = await sidService.getStudentAndScoreByClassroomIDWithFinalize(classroomId);
+            }
+            if (result) {
+                console.log("findStudentAndScoreByClassroomID", result);
+                return res.status(200).json(result);
+            }
+            else return res.status(500).json({err: 'Cannot find student and score with this classroom id'});
         }
-        else return res.status(500).json({err: 'Cannot find student and score with this classroom id'});
     },
     updateSID: async (req, res) => {
         let sid = req.body.sid;

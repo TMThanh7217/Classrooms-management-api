@@ -4,7 +4,7 @@ const Gradereview = model.Gradereview;
 //----------------------------------------------------------Create----------------------------------------------------------
 exports.create = async (gradereview) => {
     return await Gradereview.create({
-        studentID: gradereview.studentID,
+        senderSID: gradereview.senderSID,
         assignmentID: gradereview.assignmentID,
         expectGrade: gradereview.expectGrade,
         explaination: gradereview.explaination
@@ -22,11 +22,11 @@ exports.getWithID = async (id) => {
     })
 }
 
-exports.getWithStudentIDAndAssignmentID = async (studentID, assignmentID) => {
+exports.getWithSenderSIDAndAssignmentID = async (senderSID, assignmentID) => {
     return await Gradereview.findOne({
         raw: true,
         where: {
-            studentID: studentID,
+            senderSID: senderSID,
             assignmentID: assignmentID
         },
         attributes: {exclude: ['createdAt', 'updatedAt']}
@@ -45,13 +45,13 @@ exports.updateWithID = async (id, expectGrade, explaination) => {
     });
 }
 
-exports.updateWithStudentIDAndAssignmentID = async (studentID, assignmentID, expectGrade, explaination) => {
+exports.updateWithSenderSIDAndAssignmentID = async (senderSID, assignmentID, expectGrade, explaination) => {
     return await Gradereview.update({
         expectGrade: expectGrade,
         explaination: explaination
     }, {
         where: {
-            studentID: studentID,
+            senderSID: senderSID,
             assignmentID: assignmentID
         }
     });
