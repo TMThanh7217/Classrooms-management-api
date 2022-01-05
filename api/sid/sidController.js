@@ -57,12 +57,12 @@ const sidController = {
                     let newSid = await sidService.create(sidObj);
                     if (newSid) {
                         // If a new SID was created, find all assignment in every classroom and create a new student assignment  
-                        let userClassroom = await userClassroomService.getWithUserID(parseInt(newSid.userID));
+                        /*let userClassroom = await userClassroomService.getWithUserID(parseInt(newSid.userID));
                         //console.log("userClassroom", userClassroom);
                         if (userClassroom) {
                             // Get unique classroomID value only
                             // Use map to get a new array from classroomID then use filter, indexOf to get unique value
-                            /*let classroomIDList = userClassroom.map(item => item.classroomID).filter((ele, index, arr) => (arr.indexOf(ele) == index));
+                            let classroomIDList = userClassroom.map(item => item.classroomID).filter((ele, index, arr) => (arr.indexOf(ele) == index));
                             console.log("classroomIDList", classroomIDList);
                             let assignmentIDList = [];
                             for (let i = 0; i < classroomIDList.length; i++) {
@@ -96,10 +96,11 @@ const sidController = {
                                     }
                                     else console.log("Cannot update SA")
                                 }
-                            }*/
+                            }
 
                             return res.status(200).json({data: instance, msg: "SID was successfully created."})
-                        }
+                        }*/
+                        return res.status(200).json({data: instance, msg: "SID was successfully created."})
                     }
                     else return res.status(500).json({msg: "Cannot create new SID"});
                 }

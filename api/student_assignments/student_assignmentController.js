@@ -11,7 +11,7 @@ exports.create = async (req, res) => {
         let student_assignment = {
             SID: result.SID,
             assignmentID: parseInt(req.params.assignmentId),
-            score: parseFloat(req.body.score).toFixed(1),
+            score: parseFloat(req.body.score).toFixed(2),
             status: 1
         }
         let newSA = await student_assignmentService.create(student_assignment);
@@ -102,15 +102,17 @@ exports.updateScore = async (req, res) => {
     let userId = parseInt(req.params.userId);
     let classroomId = parseInt(req.params.classroomId);
     let assignmentId = parseInt(req.params.assignmentId);
-    let result = await sidService.findByUserId(userId);
     console.log("userId:", userId);
     console.log("classroomId:", classroomId);
     console.log("assignmentId:", assignmentId);
+
+    let result = await sidService.findByUserId(userId);
     if (result) {
+        console.log("findByUserId", result);
         let student_assignment = {
             SID: result.SID,
             assignmentID: assignmentId,
-            score: parseFloat(req.body.score),
+            score: parseFloat(req.body.score).toFixed(2),
             status: 1
         }
         /*let updatedSA = await student_assignmentService.update(student_assignment);

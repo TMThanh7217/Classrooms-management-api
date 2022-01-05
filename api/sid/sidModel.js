@@ -75,7 +75,7 @@ exports.getStudentAndScoreByClassroomID = async classroomID => {
         a.id AS assignmentID, a.name AS assignmentName, sa.score AS score, a.maxPoint as maxScore
         FROM SIDs AS s LEFT JOIN Users AS u ON (s.userID = u.id) 
             LEFT JOIN Assignments AS a ON (a.classroomID = :classroomId) 
-            LEFT JOIN StudentAssignments AS sa ON (sa.assignmentID = a.id)
+            LEFT JOIN StudentAssignments AS sa ON (sa.SID = s.SID AND sa.assignmentID = a.id)
             LEFT JOIN UserClassrooms AS uc ON (s.userID = uc.userID)
         WHERE uc.classroomID = :classroomId AND NOT EXISTS (SELECT * FROM Accounts AS acc WHERE u.id = acc.userID AND acc.role IN (0, 1))`,
         {
@@ -91,7 +91,7 @@ exports.getStudentAndScoreByClassroomIDWithFinalize = async (userID, classroomID
         a.id AS assignmentID, a.name AS assignmentName, sa.score AS score, a.maxPoint as maxScore
         FROM SIDs AS s LEFT JOIN Users AS u ON (s.userID = u.id) 
             LEFT JOIN Assignments AS a ON(a.classroomID = :classroomId) 
-            LEFT JOIN StudentAssignments AS sa ON (sa.assignmentID = a.id)
+            LEFT JOIN StudentAssignments AS sa ON (sa.SID = s.SID AND sa.assignmentID = a.id)
             LEFT JOIN UserClassrooms AS uc ON (s.userID = uc.userID)
         WHERE s.userID = :userID AND a.finalize = 1 AND uc.classroomID = :classroomId AND NOT EXISTS (SELECT * FROM Accounts AS acc WHERE u.id = acc.userID AND acc.role IN (0, 1))`,
         {
