@@ -63,17 +63,11 @@ exports.getByUserIDAndClassroomID = async (userID, classroomID) => {
             LEFT JOIN SIDs AS sid ON(sid.SID = gr.senderSID)
             LEFT JOIN Assignments AS a ON(a.id = gr.assignmentID)
             LEFT JOIN StudentAssignments AS sa ON (sa.SID = sid.SID AND sa.assignmentID = a.id)
-            WHERE a.classroomID = :classroomID AND (
-                sid.userID = :userID OR EXISTS (
-                    SELECT * 
-                    FROM Accounts 
-                    WHERE Accounts.userID = :userID AND Accounts.role != 2
-                )
+            WHERE a.classroomID = :classroomID AND (sid.userID = :userID OR EXISTS (SELECT * FROM Accounts WHERE Accounts.userID = :userID AND Accounts.role != 2)
             )
-        `
-        ,{
+        `, {
             type: QueryTypes.SELECT,
-            replacement: {
+            replacements: {
                 userID: userID,
                 classroomID: classroomID
             }

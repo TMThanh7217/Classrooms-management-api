@@ -81,10 +81,6 @@ router.get('/:classroomId/users/:userId/role', accountController.getRole);
 router.post('/invite/join', user_classroomController.create);
 
 /* Grade review */
-// For teacher
-router.get('/:classroomId/gradereview', gradreviewController.getAllWithAssignmentID);
-
-// For student
-router.get('/:classroomId/gradereview/users/:userId', gradreviewController.getWithSenderSIDAndAssignmentID);
+router.get('/:classroomId/gradereview', passport.authenticate('jwt', { session: false }), gradreviewController.getAllByUserIDAndClassroomID);
 
 module.exports = router;

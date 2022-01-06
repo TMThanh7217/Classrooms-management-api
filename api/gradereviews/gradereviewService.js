@@ -47,6 +47,15 @@ exports.getWithAssignmentID = async (assignmentID) => {
         .catch(err => console.log(err));
 }
 
+exports.getByUserIDAndClassroomID = async (userID, classroomID) => {
+    return await gradereviewModel
+        .getByUserIDAndClassroomID(userID, classroomID)
+        .then(result => {
+            return result;
+        })
+        .catch(err => console.log(err));
+}
+
 //----------------------------------------------------------Update----------------------------------------------------------
 exports.updateWithID = async (id, expectGrade, explaination) => {
     return await gradereviewModel

@@ -79,3 +79,19 @@ exports.getWithSenderSIDAndAssignmentID = async (req, res) => {
     }
     else return res.status(500).json({msg: 'Cannot find any gradereview with this userID'});
 }
+
+exports.getAllByUserIDAndClassroomID = async (req, res) => {
+    // No authenticate called means no req.user, take note
+    console.log("req.user in gradereview", req.user);
+    let userID = parseInt(req.user.userID);
+    let classroomID = parseInt(req.params.classroomId);
+    console.log("userID", userID);
+    console.log("classroomID", classroomID);
+
+    let gradereview = await gradereviewService.getByUserIDAndClassroomID(userID, classroomID);
+    if (gradereview) {
+        console.log(gradereview);
+        return res.status(200).json(gradereview);
+    }
+    else return res.status(500).json({msg: 'Cannot find any gradereview with this userID, classroomID'});
+}
