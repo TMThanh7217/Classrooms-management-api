@@ -23,6 +23,21 @@ exports.findUserInClassroom = async (userID, classroomID) => {
     })
 }
 
+exports.findStudentWithClassroomID = async (classroomID) => {
+    return await sequelize.query(
+        `
+            SELECT UserClassrooms.userID
+            FROM UserClassrooms
+            LEFT JOIN Accounts AS a ON (UserClassrooms.userID = a.id)
+            WHERE UserClassrooms.classroomID = :classroomID AND a.role = 2
+        `,
+        {
+            replacements: { classroomID: classroomID },
+            type: QueryTypes.SELECT
+        }
+    )
+}
+
 exports.getWithUserID = async (userID) => {
     return await UserClassroom.findAll({
         raw: true,
