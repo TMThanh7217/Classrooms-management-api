@@ -33,6 +33,26 @@ exports.getWithSenderSIDAndAssignmentID = async (senderSID, assignmentID) => {
     })
 }
 
+exports.getWithSenderSID = async (senderSID) => {
+    return await Gradereview.findAll({
+        raw: true,
+        where: {
+            senderSID: senderSID
+        },
+        attributes: {exclude: ['updatedAt']}
+    })
+}
+
+exports.getWithAssignmentID = async (assignmentID) => {
+    return await Gradereview.findAll({
+        raw: true,
+        where: {
+            assignmentID: assignmentID
+        },
+        attributes: {exclude: ['updatedAt']}
+    })
+}
+
 //----------------------------------------------------------Update----------------------------------------------------------
 exports.updateWithID = async (id, expectGrade, explaination) => {
     return await Gradereview.update({

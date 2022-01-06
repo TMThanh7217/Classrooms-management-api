@@ -12,6 +12,7 @@ const assignmentController = require('../assignments/assignmentController');
 const sidController = require('../sid/sidController');
 const student_assignmentController = require('../student_assignments/student_assignmentController');
 const accountController = require('../accounts/accountController');
+const gradreviewController = require('../gradereviews/gradereviewController');
 
 /* List all classes  */
 //router.get('/listAll', classroomController.listAllClassroom);
@@ -78,5 +79,12 @@ router.get('/:classroomId/users/:userId/role', accountController.getRole);
 
 // user_classroom does not hold role anymore, account do now (the default role is 2). So just create should be suffice.
 router.post('/invite/join', user_classroomController.create);
+
+/* Grade review */
+// For teacher
+router.get('/:classroomId/gradereview', gradreviewController.getAllWithAssignmentID);
+
+// For student
+router.get('/:classroomId/gradereview/users/:userId', gradreviewController.getWithSenderSIDAndAssignmentID);
 
 module.exports = router;

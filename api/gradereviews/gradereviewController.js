@@ -1,5 +1,7 @@
-const { parse } = require('dotenv');
 const gradereviewService = require('./gradereviewService');
+const assignmentService = require('../assignments/assignmentService');
+const sidController = require('../sid/sidController');
+const sidService = require('../sid/sidService');
 
 exports.create = async (req, res) => {
     let gradereview = {
@@ -17,17 +19,63 @@ exports.create = async (req, res) => {
     else return res.status(500).json({msg: 'Cannot create new gradeview'});
 };
 
-exports.getWithSenderSIDAndAssignmentID = async (req, res) => {
-    // Don't know what is in params
-    // If it is userID, find SID with it first;
-    let senderSID = req.params.senderSID;
-    let assignmentID = parseInt(req.params.assignmentID);
-    console.log("senderSID", senderSID);
-    console.log("assignmentID", assignmentID);
-    let gradereview = await gradereviewService.getWithSenderSIDAndAssignmentID(senderSID, assignmentID)
-    if (gradereview) {
-        console.log("gradereview", gradereview);
-        return res.status(200).json(gradereview);
+// For teacher
+exports.getAllWithAssignmentID = async (req, res) => {
+    let classroomID = parseInt(req.params.classroomId);
+    console.log("classroomID", classroomID);
+
+    let assignment = await assignmentService.getAssignmentWithClassroomID(classroomID);
+    if (assignment) {
+        console.log("assignment", assignment);
+        let assignmentIDList = assignment.map(item => item.id);
+        console.log("assignmentIDList", assignmentIDList);
+
+        let gradereviewList = [];
+        for (let i = 0; i < assignmentIDList.length; i++) {
+            // This use findAll
+            let gradereview = await gradereviewService.getWithAssignmentID(assignmentIDList[i]);
+            if (gradereview) {
+                console.log("gradereview", gradereview);
+                gradereviewList = gradereviewList.concat(gradereview);
+            }
+            else console.log('Cannot find gradereview with assignmentID');
+        }
+
+        console.log("gradereviewList", gradereviewList);
+        return res.status(200).json(gradereviewList);
     }
-    else return res.status(500).json({msg: 'Cannot find gradereview with this senderSID and assignmentID'});
+}
+
+// For student
+exports.getWithSenderSIDAndAssignmentID = async (req, res) => {
+    let userID = parseInt(req.params.userId);
+    let classroomID = parseInt(req.params.classroomId);
+    console.log("userID", userID);
+    console.log("classroomID", classroomID);
+
+    let sidObj = await sidService.findByUserId(userID);
+    if (sidObj) {
+        console.log("sidObj", sidObj);
+        let assignment = await assignmentService.getAssignmentWithClassroomID(classroomID);
+        if (assignment) {
+            console.log("assignment", assignment);
+            let assignmentIDList = assignment.map(item => item.id);
+            console.log("assignmentIDList", assignmentIDList);
+    
+            let gradereviewList = [];
+            for (let i = 0; i < assignmentIDList.length; i++) {
+                // This use findOne
+                let gradereview = await gradereviewService.getWithSenderSIDAndAssignmentID(sidObj.SID, assignmentIDList[i]);
+                if (gradereview) {
+                    console.log("gradereview", gradereview);
+                    gradereviewList = gradereviewList.push(gradereview);
+                }
+                else console.log('Cannot find gradereview with this senderSID and assignmentID');
+            }
+    
+            console.log("gradereviewList", gradereviewList);
+            return res.status(200).json(gradereviewList);
+        }
+    }
+    else return res.status(500).json({msg: 'Cannot find any gradereview with this userID'});
 }
