@@ -4,19 +4,28 @@ const sidController = require('../sid/sidController');
 const sidService = require('../sid/sidService');
 
 exports.create = async (req, res) => {
-    let gradereview = {
-        senderSID: parseInt(req.body.senderSID),
-        assignmentID: parseInt(req.body.assignmentID),
-        expectGrade: req.body.expectGrade, // This may cause some problem, may as well debug it later
-        explaination: req.body.explaination
+    console.log("req.user in gradereview", req.user);
+    let userID = parseInt(req.user.userID);
+    let classroomID = parseInt(req.params.classroomId);
+    console.log("userID", userID);
+    console.log("classroomID", classroomID);
+
+    let sidObj = await sidService.findByUserId(userID);
+    if (sidObj) {
+        let gradereview = {
+            senderSID: sidObj.SID,
+            assignmentID: parseInt(req.body.assignmentID),
+            expectGrade: req.body.expectGrade, // This may cause some problem, may as well debug it later
+            explaination: req.body.explaination
+        }
+
+        console.log('gradereview', gradereview);
+
+        /*let newGradereview = await gradereviewService.create(gradereview);
+        if (newGradereview)
+            return res.status(200).json({msg: 'Create new gradeview successfully'});
+        else return res.status(500).json({msg: 'Cannot create new gradeview'});*/
     }
-
-    console.log('gradereview', gradereview);
-
-    let newGradereview = await gradereviewService.create(gradereview);
-    if (newGradereview)
-        return res.status(200).json({msg: 'Create new gradeview successfully'});
-    else return res.status(500).json({msg: 'Cannot create new gradeview'});
 };
 
 // For teacher
@@ -90,7 +99,7 @@ exports.getAllByUserIDAndClassroomID = async (req, res) => {
 
     let gradereview = await gradereviewService.getByUserIDAndClassroomID(userID, classroomID);
     if (gradereview) {
-        console.log(gradereview);
+        console.log("gradereview", gradereview);
         return res.status(200).json(gradereview);
     }
     else return res.status(500).json({msg: 'Cannot find any gradereview with this userID, classroomID'});

@@ -10,7 +10,20 @@ exports.create = async (req, res) => {
     console.log('notification', notification);
 
     let newNotification = await notificationService.create(notification);
-    if (newNotification)
+    if (newNotification) {
+        console.log('newNotification', newNotification);
         return res.status(200).json({msg: 'Create new notification successfully'});
+    }
     else return res.status(500).json({msg: 'Cannot create new notification'});
 };
+
+exports.getAllWithUserID = async (req, res) => {
+    let userID = parseInt(req.user.userID);
+    console.log(userID);
+    let notiList = await notificationService.getWithUserID(userID);
+    if (notiList) {
+        console.log('notiList', notiList);
+        return res.status(200).json({msg: 'Create new notification successfully'});
+    }
+    else return res.status(500).json({msg: 'Cannot create new notification'});
+}

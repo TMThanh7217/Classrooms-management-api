@@ -22,7 +22,7 @@ exports.getWithID = async (id) => {
 }
 
 exports.getWithUserID = async (userID) => {
-    return await Notification.findOne({
+    return await Notification.findAll({
         raw: true,
         where: {
             userID: userID
