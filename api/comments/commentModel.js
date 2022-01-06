@@ -17,18 +17,28 @@ exports.getWithID = async (id) => {
         where: {
             id: id
         },
-        attributes: {exclude: ['createdAt', 'updatedAt']}
+        attributes: {exclude: ['updatedAt']}
     })
 }
 
 exports.getWithAuthorIDAndGradereviewID = async (authorID, gradeReviewID) => {
-    return await Comment.findOne({
+    return await Comment.findAll({
         raw: true,
         where: {
             authorID: authorID,
             gradeReviewID: gradeReviewID
         },
-        attributes: {exclude: ['createdAt', 'updatedAt']}
+        attributes: {exclude: ['updatedAt']}
+    })
+}
+
+exports.getAllWithGradereviewID = async (gradeReviewID) => {
+    return await Comment.findAll({
+        raw: true,
+        where: {
+            gradeReviewID: gradeReviewID
+        },
+        attributes: {exclude: ['updatedAt']}
     })
 }
 

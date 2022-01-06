@@ -18,7 +18,7 @@ exports.getWithID = async (id) => {
         where: {
             id: id
         },
-        attributes: {exclude: ['createdAt', 'updatedAt']}
+        attributes: {exclude: ['updatedAt']}
     })
 }
 
@@ -29,7 +29,7 @@ exports.getWithSenderSIDAndAssignmentID = async (senderSID, assignmentID) => {
             senderSID: senderSID,
             assignmentID: assignmentID
         },
-        attributes: {exclude: ['createdAt', 'updatedAt']}
+        attributes: {exclude: ['updatedAt']}
     })
 }
 

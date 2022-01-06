@@ -29,6 +29,15 @@ exports.getWithAuthorIDAndGradereviewID = async (authorID, gradeReviewID) => {
         .catch(err => console.log(err));
 }
 
+exports.getAllWithGradereviewID = async (gradeReviewID) => {
+    return await commentModel
+        .getAllWithGradereviewID(gradeReviewID)
+        .then(result => {
+            return result;
+        })
+        .catch(err => console.log(err));
+}
+
 //----------------------------------------------------------Update----------------------------------------------------------
 exports.updateWithID = async (id, content) => {
     return await commentModel

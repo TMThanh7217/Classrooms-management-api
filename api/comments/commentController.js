@@ -12,3 +12,14 @@ exports.create = async (req, res) => {
         return res.status(200).json({msg: 'Create new comment successfully'});
     else return res.status(500).json({msg: 'Cannot create new comment'});
 }
+
+exports.getAllWithGradereviewID = async (req, res) => {
+    let gradereviewID = parseInt(req.params.gradeReviewID);
+    console.log("gradereviewID", gradereviewID);
+    let commentList = await commentService.getAllWithGradereviewID(gradereviewID);
+    if (commentList) {
+        console.log("commentList", commentList);
+        return res.status(200).json(commentList);
+    }
+    else return res.status(500).json({msg: 'Cannot find comment with this gradereviewID'});
+}
