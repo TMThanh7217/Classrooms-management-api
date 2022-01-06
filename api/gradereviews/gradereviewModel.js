@@ -1,5 +1,7 @@
 const model = require("../../models");
 const Gradereview = model.Gradereview;
+const { QueryTypes } = require('sequelize');
+const { sequelize } = require("../../models");
 
 //----------------------------------------------------------Create----------------------------------------------------------
 exports.create = async (gradereview) => {
@@ -51,6 +53,32 @@ exports.getWithAssignmentID = async (assignmentID) => {
         },
         attributes: {exclude: ['updatedAt']}
     })
+}
+
+exports.getByUserIDAndClassroomID = async (userID, classroomID) => {
+    return model.sequelize.query(
+        `
+            SELECT gr.*, sid.name AS authorName, a.name AS assignmentName, sa.score, a.maxPoint
+            FROM Gradereviews AS gr
+            LEFT JOIN SIDs AS sid ON(sid.SID = gr.senderSID)
+            LEFT JOIN Assignments AS a ON(a.id = gr.assignmentID)
+            LEFT JOIN StudentAssignments AS sa ON (sa.SID = sid.SID AND sa.assignmentID = a.id)
+            WHERE a.classroomID = :classroomID AND (
+                sid.userID = :userID OR EXISTS (
+                    SELECT * 
+                    FROM Accounts 
+                    WHERE Accounts.userID = :userID AND Accounts.role != 2
+                )
+            )
+        `
+        ,{
+            type: QueryTypes.SELECT,
+            replacement: {
+                userID: userID,
+                classroomID: classroomID
+            }
+        }
+    )
 }
 
 //----------------------------------------------------------Update----------------------------------------------------------
