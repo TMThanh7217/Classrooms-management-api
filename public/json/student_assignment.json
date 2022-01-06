@@ -1,11 +1,26 @@
 [{
-    "SID": "30697813",
-    "assignmentID": 6,
-    "score": 7.6,
-    "status": 0
-  }, {
-    "SID": "30697813",
-    "assignmentID": 12,
-    "score": 9.5,
-    "status": 1
+  "SID": "30697813",
+  "assignmentID": 6,
+  "score": 7.6,
+  "status": 0
+}, {
+  "SID": "30697813",
+  "assignmentID": 12,
+  "score": 9.5,
+  "status": 1
+}, {
+  "SID": "student2",
+  "assignmentID": 6,
+  "score": 85,
+  "status": 1
+}, {
+  "SID": "student2",
+  "assignmentID": 12,
+  "score": 90.5,
+  "status": 1
+}, {
+  "SID": "student2",
+  "assignmentID": 15,
+  "score": 18.25,
+  "status": 1
 }]

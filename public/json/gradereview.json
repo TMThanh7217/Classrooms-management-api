@@ -3,4 +3,24 @@
     "assignmentId": 6,
     "expectGrade": 9,
     "explaination": "This should be 9"
+}, {
+    "senderSID": "30697813",
+    "assignmentId": 12,
+    "expectGrade": 50,
+    "explaination": "This should be 50"
+}, {
+    "senderSID": "student2",
+    "assignmentId": 6,
+    "expectGrade": 85,
+    "explaination": "Nahhhhhhhhhhhhhhhhhhh"
+}, {
+    "senderSID": "student2",
+    "assignmentId": 12,
+    "expectGrade": 20,
+    "explaination": "Sorry please check this"
+}, {
+    "senderSID": "student2",
+    "assignmentId": 15,
+    "expectGrade": 100,
+    "explaination": "This had to be 100, this is wrong"
 }]
