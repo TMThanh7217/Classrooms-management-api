@@ -20,11 +20,22 @@ exports.create = async (req, res) => {
         }
 
         console.log('gradereview', gradereview);
-
-        /*let newGradereview = await gradereviewService.create(gradereview);
-        if (newGradereview)
-            return res.status(200).json({msg: 'Create new gradeview successfully'});
-        else return res.status(500).json({msg: 'Cannot create new gradeview'});*/
+        let oldGradereview = await gradereviewService.getWithSenderSIDAndAssignmentID(gradereview.senderSID, gradereview.assignmentID);
+        if (!oldGradereview) {
+            let newGradereview = await gradereviewService.create(gradereview);
+            if (newGradereview) {
+                console.log('Create new gradeview successfully');
+                return res.status(200).json({msg: 'Create new gradeview successfully'});
+            }
+            else {
+                console.log('Cannot create new gradeview');
+                return res.status(500).json({msg: 'Cannot create new gradeview'});
+            }
+        }
+        else {
+            console.log('You have create a grade review for this assignment already');
+            return res.status(500).json({msg: 'You have create a grade review for this assignment already'});
+        }
     }
 };
 
