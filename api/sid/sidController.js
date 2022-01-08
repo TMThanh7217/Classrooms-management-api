@@ -5,6 +5,7 @@ const studentAssignmentService = require("../student_assignments/student_assignm
 const assignmentService = require("../assignments/assignmentService");
 const accountService = require('../accounts/accountService');
 const userClassroomService = require('../user_classrooms/user_classroomService');
+const sidClassroomService = require('../sid_classrooms/sid_classroomService');
 
 const sidController = {
     addSID: async (req, res) => {
@@ -14,7 +15,7 @@ const sidController = {
             userID: parseInt(req.body.userID) ?? null,
             name: req.body.name
         };
-        console.log("data", sidObj);
+        console.log("sidObj outside if check", sidObj);
         let instance = await sidService.findBySID(sidObj.sid);
         console.log("SID found: ", instance);
 
@@ -47,64 +48,65 @@ const sidController = {
             // Check if the userID has a SID before
             const foundSID = await sidService.findByUserId(sidObj.userID)
             console.log("found SID", foundSID)
-            if(!foundSID) {
+            if(!foundSID ) {
                 // If not, create a new SID
-                const requireFields = ['name', 'sid'];
-                const validateAddData = data => requireFields.every(field => Object.keys(data).includes(field));
-                let isValid = Object.keys(validateAddData(sidObj));
-                if(isValid) {
-                    console.log("Call create SID")
-                    let newSid = await sidService.create(sidObj);
-                    if (newSid) {
-                        // If a new SID was created, find all assignment in every classroom and create a new student assignment  
-                        /*let userClassroom = await userClassroomService.getWithUserID(parseInt(newSid.userID));
-                        //console.log("userClassroom", userClassroom);
-                        if (userClassroom) {
-                            // Get unique classroomID value only
-                            // Use map to get a new array from classroomID then use filter, indexOf to get unique value
-                            let classroomIDList = userClassroom.map(item => item.classroomID).filter((ele, index, arr) => (arr.indexOf(ele) == index));
-                            console.log("classroomIDList", classroomIDList);
-                            let assignmentIDList = [];
-                            for (let i = 0; i < classroomIDList.length; i++) {
-                                let assignment = await assignmentService.getAssignmentWithClassroomID(classroomIDList[i]);
-                                if (assignment)
-                                assignmentIDList = assignmentIDList.concat(assignment.map(item => item.id));
-                            }
-                            assignmentIDList.filter((ele, index, arr) => (arr.indexOf(ele) == index));
-
-                            let studentAssignment = {
-                                SID: newSid.SID,
-                                score : 0,
-                                status: 0
-                            }
-                            console.log("assignmentIDList", assignmentIDList);
-                            for (let i = 0; i < assignmentIDList.length; i++) {
-                                studentAssignment.assignmentID = assignmentIDList[i];
-                                console.log('studentAssignment', studentAssignment);
-                                let oldSA = studentAssignmentService.getStudentAssignmentWithSID(studentAssignment.SID);
-                                if (!oldSA) {
-                                    let newSA = await studentAssignmentService.create(studentAssignment);
-                                    if (newSA) {
-                                        console.log('newSA', newSA);
-                                    }
-                                    else console.log("Cannot create new SA")
-                                }
-                                else {
-                                    let result = await studentAssignmentService.update(studentAssignment);
-                                    if (result) {
-                                        console.log('Update SA successfully', result);
-                                    }
-                                    else console.log("Cannot update SA")
-                                }
-                            }
-
-                            return res.status(200).json({data: instance, msg: "SID was successfully created."})
-                        }*/
-                        return res.status(200).json({data: instance, msg: "SID was successfully created."})
-                    }
-                    else return res.status(500).json({msg: "Cannot create new SID"});
+                console.log('sidObj', sidObj);
+                if (sidObj.name == '') { 
+                    console.log('Missing name');
+                    return res.status(500).json({msg: "Missing name"});
                 }
-                else return res.status(500).json({msg: "Invalid post data."})
+
+                console.log("Call create SID")
+                let newSid = await sidService.create(sidObj);
+                if (newSid) {
+                    // If a new SID was created, find all assignment in every classroom and create a new student assignment  
+                    // Don't do that
+                    /*let userClassroom = await userClassroomService.getWithUserID(parseInt(newSid.userID));
+                    //console.log("userClassroom", userClassroom);
+                    if (userClassroom) {
+                        // Get unique classroomID value only
+                        // Use map to get a new array from classroomID then use filter, indexOf to get unique value
+                        let classroomIDList = userClassroom.map(item => item.classroomID).filter((ele, index, arr) => (arr.indexOf(ele) == index));
+                        console.log("classroomIDList", classroomIDList);
+                        let assignmentIDList = [];
+                        for (let i = 0; i < classroomIDList.length; i++) {
+                            let assignment = await assignmentService.getAssignmentWithClassroomID(classroomIDList[i]);
+                            if (assignment)
+                            assignmentIDList = assignmentIDList.concat(assignment.map(item => item.id));
+                        }
+                        assignmentIDList.filter((ele, index, arr) => (arr.indexOf(ele) == index));
+
+                        let studentAssignment = {
+                            SID: newSid.SID,
+                            score : 0,
+                            status: 0
+                        }
+                        console.log("assignmentIDList", assignmentIDList);
+                        for (let i = 0; i < assignmentIDList.length; i++) {
+                            studentAssignment.assignmentID = assignmentIDList[i];
+                            console.log('studentAssignment', studentAssignment);
+                            let oldSA = studentAssignmentService.getStudentAssignmentWithSID(studentAssignment.SID);
+                            if (!oldSA) {
+                                let newSA = await studentAssignmentService.create(studentAssignment);
+                                if (newSA) {
+                                    console.log('newSA', newSA);
+                                }
+                                else console.log("Cannot create new SA")
+                            }
+                            else {
+                                let result = await studentAssignmentService.update(studentAssignment);
+                                if (result) {
+                                    console.log('Update SA successfully', result);
+                                }
+                                else console.log("Cannot update SA")
+                            }
+                        }
+
+                        return res.status(200).json({data: instance, msg: "SID was successfully created."})
+                    }*/
+                    return res.status(200).json({data: instance, msg: "SID was successfully created."})
+                }
+                else return res.status(500).json({msg: "Cannot create new SID"});
             }
             else {
                 // If yes, call update. haha update on m:n association funny hah a
@@ -210,13 +212,27 @@ const sidController = {
             if (!result) {
                 sidObj.classroomID = classroomId;
                 sidObj.userID = null;
+
                 let newSid = await sidService.create(sidObj);
                 if (!newSid) {
-                    return res.status(500).json({msg: 'Cannot create new Sid'});
+                    return res.status(500).json({msg: 'Cannot create new Sid - SID table'});
                 }
                 else {
-                    console.log('newSid:');
-                    console.log(newSid.SID);
+                    console.log('newSid:', newSid.SID);
+
+                    // Yes this is dumb
+                    let oldSidClassroom = await sidClassroomService.getWithBothKeys(sidObj.sid, classroomId);
+                    if (oldSidClassroom)
+                        console.log('Sid has already existed - SIDClassroom table');
+                    else {
+                        let newSC = await sidClassroomService.create(sidObj.sid, classroomId);
+                        if (!newSC) {
+                            console.log('Cannot create new Sid - SIDClassroom table');
+                        }
+                        else {
+                            console.log('newSC:', newSC);
+                        }
+                    }
                 }
             }
             else { 
@@ -224,7 +240,7 @@ const sidController = {
                 //let updatedSidObj = await sidService.updateName(result);
                 //if (updatedSidObj)
                 //    console.log('Name updated');
-                console.log('Sid has already existed');
+                console.log('Sid has already existed - SID table');
             }
         }
         return res.status(200).json({msg: 'Import student list successfully'});

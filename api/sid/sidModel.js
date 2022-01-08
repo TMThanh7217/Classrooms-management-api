@@ -71,13 +71,13 @@ exports.getByUserIDAndClassroomID = async (userID, classroomID) => {
 // Did some adjustment, work as intended? not very sure
 exports.getStudentAndScoreByClassroomID = async classroomID => {
     return await sequelize.query(   
-        `SELECT s.SID AS sid, s.name AS studentName, u.id AS userID, u.name as UserName, 
-        a.id AS assignmentID, a.name AS assignmentName, sa.score AS score, a.maxPoint as maxScore
-        FROM SIDs AS s LEFT JOIN Users AS u ON (s.userID = u.id) 
-            LEFT JOIN Assignments AS a ON (a.classroomID = :classroomId) 
-            LEFT JOIN StudentAssignments AS sa ON (sa.SID = s.SID AND sa.assignmentID = a.id)
-            LEFT JOIN UserClassrooms AS uc ON (s.userID = uc.userID)
-        WHERE uc.classroomID = :classroomId AND NOT EXISTS (SELECT * FROM Accounts AS acc WHERE u.id = acc.userID AND acc.role IN (0, 1))`,
+        `
+        SELECT s.SID AS sid, s.name AS studentName, s.userID AS userID, a.id AS assignmentID, a.name AS assignmentName, sa.score AS score, a.maxPoint as maxScore, a.classroomID
+        FROM SIDs AS s 
+        LEFT JOIN Assignments AS a ON (1)
+		LEFT JOIN StudentAssignments AS sa ON (sa.SID = s.SID AND sa.assignmentID = a.id)
+        WHERE a.classroomID = :classroomId AND NOT EXISTS (SELECT * FROM Accounts AS acc WHERE s.userID = acc.userID AND acc.role IN (0, 1))
+        `,
         {
             replacements: {classroomId: classroomID},
             type: QueryTypes.SELECT
