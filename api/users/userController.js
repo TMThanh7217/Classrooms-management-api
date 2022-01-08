@@ -33,6 +33,22 @@ exports.listAllUser = async (req, res) => {
         .then(userList => {
             if (userList)
                 return res.status(200).json(userList);
-            return res.status(404).json({msg: 'Cannot get User list'})
+            return res.status(500).json({msg: 'Cannot get User list'})
         })
+}
+
+exports.getAllUserInClassroomWithRole = async (req, res) => {
+    let classroomID = parseInt(req.params.classroomId);
+    let role = parseInt(req.query.role);
+    console.log('classroomID', classroomID);
+    console.log('role', role);
+    let userList = await userService.getAllUserInClassroomWithRole(classroomID, role);
+    if (userList) {
+        console.log('userList', userList);
+        return res.status(200).json(userList);
+    }
+    else {
+        console.log('Cannot get user list');
+        return res.status(500).json({msg: 'Cannot get User list'})
+    }
 }

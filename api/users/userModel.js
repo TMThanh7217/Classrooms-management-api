@@ -1,6 +1,7 @@
 const model = require('../../models');
 const User = model.User;
-const { QueryTypes } = require('sequelize')
+const { QueryTypes } = require('sequelize');
+const { sequelize } = require('../../models');
 
 //----------------------------------------------------------Create----------------------------------------------------------
 exports.create = async (user) => {
@@ -82,6 +83,25 @@ exports.getAllUserInfoAccountWithRole = async (role) => {
             type: QueryTypes.SELECT
         }
     )
+}
+
+exports.getAllUserInClassroomWithRole = async (classroomID, role) => {
+    return await sequelize.query(
+        `
+        SELECT u.*, a.role
+        FROM Users AS u
+        LEFT JOIN UserClassrooms AS uc ON (u.id = uc.userID)
+        LEFT JOIN Accounts AS a ON (a.userID = u.id)
+        WHERE uc.classroomID = :classroomID AND a.role = :role
+        `,
+        {
+            replacements: {
+                classroomID: classroomID,
+                role: role
+            },
+            type: QueryTypes.SELECT
+        }
+    );
 }
 
 //----------------------------------------------------------Update----------------------------------------------------------

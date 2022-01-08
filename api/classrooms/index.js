@@ -13,7 +13,8 @@ const sidController = require('../sid/sidController');
 const student_assignmentController = require('../student_assignments/student_assignmentController');
 const accountController = require('../accounts/accountController');
 const gradreviewController = require('../gradereviews/gradereviewController');
-const commentController = require('../comments/commentController')
+const commentController = require('../comments/commentController');
+const userController = require('../users/userController');
 
 /* List all classes  */
 //router.get('/listAll', classroomController.listAllClassroom);
@@ -89,5 +90,8 @@ router.get('/:classroomId/gradereview', passport.authenticate('jwt', { session: 
 router.get('/:classroomId/gradereview/:gradeReviewId/comments', passport.authenticate('jwt', { session: false }), authorization.checkAllRole, commentController.getAllWithGradereviewID)
 
 router.post('/:classroomId/gradereview/:gradeReviewId/comments', passport.authenticate('jwt', { session: false }), authorization.checkAllRole, commentController.create)
+
+/* Misc stuff */
+router.get('/:classroomId/users', passport.authenticate('jwt', { session: false }), authorization.checkAllRole, userController.getAllUserInClassroomWithRole);
 
 module.exports = router;

@@ -54,6 +54,15 @@ exports.listAllUser = async () => {
         .catch(err => console.log(err));
 };
 
+exports.getAllUserInClassroomWithRole = async (classroomID, role) => {
+    return await userModel
+        .getAllUserInClassroomWithRole(classroomID, role)
+        .then( userList => {
+            return userList;
+        })
+        .catch(err => console.log(err));
+}
+
 exports.update = async (user) => {
     /*console.log('service call')
     console.log(user);*/
