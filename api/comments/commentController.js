@@ -12,7 +12,7 @@ exports.create = async (req, res) => {
     let newComment = await commentService.create(comment);
     if (newComment) {
         console.log('newComment', newComment);
-        //return res.status(200).json({msg: 'Create new comment successfully'});
+        return res.status(200).json({msg: 'Create new comment successfully'});
     }
     else { 
         console.log("Cannot create new comment");
