@@ -1,5 +1,6 @@
 const model = require("../../models");
 const Comment = model.Comment;
+const { QueryTypes } = require('sequelize')
 
 //----------------------------------------------------------Create----------------------------------------------------------
 exports.create = async (comment) => {
@@ -33,13 +34,20 @@ exports.getWithAuthorIDAndGradereviewID = async (authorID, gradeReviewID) => {
 }
 
 exports.getAllWithGradereviewID = async (gradeReviewID) => {
-    return await Comment.findAll({
-        raw: true,
-        where: {
-            gradeReviewID: gradeReviewID
-        },
-        attributes: {exclude: ['updatedAt']}
-    })
+    return await model.sequelize.query(
+        `
+            SELECT c.*, u.name AS authorName
+            FROM Comments AS c LEFT JOIN Users AS u ON (u.id = c.authorID)
+            WHERE c.gradeReviewID = :id
+            ORDER BY c.createdAt DESC 
+        `,{
+            type: QueryTypes.SELECT,
+            replacements: {
+                id: gradeReviewID
+            }
+        }
+
+    )
 }
 
 //----------------------------------------------------------Update----------------------------------------------------------
