@@ -60,8 +60,7 @@ const sidController = {
                 let newSid = await sidService.create(sidObj);
                 if (newSid) {
                     // If a new SID was created, find all assignment in every classroom and create a new student assignment  
-                    // Don't do that
-                    /*let userClassroom = await userClassroomService.getWithUserID(parseInt(newSid.userID));
+                    let userClassroom = await userClassroomService.getWithUserID(parseInt(newSid.userID));
                     //console.log("userClassroom", userClassroom);
                     if (userClassroom) {
                         // Get unique classroomID value only
@@ -72,7 +71,7 @@ const sidController = {
                         for (let i = 0; i < classroomIDList.length; i++) {
                             let assignment = await assignmentService.getAssignmentWithClassroomID(classroomIDList[i]);
                             if (assignment)
-                            assignmentIDList = assignmentIDList.concat(assignment.map(item => item.id));
+                                assignmentIDList = assignmentIDList.concat(assignment.map(item => item.id));
                         }
                         assignmentIDList.filter((ele, index, arr) => (arr.indexOf(ele) == index));
 
@@ -85,7 +84,8 @@ const sidController = {
                         for (let i = 0; i < assignmentIDList.length; i++) {
                             studentAssignment.assignmentID = assignmentIDList[i];
                             console.log('studentAssignment', studentAssignment);
-                            let oldSA = studentAssignmentService.getStudentAssignmentWithSID(studentAssignment.SID);
+                            let oldSA = await studentAssignmentService.getStudentAssignment(studentAssignment.SID, studentAssignment.assignmentID);
+                            console.log('oldSA', oldSA);
                             if (!oldSA) {
                                 let newSA = await studentAssignmentService.create(studentAssignment);
                                 if (newSA) {
@@ -103,8 +103,9 @@ const sidController = {
                         }
 
                         return res.status(200).json({data: instance, msg: "SID was successfully created."})
-                    }*/
-                    return res.status(200).json({data: instance, msg: "SID was successfully created."})
+                    }
+
+                    //return res.status(200).json({data: instance, msg: "SID was successfully created."})
                 }
                 else return res.status(500).json({msg: "Cannot create new SID"});
             }
@@ -190,7 +191,7 @@ const sidController = {
                         if (deleteResult) 
                             return res.status(200).json({data: instance, msg: "SID was successfully updated."});
                     }
-                    else return res.status(500).json({msg: "Some error occured"});
+                    else return res.status(500).json({msg: "Some error has occured"});
                 }
             }
         };
