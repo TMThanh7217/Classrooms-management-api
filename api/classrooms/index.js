@@ -86,8 +86,8 @@ router.post('/:classroomId/gradereview', passport.authenticate('jwt', { session:
 
 router.get('/:classroomId/gradereview', passport.authenticate('jwt', { session: false }), gradreviewController.getAllByUserIDAndClassroomID);
 
-router.get('/:classroomId/gradereview/:gradereviewId/comments', passport.authenticate('jwt', { session: false }), authorization.checkAllRole, commentController.getAllWithGradereviewID)
+router.get('/:classroomId/gradereview/:gradeReviewId/comments', passport.authenticate('jwt', { session: false }), authorization.checkAllRole, commentController.getAllWithGradereviewID)
 
-router.post('/:classroomId/gradereview/:gradereviewId/comments', passport.authenticate('jwt', { session: false }), authorization.checkAllRole, commentController.create)
+router.post('/:classroomId/gradereview/:gradeReviewId/comments', passport.authenticate('jwt', { session: false }), authorization.checkAllRole, commentController.create)
 
 module.exports = router;
