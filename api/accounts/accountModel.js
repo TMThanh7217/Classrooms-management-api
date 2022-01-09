@@ -12,7 +12,8 @@ exports.create = async (account) => {
         createdDate: account.createdDate,
         googleToken: account.googleToken,
         role: 2,
-        status: 0
+        status: 0,
+        validate: 0
     })
 }
 

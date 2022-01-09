@@ -34,6 +34,9 @@ module.exports = {
       status: {
         type: Sequelize.INTEGER
       },
+      validate: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

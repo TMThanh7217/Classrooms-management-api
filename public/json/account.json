@@ -5,7 +5,8 @@
     "createdDate": "2021-03-03",
     "googleToken": "",
     "role": 1,
-    "status": 0
+     "status": 0,
+    "validate": 0
   }, {
     "username": "student",
     "password": "student",
@@ -13,7 +14,8 @@
     "createdDate": "2021-10-24",
     "googleToken": "",
     "role": 2,
-    "status": 0
+     "status": 0,
+    "validate": 0
   }, {
     "username": "admin",
     "password": "admin",
@@ -21,7 +23,8 @@
     "createdDate": "2021-03-12",
     "googleToken": "",
     "role": 0,
-    "status": 0
+     "status": 0,
+    "validate": 0
   }, {
     "username": "admin2",
     "password": "admin2",
@@ -29,7 +32,8 @@
     "createdDate": "2021-09-27",
     "googleToken": "",
     "role": 0,
-    "status": 0
+     "status": 0,
+    "validate": 0
   }, {
     "username": "admin3",
     "password": "admin3",
@@ -37,7 +41,8 @@
     "createdDate": "2020-12-31",
     "googleToken": "",
     "role": 0,
-    "status": 0
+     "status": 0,
+    "validate": 0
   }, {
     "username": "student2",
     "password": "student2",
@@ -45,7 +50,8 @@
     "createdDate": "2021-02-05",
     "googleToken": "",
     "role": 2,
-    "status": 0
+     "status": 0,
+    "validate": 0
   }, {
     "username": "gcrowne6",
     "password": "loOc5PpfB",
@@ -53,7 +59,8 @@
     "createdDate": "2021-04-29",
     "googleToken": "",
     "role": 2,
-    "status": 0
+     "status": 0,
+    "validate": 0
   }, {
     "username": "fluna7",
     "password": "AnHHLoC",
@@ -61,7 +68,8 @@
     "createdDate": "2021-01-06",
     "googleToken": "",
     "role": 1,
-    "status": 0
+     "status": 0,
+    "validate": 0
   }, {
     "username": "rnuzzetti8",
     "password": "0dwSUm0tACEG",
@@ -69,7 +77,8 @@
     "createdDate": "2021-06-01",
     "googleToken": "",
     "role": 2,
-    "status": 0
+     "status": 0,
+    "validate": 0
   }, {
     "username": "fcheeseman9",
     "password": "VEnz8BmmYA",
@@ -77,5 +86,6 @@
     "createdDate": "2021-10-07",
     "googleToken": "",
     "role": 2,
-    "status": 0
+     "status": 0,
+    "validate": 0
   }]
