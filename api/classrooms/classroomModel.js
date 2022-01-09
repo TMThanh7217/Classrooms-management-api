@@ -86,7 +86,7 @@ exports.getClassroomWithInviteLink = async (inviteLink) => {
         where: {
             inviteLink: inviteLink
         },
-        attributes: {exclude: ['updatedAt', 'createdAt']}
+        attributes: {exclude: ['updatedAt']}
     });
 };
 

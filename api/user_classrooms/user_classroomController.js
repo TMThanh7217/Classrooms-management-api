@@ -1,29 +1,33 @@
 const user_classroomService = require('./user_classroomService');
 const accountService = require('../accounts/accountService');
-const classroomServicce = require('../classrooms/classroomService');
+const classroomService = require('../classrooms/classroomService');
 
 exports.create = async (req, res) => {
     let user_classroom = {
         userID: parseInt(req.body.userID),
-        classroomID: parseInt(req.body.classroomID), //classroomId received from front end
         userCode: ''
     }
-    console.log("user_classroom", user_classroom);
-    
-    user_classroomService
-        .findUserInClassroom(user_classroom.userID, user_classroom.classroomID)
-        .then((userclassroom) => {
-            console.log('userclassroom',userclassroom) 
-            if (!userclassroom) {
-                user_classroomService.create(user_classroom) // 2 = Student, default should be this
-                .then(result => {
-                    if (result)
-                        return res.status(200).json(result);
-                    else return res.status(500).json({err: 'Can not add user to classroom'});
-                })
-            }
-            //return res.status(409).json({err: 'User is already in this classroom'});
-        })
+    let inviteLink = req.body.inviteLink;
+    let classroom = await classroomService.getClassroomWithInviteLink(inviteLink);
+    if (classroom) {
+        console.log("classroom", classroom);
+        user_classroom.classroomID = classroom.id;
+        console.log('user_classroom', user_classroom);
+        user_classroomService
+            .findUserInClassroom(user_classroom.userID, user_classroom.classroomID)
+            .then((userclassroom) => {
+                console.log('userclassroom',userclassroom) 
+                if (!userclassroom) {
+                    user_classroomService.create(user_classroom) // 2 = Student, default should be this
+                    .then(result => {
+                        if (result)
+                            return res.status(200).json(result);
+                        else return res.status(500).json({err: 'Can not add user to classroom'});
+                    })
+                }
+                //return res.status(409).json({err: 'User is already in this classroom'});
+            })
+    }
 }
 
 exports.getWithUserID = async(req, res) => {
