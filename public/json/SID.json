@@ -2,15 +2,15 @@
   "SID": "33161455",
   "classroomID": 5,
   "userID": 1,
-  "name": "Teacher placeholder name"
+  "name": "Nguyen Minh Huy"
 }, {
   "SID": "30697813",
   "classroomID": 5,
   "userID": 2,
-  "name": "Student placeholder name"
+  "name": "Hoc sinh A"
 }, {
   "SID": "student2",
   "classroomID": 5,
   "userID": 6,
-  "name": "Student 2 placeholder name"
+  "name": "Reich Michael"
 }]
