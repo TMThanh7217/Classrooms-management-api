@@ -95,7 +95,7 @@ exports.googleAuthentication = async (req, res) => {
             username: removeVietnameseTones(name),
             password: 'none',
             createdDate: '',
-            googleToken: ggID,
+            googleToken: ggID
         }
 
         let new_user = {
@@ -123,7 +123,7 @@ exports.googleAuthentication = async (req, res) => {
                 new_account.userID = parseInt(newUser);
                 //account.username = account.username.toLowerCase()
                 accountService
-                    .create(new_account)
+                    .create(new_account, 2)
                     .then(newAccount => {
                         // newAccount should be the id of new account lmao
                         new_account.id = parseInt(newAccount);
