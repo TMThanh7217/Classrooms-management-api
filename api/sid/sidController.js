@@ -209,13 +209,14 @@ const sidController = {
             };
             /*console.log("sidObj");
             console.log(sidObj);*/
-            let result = await sidService.findBySidAndClassroomId(sidObj.sid, classroomId);
+            let result = await sidService.findBySID(sidObj.sid);
             if (!result) {
-                sidObj.classroomID = classroomId;
+                //sidObj.classroomID = classroomId;
                 sidObj.userID = null;
 
                 let newSid = await sidService.create(sidObj);
                 if (!newSid) {
+                    console.log('Cannot create new Sid - SID table');
                     return res.status(500).json({msg: 'Cannot create new Sid - SID table'});
                 }
                 else {

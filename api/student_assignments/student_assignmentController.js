@@ -39,9 +39,11 @@ exports.importGradeForAnAssignment = async (req, res) => {
 
         let result = await sidService.findBySID(sid);
         if (result) {
-            console.log('Pass findBySidAndClassroomId check');
+            console.log('Pass findBySid check');
             // Yep no need to check here, if there is an SID, show it and done
             let student_assignment = await student_assignmentService.getStudentAssignment(sid, assignmentId);
+            console.log('student_assignment', student_assignment);
+            
             if (student_assignment) {
                 updateInfo = {
                     SID: sid,
@@ -49,6 +51,8 @@ exports.importGradeForAnAssignment = async (req, res) => {
                     score: score,
                     status: 1, // Think this was to mark the assignment is done. No need for it now
                 }
+
+                console.log('updateInfo', updateInfo);
                 // This update does not update SID and assignmentID, need these two for where clause though
                 let updatedSA = await student_assignmentService.update(updateInfo);
                 if (updatedSA) {
@@ -63,14 +67,16 @@ exports.importGradeForAnAssignment = async (req, res) => {
                     score: score,
                     status: 1,
                 }
+                console.log('student_assignmentObj', student_assignmentObj);
                 let newSA = await student_assignmentService.create(student_assignmentObj);
+                console.log('newSA', newSA);
                 if (newSA)
                     console.log('Create new SA successfully');
                 else console.log('Create SA fail');
             }
         }
         else {
-            console.log(`Cannot find with sid: ${sid} in classroom ${classroomId}`);
+            console.log(`Cannot find with sid: ${sid}`);
         }
     }
     return res.status(200).json({msg: 'Import grade for this assignment successfully'});
