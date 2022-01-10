@@ -285,7 +285,7 @@ const sidController = {
     },
     updateSID: async (req, res) => {
         let sid = req.body.sid;
-        let userID = parseInt(req.body.userId);
+        let userID = req.body.userId ? parseInt(req.body.userId) : req.body.userId;
         let result = await sidService.updateSID(sid, userID);
 
         if (result) {
@@ -323,6 +323,21 @@ const sidController = {
         }
         else return res.status(500).json({ err: "UNK" })
 
+    },
+    delete: async (req, res) => {
+        const SID = req.body.SID
+        if(!SID) return res.status(500).json({err:"Not found"})
+
+        sidService
+        .deleteBySID(SID)
+        .then(result => {
+            console.log("NOOOOO", result)
+            res.status(200).json(result)
+        })
+        .catch(err => {
+            console.log("EEEEEEE", err)
+            res.status(500).json({err:"?????"}) 
+        })
     }
 }
 

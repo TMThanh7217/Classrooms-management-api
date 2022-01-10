@@ -25,8 +25,11 @@ exports.create = async (req, res) => {
                         else return res.status(500).json({err: 'Can not add user to classroom'});
                     })
                 }
-                //return res.status(409).json({err: 'User is already in this classroom'});
+                else return res.status(409).json({err: 'User is already in this classroom'});
             })
+    }
+    else {
+        res.status(409).json({err: "Invite code not exist"})
     }
 }
 
