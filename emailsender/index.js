@@ -17,33 +17,40 @@ const sendEmail = {
     }
   },
   verification: async (receiver, verification_link) => {
-    let testAccount = await nodemailer.createTestAccount();
+    try {
+      /*let testAccount = await nodemailer.createTestAccount();
+      console.log('testAccount', testAccount);*/
+      console.log("Test transporter host");
+      let transporter = nodemailer.createTransport({
+        //host: "smtp.ethereal.email",
+        //host: process.env.TEMP_HOST,
+        service: 'hotmail',
+        port: 587,
+        auth: {
+          user: process.env.TEMP_USERNAME,
+          pass: process.env.TEMP_PASSWORD,
+        }
+      });
+      
+      // send mail with defined transport object
+      let info = await transporter.sendMail({
+        from: process.env.TEMP_USERNAME, // sender address
+        to: receiver, // list of receivers
+        subject: "Test send verification link", // Subject line
+        text: verification_link, // plain text body
+      });
 
-    let transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
-      port: 587,
-      secure: false, // true for 465, false for other ports
-      auth: {
-        user: testAccount.user, // generated ethereal user
-        pass: testAccount.pass, // generated ethereal password
-      },
-    });
-    
-    var mailOptions = {
-      from: testAccount.user,
-      to: receiver,
-      subject: 'Sending Email using Node.js',
-      text: verification_link
-    };
-    
-    await transporter.sendMail(mailOptions, function(error, info){
-      if (error) {
-        console.log(error);
-      } else {
-        console.log('Email sent: ' + info.response);
-        console.log("Info", info);
-      }
-    });
+      console.log("Message sent: %s", info.messageId);
+      // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+      // Preview only available when sending through an Ethereal account
+      console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+      console.log("Info", info);
+      return info;
+    }
+    catch (err) {
+      console.log(err)
+    }
   }
 }
 
