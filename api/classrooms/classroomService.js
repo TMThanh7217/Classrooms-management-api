@@ -1,16 +1,5 @@
 // const classrooms = require('../mock.json');
 const classroomModel = require('./classroomModel');
-const inviteLinkLength = 8;
-
-exports.makeInviteLink = (length) =>{
-    let result = '';
-    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let charactersLength = characters.length;
-    for ( let i = 0; i < length; i++ ) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    return result;
-}
 
 exports.create = async (classroom) => {
     return await classroomModel

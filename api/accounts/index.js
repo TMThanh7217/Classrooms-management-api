@@ -5,6 +5,7 @@ const passport = require('../passport');
 const jwt = require('jsonwebtoken');
 const accountController = require('./accountController');
 const authorization = require('../authorization/classroomAuth');
+const verifyCodeController = require('../verifycodes/verifycodeController');
 
 // for debugging, delete or comment this later
 router.get('/listAll', accountController.listAllAccount);

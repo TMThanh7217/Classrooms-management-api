@@ -1,0 +1,13 @@
+[{
+    "userID": 1,
+    "code": "teachercode",
+    "status": 0
+}, {
+    "userID": 2,
+    "code": "studentcode",
+    "status": 0
+}, {
+    "userID": 3,
+    "code": "admincode",
+    "status": 1
+}]

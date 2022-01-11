@@ -2,6 +2,7 @@ const classroomService = require('./classroomService');
 const userService = require('../users/userService');
 const user_classroomService = require('../user_classrooms/user_classroomService');
 const accountService = require('../accounts/accountService');
+const helper = require('../helper');
 
 // why does this function not require async? idk. How can it even work but the others don't? why? :?
 exports.create = function(req, res) {
@@ -14,7 +15,7 @@ exports.create = function(req, res) {
       //inviteLink: req.body.inviteLink
   };
 
-  classroom.inviteLink = classroomService.makeInviteLink(8);
+  classroom.inviteLink = helper.makeInviteLink(8);
   let userID = parseInt(req.body.userID);
   // create return id only lmao
   classroomService.create(classroom)

@@ -156,6 +156,16 @@ exports.updateStatus = async (id, status) => {
     });
 }
 
+exports.updateValidate = async (userID, validate) => {
+    return await Account.update({
+        validate: validate
+    }, {
+        where: {
+            userID: userID
+        }
+    });
+}
+
 //----------------------------------------------------------Delete----------------------------------------------------------
 exports.delete = async (id) => {
     return await Account.destroy({

@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.SID, {foreignKey: 'userID'}, {onDelete: 'CASCADE'});
       User.hasMany(models.Notification, {foreignKey: 'userID'}, {onDelete: 'CASCADE'});
       User.hasMany(models.Comment, {foreignKey: 'authorID'}, {onDelete: 'CASCADE'});
+      User.hasMany(models.VerifyCode, {foreignKey: 'userID'}, {onDelete: 'CASCADE'});
     }
   };
   User.init({

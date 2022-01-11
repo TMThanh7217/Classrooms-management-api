@@ -1,4 +1,4 @@
-import emailjs from "emailjs-com";
+const emailjs = require("emailjs-com");
 
 const serviceId = "service_xryud6j";
 const templateId_invitation = "template_j4pd2o3";
@@ -39,7 +39,7 @@ const sendEmail = {
   }
 }
 
-export default sendEmail;
+module.exports = sendEmail;
 
 //--------------------------How to use--------------------------
 // const handleSendVerificationEmail = (submited_email, verification_code, purpose_type_string) => {
