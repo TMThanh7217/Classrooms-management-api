@@ -1,9 +1,4 @@
-const emailjs = require("emailjs-com");
-
-const serviceId = "service_xryud6j";
-const templateId_invitation = "template_j4pd2o3";
-const templateId_verification = "template_6chzc6b";
-const userId = "user_Fl7wGEZtBmtwoQxwYwb8Y";
+const nodemailer = require('nodemailer');
 
 const sendEmail = {
   invitation_email: async (param) => {
@@ -21,21 +16,34 @@ const sendEmail = {
       console.error("Failed to send email. Error: ", error);
     }
   },
-  verification: async (param) => {
-    try {
-      const response = await emailjs.send(
-        serviceId,
-        templateId_verification,
-        param,
-        userId
-      );
+  verification: async (receiver, verification_link) => {
+    let testAccount = await nodemailer.createTestAccount();
 
-      if (response.status === 200) {
-        console.log("Successfully sent message.");
+    let transporter = nodemailer.createTransport({
+      host: "smtp.ethereal.email",
+      port: 587,
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: testAccount.user, // generated ethereal user
+        pass: testAccount.pass, // generated ethereal password
+      },
+    });
+    
+    var mailOptions = {
+      from: testAccount.user,
+      to: receiver,
+      subject: 'Sending Email using Node.js',
+      text: verification_link
+    };
+    
+    await transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+        console.log("Info", info);
       }
-    } catch (error) {
-      console.error("Failed to send email. Error: ", error);
-    }
+    });
   }
 }
 

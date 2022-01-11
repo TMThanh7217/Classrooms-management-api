@@ -11,13 +11,7 @@ exports.makeInviteLink = (length) =>{
     return result;
 }
 
-exports.handleSendVerificationEmail = (submited_email, verification_code, verification_link, purpose_type_string) => {
-    console.log('Submitted email: ' + submited_email)
-    let templatedEmail = {
-        to_email: submited_email,
-        verify_code: verification_code,
-        purpose_type: purpose_type_string, //"Change Password"
-        verify_link: verification_link,
-    }
-    sendEmail.verification(templatedEmail);
+exports.handleSendVerificationEmail = (receiver, verification_link) => {
+    console.log('Receiver email: ' + receiver)
+    sendEmail.verification(receiver, verification_link);
 }

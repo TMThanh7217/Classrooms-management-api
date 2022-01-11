@@ -5,18 +5,23 @@ const accountService = require('../accounts/accountService');
 
 exports.create = async (req, res) => {
     let email = req.body.email;
-    let user = await userService.getUserWithEmail(email);
-    console.log('user', user);
-
-    if (user) {
+    console.log('email', email);
+    //let user = await userService.getUserWithEmail(email);
+    //console.log('user', user);
+    let verification_link = process.env.ROOT_LINK + `/verify/email?email`;
+    console.log(verification_link);
+    helper.handleSendVerificationEmail(email, verification_link);
+    return res.status(200).json({msg: 'hi'});
+    /*if (user) {
         let userID = user.id;
         let oldVCode = await verifycodeService.getWithUserID(userID);
         let vCode = helper.makeInviteLink(4);
+        let verification_link = process.env.ROOT_LINK + `/verify/email?email=${email}&code=${vCode}`; 
         if (oldVCode) {
             let result = await verifycodeService.update(userID, vCode);
             if (result) {
                 console.log('Update successfully');
-                helper.handleSendVerificationEmail(email, vCode, "Test test");
+                helper.handleSendVerificationEmail(email, vCode, verification_link, "Update old code");
                 console.log('Pass handleSendVerificationEmail');
                 return res.status(200).json({msg: 'Update successfully'});
             }
@@ -29,7 +34,7 @@ exports.create = async (req, res) => {
             let newVCode = await verifycodeService.create(userID, vCode);
             if (newVCode) {
                 console.log('newVCode', newVCode);
-                helper.handleSendVerificationEmail(email, vCode, "Test test");
+                helper.handleSendVerificationEmail(email, vCode, verification_link, "Create new code");
                 console.log('Pass handleSendVerificationEmail');
                 return res.status(200).json('Create new verify code successfully');
             }
@@ -39,7 +44,7 @@ exports.create = async (req, res) => {
             }
         }
     }
-    return res.status(500).json({msg: 'Cannot find any user with this email'});
+    return res.status(500).json({msg: 'Cannot find any user with this email'});*/
 };
 
 exports.validateEmail = async (req, res) => {
@@ -58,7 +63,9 @@ exports.validateEmail = async (req, res) => {
                     console.log({msg: 'Update validate successfully'});
                     return res.status(200).json({msg: 'Validate email successfully'});
                 }
+                return res.status(500).json({msg: 'Update email fail'});
             }
+            return res.status(500).json({msg: 'Missmatch verify code'});
         }
         return res.status(500).json({msg: 'Validate email fail'});
     }
