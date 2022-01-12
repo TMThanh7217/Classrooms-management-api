@@ -66,7 +66,9 @@ router.post('/:classroomId/assignments/:assignmentId/scores/import', passport.au
 // update gradeboard score
 // yep this need some adjustment too
 // did some adjusment not sure if working as intended again
-router.put('/:classroomId/assignments/:assignmentId/scores/:userId', passport.authenticate('jwt', { session: false }), authorization.checkTeacherRole, student_assignmentController.updateScore);
+//router.put('/:classroomId/assignments/:assignmentId/scores/:userId', passport.authenticate('jwt', { session: false }), authorization.checkTeacherRole, student_assignmentController.updateScore);
+// Change the update score route to this
+router.put('/:classroomId/assignments/:assignmentId/scores', passport.authenticate('jwt', { session: false }), authorization.checkTeacherRole, student_assignmentController.updateScoreUsingSID);
 
 // Add studentId
 router.post('/:classroomId/sids', passport.authenticate('jwt', { session: false }), sidController.addSID);

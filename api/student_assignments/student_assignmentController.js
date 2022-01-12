@@ -157,13 +157,14 @@ exports.updateScore = async (req, res) => {
 // Copy paste from above, this one need the SID from req.parms
 // Change the function name later
 exports.updateScoreUsingSID = async (req, res) => {
-    let SID = req.params.SID;
+    let SID = req.body.SID;
     let classroomId = parseInt(req.params.classroomId);
     let assignmentId = parseInt(req.params.assignmentId);
     let result = await sidService.findBySID(SID, classroomId);
-    /*console.log("userId:", userId);
+    console.log("SID:", SID);
     console.log("classroomId:", classroomId);
-    console.log("assignmentId:", assignmentId);*/
+    console.log("assignmentId:", assignmentId);
+    console.log("result", result);
     if (result) {
         let student_assignment = {
             SID: result.SID,
