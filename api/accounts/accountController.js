@@ -2,6 +2,7 @@ const accountService = require('./accountService');
 const userService = require('../users/userService');
 const bcrypt = require('bcrypt');
 const saltRound = 11;
+const verifycodeService = require('../verifycodes/verifycodeService');
 
 // This is almost the same as the old user_classroom getRole function
 exports.getRole = async function(req, res) {
@@ -274,6 +275,38 @@ exports.updateAccountInfo = async (req, res) => {
     else return res.status(404).json({msg: 'Cannot find this account'});
 }
 
+exports.updatePasswordWithEmail = async (req, res) => {
+    let email = req.body.email;
+    let newPassword = req.body.newPassword;
+    let vCode = req.body.vCode;
+    console.log('email', email);
+    console.log('newPassword', newPassword);
+    console.log('vCode', vCode);
+
+    let user = await userService.getUserWithEmail(email);
+    console.log('user', user);
+    if (user) {
+       let verifyCode = await verifycodeService.getWithUserID(user.id);
+       console.log('verifyCode', verifyCode);
+       if (verifyCode) {
+           if (verifyCode.code == vCode) {
+                let result = await accountService.updatePassword(user.id, newPassword);
+                if (result) {
+                    console.log('Update password succesfully');
+                    return res.status(200).json({msg: 'Update password succesfully'});
+                }
+                return res.status(500).json({msg: 'Update password fail'});
+           }
+           console.log('Verify code does not match');
+           return res.status(500).json({msg: 'Verify code does not match'});
+       }
+       console.log('Cannot find this verify code');
+       return res.status(500).json({msg: 'Cannot find this verify code'});
+    }
+    console.log('Cannot find any user with this email');
+    return res.status(500).json({msg: 'Cannot find any user with this email'}); 
+}
+
 exports.banAccount = async (req, res) => {
     // front end return a list find a way to update everything in the list
     let accountList = req.body;
@@ -299,7 +332,6 @@ exports.banAccount = async (req, res) => {
     }
     return res.status(200).json({msg: 'Hi'});
 }
-
 
 exports.getAllJoinedUsers = async (req, res) => {
     return res.json(await accountService.getAllJoinedUsers(req.query))

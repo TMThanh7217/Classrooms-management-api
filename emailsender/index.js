@@ -16,7 +16,7 @@ const sendEmail = {
       console.error("Failed to send email. Error: ", error);
     }
   },
-  verification: async (receiver, verification_link) => {
+  verification: async (receiver, subject, content) => {
     try {
       /*let testAccount = await nodemailer.createTestAccount();
       console.log('testAccount', testAccount);*/
@@ -36,15 +36,15 @@ const sendEmail = {
       let info = await transporter.sendMail({
         from: process.env.TEMP_USERNAME, // sender address
         to: receiver, // list of receivers
-        subject: "Test send verification link", // Subject line
-        text: verification_link, // plain text body
+        subject: subject, // Subject line
+        text: content, // plain text body
       });
 
       console.log("Message sent: %s", info.messageId);
       // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
 
       // Preview only available when sending through an Ethereal account
-      console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+      //console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
       console.log("Info", info);
       return info;
     }

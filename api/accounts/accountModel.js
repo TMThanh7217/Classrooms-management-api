@@ -97,7 +97,7 @@ exports.getAllAccount = async () => {
     });
 }
 
-getAllAccountWithRole = async (role) => {
+exports.getAllAccountWithRole = async (role) => {
     return await Account.findAll({
         raw: true,
         where: {
@@ -159,6 +159,16 @@ exports.updateStatus = async (id, status) => {
 exports.updateValidate = async (userID, validate) => {
     return await Account.update({
         validate: validate
+    }, {
+        where: {
+            userID: userID
+        }
+    });
+}
+
+exports.updatePassword = async (userID, newPassword) => {
+    return await Account.update({
+        password: newPassword
     }, {
         where: {
             userID: userID

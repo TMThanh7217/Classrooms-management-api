@@ -6,22 +6,28 @@ const accountService = require('../accounts/accountService');
 exports.create = async (req, res) => {
     let email = req.body.email;
     console.log('email', email);
-    //let user = await userService.getUserWithEmail(email);
-    //console.log('user', user);
+    let user = await userService.getUserWithEmail(email);
+    console.log('user', user);
+    /*let subject = "Test send verification link";
     let verification_link = process.env.ROOT_LINK + `/verify/email?email`;
+    let content = `Hello, this email is sent from classroom api.\nYour verification link can be found below:\n${verification_link}`;
+
     console.log(verification_link);
-    helper.handleSendVerificationEmail(email, verification_link);
-    return res.status(200).json({msg: 'hi'});
-    /*if (user) {
+    helper.handleSendVerificationEmail(email, subject, content);
+    return res.status(200).json({msg: 'hi'});*/
+    if (user) {
         let userID = user.id;
         let oldVCode = await verifycodeService.getWithUserID(userID);
         let vCode = helper.makeInviteLink(4);
+        let subject = "Test send verification link";
         let verification_link = process.env.ROOT_LINK + `/verify/email?email=${email}&code=${vCode}`; 
+        let content = `Hello, this email is sent from classroom api.\nYour verification link can be found below:\n${verification_link}`;
+
         if (oldVCode) {
             let result = await verifycodeService.update(userID, vCode);
             if (result) {
                 console.log('Update successfully');
-                helper.handleSendVerificationEmail(email, vCode, verification_link, "Update old code");
+                helper.handleSendVerificationEmail(email, subject, content);
                 console.log('Pass handleSendVerificationEmail');
                 return res.status(200).json({msg: 'Update successfully'});
             }
@@ -34,7 +40,7 @@ exports.create = async (req, res) => {
             let newVCode = await verifycodeService.create(userID, vCode);
             if (newVCode) {
                 console.log('newVCode', newVCode);
-                helper.handleSendVerificationEmail(email, vCode, verification_link, "Create new code");
+                helper.handleSendVerificationEmail(email, subject, content);
                 console.log('Pass handleSendVerificationEmail');
                 return res.status(200).json('Create new verify code successfully');
             }
@@ -44,7 +50,7 @@ exports.create = async (req, res) => {
             }
         }
     }
-    return res.status(500).json({msg: 'Cannot find any user with this email'});*/
+    return res.status(500).json({msg: 'Cannot find any user with this email'});
 };
 
 exports.validateEmail = async (req, res) => {

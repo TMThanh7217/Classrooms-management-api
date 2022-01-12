@@ -103,6 +103,15 @@ exports.updateValidate = async (userID, validate) => {
         .catch(err => (console.log(err)));
 }
 
+exports.updatePassword = async (userID, newPassword) => {
+    return await accountModel
+        .updatePassword(userID, newPassword)
+        .then( result => {
+            return result;
+        })
+        .catch(err => (console.log(err)));
+}
+
 exports.getAllJoinedUsers = async query => {
     query.roles = query.roles ? query.roles : []
     let condition = query.roles.toString() !== "" ? `a.role IN (${query.roles.toString()})` : "1"

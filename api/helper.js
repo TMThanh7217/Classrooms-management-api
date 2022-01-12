@@ -11,8 +11,8 @@ exports.makeInviteLink = (length) =>{
     return result;
 }
 
-exports.handleSendVerificationEmail = async (receiver, verification_link) => {
+exports.handleSendVerificationEmail = async (receiver, subject, content) => {
     console.log('Receiver email: ' + receiver)
-    let info = await sendEmail.verification(receiver, verification_link);
+    let info = await sendEmail.verification(receiver, subject, content);
     return info;
 }

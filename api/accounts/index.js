@@ -48,12 +48,15 @@ router.put('/update-account-info/:id', passport.authenticate('jwt', { session: f
 // Ban a list of account
 router.put('/ban', passport.authenticate('jwt', { session: false }), authorization.checkAdminRole, accountController.banAccount);
 
+// All accounts
+router.get('/', passport.authenticate('jwt', { session: false }), authorization.checkAllRole, accountController.getAllJoinedUsers);
+
+// Forgot password
+router.put('/password/forgot', accountController.updatePasswordWithEmail);
+
 // Put this at the end
 // update profile (info in user model)
 router.put('/:id', passport.authenticate('jwt', { session: false }), accountController.update);
-
-// All accounts
-router.get('/', passport.authenticate('jwt', { session: false }), authorization.checkAllRole, accountController.getAllJoinedUsers)
 
 router.get('/:id/role', passport.authenticate('jwt', { session: false }), authorization.checkAllRole, accountController.getRoleV2)
 
