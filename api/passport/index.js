@@ -19,8 +19,10 @@ passport.use(new LocalStrategy( async (username, password, done) => {
     if (account) {
         // account status used to show if an account is normal or lock, ...
         // 0 = default = not lock, 1 = lock/ban
-        if (account.status == 1)
+        if (account.status == 1) {
+            console.log('This account has been locked');
             return done(null, false, { message: 'This account has been locked.'});
+        }
             
         /*console.log('account check when log in');
         console.log(account);*/

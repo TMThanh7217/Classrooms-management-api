@@ -29,9 +29,12 @@ exports.create = async (req, res) => {
             let result = await verifycodeService.update(userID, vCode);
             if (result) {
                 console.log('Update successfully');
-                helper.handleSendVerificationEmail(email, subject, content);
-                console.log('Pass handleSendVerificationEmail');
-                return res.status(200).json({msg: 'Update successfully'});
+                let info = await helper.handleSendVerificationEmail(email, subject, content);
+                if (info) {
+                    console.log('Pass handleSendVerificationEmail');
+                    return res.status(200).json({msg: 'Update successfully'});
+                }
+                return res.status(500).json({msg: 'Cannot send email'});
             }
             else {
                 console.log('Update fail');
@@ -42,9 +45,12 @@ exports.create = async (req, res) => {
             let newVCode = await verifycodeService.create(userID, vCode);
             if (newVCode) {
                 console.log('newVCode', newVCode);
-                helper.handleSendVerificationEmail(email, subject, content);
-                console.log('Pass handleSendVerificationEmail');
-                return res.status(200).json('Create new verify code successfully');
+                let info = await helper.handleSendVerificationEmail(email, subject, content);
+                if (info) {
+                    console.log('Pass handleSendVerificationEmail');
+                    return res.status(200).json({msg: 'Create new verify code successfully'});
+                }
+                return res.status(500).json({msg: 'Cannot send email'});
             }
             else {
                 console.log('Cannot create new verify code');
