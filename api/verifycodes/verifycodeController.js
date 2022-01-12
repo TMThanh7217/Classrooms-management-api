@@ -20,9 +20,11 @@ exports.create = async (req, res) => {
         let oldVCode = await verifycodeService.getWithUserID(userID);
         let vCode = helper.makeInviteLink(4);
         let subject = "Verification link";
-        let verification_link = process.env.ROOT_LINK + `/verify/email?email=${email}&code=${vCode}`; 
+        let local_verification_link = process.env.ROOT_LOCAL_LINK + `/verify/email?email=${email}&code=${vCode}`;
+        let verification_link = process.env.ROOT_WEBSITE_LINK + `/verify/email?email=${email}&code=${vCode}`;
         let content = `Hello, this email is sent from classroom api.\nYour verification link can be found below:
-                        \n${verification_link}
+                        \nLocal: ${local_verification_link}
+                        \nOr website: ${verification_link}
                         \nAnd this is your code: ${vCode}`;
 
         if (oldVCode) {
