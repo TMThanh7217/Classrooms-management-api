@@ -13,14 +13,16 @@ exports.info = async function(req, res) {
 // let account = await accountService.getAccountWithUserID(userId);
 // if (account) {
     let accountInfos = await userService.info(userId);
-    if (accountInfos.length > 0){
-        let accountInfo = {...accountInfos.pop(), isOwner: req.user.userID == userId}
+    if (accountInfos.length > 0) {
+        let account = await accountService.getAccountWithUserID(req.user.userID);
+        let accountInfo = {...accountInfos.pop(), isOwner: req.user.userID == userId, validate: account.validate};
         // Add the role since this maybe needed
         // accountInfo.role = account.role;
         // The isOwner is used to determine if that user is the owner of that account
         // Using the userId stored in the JWT and the userId received from the params to check ownership
         // accountInfo.isOwner = req.user.userID == userId;
-        console.log(accountInfo.isOwner);
+        console.log('isOwner', accountInfo.isOwner);
+        console.log('accountInfo', accountInfo)
         return res.status(200).json(accountInfo);
     }
     else 

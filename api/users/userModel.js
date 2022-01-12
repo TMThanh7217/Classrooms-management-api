@@ -28,7 +28,7 @@ exports.getUserWithID = async (id) => {
     return await model.sequelize.query(
         `
             SELECT s.SID, u.*, a.role
-            FROM Users AS u LEFT JOIN SIDs AS s ON(u.id = s.userID) LEFT JOIN Accounts AS a ON(a.userID = u.id)
+            FROM Users AS u LEFT JOIN SIDs AS s ON(u.id = s.userID) LEFT JOIN Accounts AS a ON (a.userID = u.id)
             WHERE u.id = :userId
         `,{
             type: QueryTypes.SELECT,
